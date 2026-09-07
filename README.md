@@ -62,6 +62,40 @@ Vale usar isso para arrumar o que a importação automática não teve como acer
 vários versos numa linha só em muitos pontos, e o título sai truncado quando a primeira linha
 é longa demais.
 
+## Levar correções do JSON para o banco (`npm run resync`)
+
+O seed automático só roda com a tabela vazia, de propósito: senão todo deploy sobrescreveria
+o que você editou. A consequência é que corrigir o `seed/pontos.json` depois do primeiro boot
+não muda nada sozinho. O `resync` é a ponte.
+
+```bash
+npm run resync                      # só mostra o que mudaria, não grava
+npm run resync -- --apply           # aplica
+npm run resync -- --apply --force   # aplica também sobre pontos que você editou na interface
+```
+
+Sem `--apply` ele é somente leitura, então rodar por curiosidade é seguro. Contra o Postgres do
+Railway, exporte a `DATABASE_URL` do banco antes de rodar (pega em Variables, ou use
+`railway run npm run resync`).
+
+O casamento entre JSON e banco é pela coluna `seed_ref`, que guarda o `id` do ponto no JSON.
+Bancos populados antes dessa coluna existir têm ela vazia, e aí o script casa pela letra exata
+e preenche o `seed_ref` na primeira execução.
+
+Cinco situações, e o que ele faz em cada:
+
+| Situação | O que acontece |
+|---|---|
+| Ponto do seed que ninguém tocou e mudou no JSON | Atualiza |
+| Ponto do seed que **você editou pela interface** | Protege e lista, só muda com `--force` |
+| Ponto novo no JSON | Insere |
+| Ponto que saiu do JSON | Avisa, não exclui (excluir quebraria as giras) |
+| Ponto que **você criou** pela interface | Ignora, não tem `seed_ref` |
+
+Favoritos e giras nunca são tocados: o script só faz `UPDATE` e `INSERT`, nunca `DELETE`, e a
+associação da gira é por `ponto_id`, que não muda. No Postgres tudo roda numa transação, então
+um erro no meio não deixa o banco pela metade.
+
 ## Rodar local
 
 ```bash
