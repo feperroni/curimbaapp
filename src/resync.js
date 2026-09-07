@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import pg from 'pg';
+import { URL_BANCO } from './db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SEED_PATH = path.join(__dirname, '..', 'seed', 'pontos.json');
@@ -26,7 +27,7 @@ const DEV_PONTOS = path.join(__dirname, '..', 'seed', '.dev-db.json');
 
 const APLICAR = process.argv.includes('--apply');
 const FORCAR = process.argv.includes('--force');
-const usaDb = Boolean(process.env.DATABASE_URL);
+const usaDb = Boolean(URL_BANCO);
 
 const CAMPOS = ['linha', 'entidade', 'entidade_especifica', 'momento', 'ritmos', 'coringa', 'da_casa', 'titulo', 'letra'];
 
@@ -160,7 +161,7 @@ async function main() {
   const seed = JSON.parse(fs.readFileSync(SEED_PATH, 'utf8'));
   const pool = usaDb
     ? new pg.Pool({
-        connectionString: process.env.DATABASE_URL,
+        connectionString: URL_BANCO,
         ssl: process.env.PGSSL === 'disable' ? false : { rejectUnauthorized: false }
       })
     : null;

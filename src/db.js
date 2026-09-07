@@ -16,8 +16,23 @@ const RITMOS = ['Angola', 'Ijexá', 'Nagô', 'Congo', 'Samba', 'Samba de Caboclo
  * Camada de dados. Com DATABASE_URL definida usa Postgres.
  * Sem ela, cai para arquivos JSON locais, so para desenvolvimento.
  */
-const useDb = Boolean(process.env.DATABASE_URL);
+/* O Railway expoe tanto DATABASE_URL quanto as PG* separadas (PGHOST, PGUSER...).
+   Se a referencia ${{Postgres.DATABASE_URL}} nao resolveu mas as PG* chegaram,
+   montamos a string aqui em vez de derrubar o deploy por um detalhe de nome. */
+function montarUrlDasPG() {
+  const { PGHOST, PGPORT, PGUSER, PGPASSWORD, PGDATABASE } = process.env;
+  if (!PGHOST || !PGUSER || !PGDATABASE) return null;
+  const senha = PGPASSWORD ? `:${encodeURIComponent(PGPASSWORD)}` : '';
+  return `postgresql://${encodeURIComponent(PGUSER)}${senha}@${PGHOST}:${PGPORT || 5432}/${PGDATABASE}`;
+}
+
+export const URL_BANCO = process.env.DATABASE_URL || montarUrlDasPG();
+const useDb = Boolean(URL_BANCO);
 let pool = null;
+
+if (!process.env.DATABASE_URL && URL_BANCO) {
+  console.warn('[db] DATABASE_URL ausente, mas as variaveis PG* estao presentes. Montei a conexao a partir delas.');
+}
 
 /* Trava contra perda silenciosa de dados.
  *
@@ -53,12 +68,27 @@ if (!useDb && naNuvem && process.env.PERMITIR_MODO_ARQUIVO !== '1') {
     '  Para rodar sem banco de proposito: PERMITIR_MODO_ARQUIVO=1',
     ''
   ].join('\n'));
+
+  /* Diagnostico: so os NOMES das variaveis que este servico recebeu, nunca os
+     valores. Serve para descobrir se o problema e nome de servico errado,
+     variavel no servico errado ou no ambiente errado. */
+  const nomes = Object.keys(process.env)
+    .filter(k => /^(PG|DATABASE|POSTGRES)/i.test(k) || k.startsWith('RAILWAY_'))
+    .sort();
+  console.error('  Variaveis de banco e de Railway que ESTE servico recebeu (so os nomes):');
+  console.error(nomes.length ? '    ' + nomes.join('\n    ') : '    (nenhuma)');
+  console.error('');
+  console.error('  Se nao aparece nenhum nome comecando com PG ou DATABASE, a variavel');
+  console.error('  nao esta chegando: confira se foi criada no servico do APP (nao no do');
+  console.error('  banco) e no mesmo ambiente que esta sendo publicado.');
+  console.error('');
+
   process.exit(1);
 }
 
 if (useDb) {
   pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: URL_BANCO,
     ssl: process.env.PGSSL === 'disable' ? false : { rejectUnauthorized: false }
   });
 }
