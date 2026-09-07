@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#12100f">
-<title>Curimba · Nosso Cazuá</title>
+<title>Curimba · Nosso Casuá</title>
 <link rel="stylesheet" href="/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🥁</text></svg>">
 </head>
@@ -13,7 +13,7 @@
 <header class="topo">
   <div class="marca">
     <span class="marca-ico">🥁</span>
-    <span class="marca-txt">Curimba<b>Nosso Cazuá</b></span>
+    <span class="marca-txt">Curimba<b>Nosso Casuá</b></span>
   </div>
 
   <nav class="linhas" id="navLinhas">
@@ -21,6 +21,7 @@
     <button class="linha-btn" data-vista="orixas">Orixás</button>
     <button class="linha-btn" data-vista="esquerda">Esquerda</button>
     <button class="linha-btn" data-vista="direita">Direita</button>
+    <button class="linha-btn" data-vista="casa">Casa</button>
     <button class="linha-btn estreito" data-vista="favoritos" title="Favoritos">★</button>
     <button class="linha-btn estreito" data-vista="giras" title="Giras">Giras</button>
   </nav>
@@ -58,7 +59,7 @@
   <aside class="lista-wrap">
     <div class="lista-cab">
       <span id="contador">0 pontos</span>
-      <button class="mini" id="empilharTudo" title="Empilhar todos os pontos da lista">Empilhar tudo</button>
+      <button class="mini" id="empilharTudo" title="Voltar a mostrar todos os pontos da lista">Ver todos</button>
     </div>
     <ul class="lista" id="lista"></ul>
   </aside>
@@ -66,18 +67,26 @@
   <section class="leitor" id="leitor">
     <div class="vazio" id="vazio">
       <p class="vazio-ico">🎼</p>
-      <p>Toque num ponto para abrir a letra.<br>Use o <b>＋</b> da lista para empilhar mais de um.</p>
+      <p>Nada para mostrar com os filtros de agora.<br>Escolha outra entidade acima.</p>
     </div>
     <div class="pilha" id="pilha"></div>
   </section>
 </main>
 
-<div class="rodape-pilha" id="rodapePilha" hidden>
+<div class="rodape-pilha" id="rodapePilha">
+  <div class="alternador" id="altModo">
+    <button data-modo="tudo" title="Mostrar todos os pontos da lista, para ir rolando">Tudo</button>
+    <button data-modo="selecao" title="Mostrar só os pontos que você escolheu">Seleção</button>
+  </div>
+  <div class="alternador" id="altColunas">
+    <button data-colunas="1" title="Uma coluna, letra maior">1 col</button>
+    <button data-colunas="2" title="Duas colunas, mais pontos por tela">2 col</button>
+  </div>
   <span id="pilhaInfo"></span>
   <span class="espaco"></span>
   <button class="icone" id="btnMenor" title="Diminuir letra">A−</button>
   <button class="icone" id="btnMaior" title="Aumentar letra">A+</button>
-  <button class="icone icone-txt" id="limparPilha">Limpar</button>
+  <button class="icone icone-txt" id="limparPilha" hidden>Limpar</button>
 </div>
 
 <!-- modal de ponto -->
@@ -126,6 +135,10 @@
 
       <label class="linha-checkbox">
         <input type="checkbox" name="coringa" id="fCoringa"> Ponto coringa (serve qualquer entidade da linha)
+      </label>
+
+      <label class="linha-checkbox">
+        <input type="checkbox" name="da_casa" id="fDaCasa"> Ponto da casa (aparece também na aba Casa)
       </label>
 
       <label>Senha de edição

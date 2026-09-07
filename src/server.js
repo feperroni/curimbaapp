@@ -29,6 +29,7 @@ function validar(body) {
     ritmos: Array.isArray(body.ritmos) ? body.ritmos.filter(r => db.RITMOS.includes(r)) : [],
     ritmo_original: body.ritmo_original ? String(body.ritmo_original) : null,
     coringa: Boolean(body.coringa),
+    da_casa: Boolean(body.da_casa),
     titulo: String(body.titulo || '').trim(),
     letra: String(body.letra || '').trim()
   };

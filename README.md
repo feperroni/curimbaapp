@@ -1,4 +1,4 @@
-# Curimba · Nosso Cazuá
+# Curimba · Nosso Casuá
 
 Biblioteca de pontos de Umbanda para uso ao vivo em tablet de 10 polegadas.
 147 pontos extraídos do songbook do terreiro, classificados por linha, entidade, momento litúrgico e ritmo.
@@ -23,6 +23,11 @@ abertura, defumação, chamada, saudação, firmeza, paga, descarrego, subida.
 
 **Coringa**: ponto que serve qualquer entidade da linha. Aparece na lista de todas elas.
 
+**Casa**: aba própria, para os pontos do terreiro. É uma marcação (`da_casa`), não uma linha
+separada, então um ponto da casa para Ogum continua aparecendo em Orixás → Ogum **e** na aba
+Casa. Marque no formulário, tanto ao criar quanto ao editar um ponto que já existe. Se você
+preferir que Casa seja uma quinta linha exclusiva, é uma troca pequena.
+
 Títulos foram gerados a partir da primeira linha cantada, que é como o ponto é chamado na prática.
 São editáveis pela interface.
 
@@ -40,15 +45,19 @@ durante a gira, totalmente reversível, e exigir senha ali atrapalharia o uso ao
 `＋` de cada ponto para escolher, na ordem. "Ver roteiro" mostra o que já entrou, com `↑ ↓ ✕`
 para reordenar e tirar. Salvar exige a senha. Abrir uma gira empilha o roteiro inteiro no leitor.
 
-**Pilha.** O leitor mostra vários pontos ao mesmo tempo, um embaixo do outro. Cada card ocupa
-metade da altura útil, então dois cabem por tela, e cresce sozinho quando a letra é mais longa.
-O scroll tem snap, então o card seguinte encaixa no topo. A lista lateral continua sempre
-visível para você trocar rápido, e os pontos que estão na tela ficam marcados nela.
+**Leitor.** Por padrão ele mostra **todos** os pontos da seleção atual, um após o outro, e você
+rola a página. A lista da esquerda é o índice: tocar num item **pula** até ele no leitor, não
+troca o que está na tela. Trocar de entidade ou mexer nos filtros recarrega o leitor inteiro.
 
-- Toque no corpo do item: abre sozinho, trocando o que estava na tela.
-- `＋` no item: acrescenta à pilha sem tirar o que já está.
-- "Empilhar tudo": joga a lista filtrada inteira na pilha.
-- `✕` no card ou "Limpar" no rodapé: esvazia.
+No rodapé:
+
+- **Tudo / Seleção.** `Tudo` é o padrão descrito acima. `Seleção` mostra só os pontos que você
+  juntou com o `＋`, para quando quiser dois específicos lado a lado sem o resto no meio.
+- **1 col / 2 col.** Uma coluna cabem dois pontos por tela, com a letra maior. Duas colunas
+  cabem quatro, em 2x2, com a letra a 80% do tamanho. A escolha fica salva no tablet.
+- **A− / A+.** Tamanho da letra, de 17px a 56px, também salvo no tablet.
+
+O scroll tem snap, então o card seguinte encaixa no topo em vez de parar pela metade.
 
 ## Corrigir pontos
 
@@ -106,7 +115,7 @@ npm run dev
 Abre em `http://localhost:3000`. Sem `DATABASE_URL` o app usa um arquivo JSON local
 (`seed/.dev-db.json`, ignorado pelo git) e não precisa de banco nenhum para você mexer no layout.
 
-Senha de edição padrão em desenvolvimento: `cazua`.
+Senha de edição padrão em desenvolvimento: `cazua`. **Troque a `SENHA_EDICAO` em produção.**
 
 ## Deploy no Railway
 
@@ -132,6 +141,11 @@ sem barra de endereço comendo espaço vertical.
 | POST | `/api/pontos` | header | Cria ponto |
 | PUT | `/api/pontos/:id` | header | Edita ponto |
 | DELETE | `/api/pontos/:id` | header | Exclui ponto |
+| PATCH | `/api/pontos/:id/favorito` | não | Liga e desliga o favorito |
+| GET | `/api/giras` | não | Lista as giras com os pontos em ordem |
+| POST | `/api/giras` | header | Cria gira |
+| PUT | `/api/giras/:id` | header | Edita gira |
+| DELETE | `/api/giras/:id` | header | Exclui gira |
 | GET | `/health` | não | Healthcheck do Railway |
 
 A senha vai no header `x-senha`.
@@ -153,5 +167,6 @@ src/db.js          Camada de dados (Postgres, ou arquivo em dev) e seed
 public/index.html  Estrutura da tela
 public/style.css   Tema escuro, alvos de toque grandes
 public/app.js      Navegação, filtros, busca e formulário
+src/resync.js      Leva correções do JSON para um banco já populado
 seed/pontos.json   Os 147 pontos classificados
 ```

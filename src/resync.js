@@ -28,7 +28,7 @@ const APLICAR = process.argv.includes('--apply');
 const FORCAR = process.argv.includes('--force');
 const usaDb = Boolean(process.env.DATABASE_URL);
 
-const CAMPOS = ['linha', 'entidade', 'entidade_especifica', 'momento', 'ritmos', 'coringa', 'titulo', 'letra'];
+const CAMPOS = ['linha', 'entidade', 'entidade_especifica', 'momento', 'ritmos', 'coringa', 'da_casa', 'titulo', 'letra'];
 
 const c = {
   cinza: s => `\x1b[90m${s}\x1b[0m`,
@@ -111,19 +111,19 @@ async function gravar(pool, banco, plano) {
       for (const it of plano.atualizar) {
         await client.query(
           `UPDATE pontos SET linha=$1, entidade=$2, entidade_especifica=$3, momento=$4, ritmos=$5,
-                  ritmo_original=$6, coringa=$7, titulo=$8, letra=$9, atualizado_em=NOW()
-           WHERE id=$10`,
+                  ritmo_original=$6, coringa=$7, da_casa=$8, titulo=$9, letra=$10, atualizado_em=NOW()
+           WHERE id=$11`,
           [it.seedP.linha, it.seedP.entidade, it.seedP.entidade_especifica, it.seedP.momento,
-           it.seedP.ritmos, it.seedP.ritmo_original, it.seedP.coringa, it.seedP.titulo,
-           it.seedP.letra, it.linhaBanco.id]
+           it.seedP.ritmos, it.seedP.ritmo_original, it.seedP.coringa, Boolean(it.seedP.da_casa),
+           it.seedP.titulo, it.seedP.letra, it.linhaBanco.id]
         );
       }
       for (const seedP of plano.inserir) {
         await client.query(
-          `INSERT INTO pontos (linha, entidade, entidade_especifica, momento, ritmos, ritmo_original, coringa, titulo, letra, seed_ref)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+          `INSERT INTO pontos (linha, entidade, entidade_especifica, momento, ritmos, ritmo_original, coringa, da_casa, titulo, letra, seed_ref)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
           [seedP.linha, seedP.entidade, seedP.entidade_especifica, seedP.momento, seedP.ritmos,
-           seedP.ritmo_original, seedP.coringa, seedP.titulo, seedP.letra, seedP.id]
+           seedP.ritmo_original, seedP.coringa, Boolean(seedP.da_casa), seedP.titulo, seedP.letra, seedP.id]
         );
       }
       await client.query('COMMIT');
@@ -143,7 +143,8 @@ async function gravar(pool, banco, plano) {
       linha: it.seedP.linha, entidade: it.seedP.entidade,
       entidade_especifica: it.seedP.entidade_especifica, momento: it.seedP.momento,
       ritmos: it.seedP.ritmos, ritmo_original: it.seedP.ritmo_original,
-      coringa: it.seedP.coringa, titulo: it.seedP.titulo, letra: it.seedP.letra
+      coringa: it.seedP.coringa, da_casa: Boolean(it.seedP.da_casa),
+      titulo: it.seedP.titulo, letra: it.seedP.letra
     });
   }
   let proximo = Math.max(0, ...banco.map(r => r.id)) + 1;

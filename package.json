@@ -1,7 +1,7 @@
 {
   "name": "curimbaapp",
   "version": "1.0.0",
-  "description": "Curimba Nosso Cazua - biblioteca de pontos de Umbanda para tablet",
+  "description": "Curimba Nosso Casua - biblioteca de pontos de Umbanda para tablet",
   "type": "module",
   "main": "src/server.js",
   "scripts": {

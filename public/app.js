@@ -3,6 +3,8 @@
 const CACHE_KEY = 'curimba.cache.v2';
 const SENHA_KEY = 'curimba.senha';
 const TAM_KEY = 'curimba.tamanho';
+const MODO_KEY = 'curimba.modo';
+const COL_KEY = 'curimba.colunas';
 
 const LINHAS = ['ritual', 'orixas', 'esquerda', 'direita'];
 const ROTULO_LINHA = { ritual: 'Ritual', orixas: 'Orixás', esquerda: 'Esquerda', direita: 'Direita' };
@@ -37,7 +39,9 @@ const est = {
   momento: null,
   ritmo: null,
   busca: '',
-  pilha: [],              // ids dos pontos abertos ao mesmo tempo
+  modo: 'tudo',           // 'tudo' espelha a lista inteira; 'selecao' so o que voce escolheu
+  colunas: 1,
+  pilha: [],              // ids, usado apenas no modo 'selecao'
   montando: null,         // { id|null, nome, observacao, pontos:[ids] }
   verRoteiro: false,      // na montagem, mostra o roteiro em vez do acervo
   editandoPonto: null
@@ -79,18 +83,27 @@ function normaliza(s) {
 
 const daLinha = linha => PONTOS.filter(p => p.linha === linha);
 
-function entidadesDaLinha(linha) {
+// conjunto de pontos que a aba do topo representa, antes de entidade e filtros
+function conjuntoDaVista(vista) {
+  if (vista === 'favoritos') return PONTOS.filter(p => p.favorito);
+  if (vista === 'casa') return PONTOS.filter(p => p.da_casa);
+  if (vista === 'giras') return [];
+  return daLinha(vista);
+}
+
+function entidadesDaVista(vista) {
   const mapa = new Map();
-  for (const p of daLinha(linha)) mapa.set(p.entidade, (mapa.get(p.entidade) || 0) + 1);
-  for (const nome of (ENTIDADES_EXTRA[linha] || [])) if (!mapa.has(nome)) mapa.set(nome, 0);
+  for (const p of conjuntoDaVista(vista)) mapa.set(p.entidade, (mapa.get(p.entidade) || 0) + 1);
+  if (vista !== 'casa') {
+    for (const nome of (ENTIDADES_EXTRA[vista] || [])) if (!mapa.has(nome)) mapa.set(nome, 0);
+  }
   return [...mapa.entries()];
 }
 
 // pontos que servem de base para os chips de filtro
 function baseAtual() {
-  if (est.vista === 'favoritos') return PONTOS.filter(p => p.favorito);
-  if (est.vista === 'giras') return [];
-  return est.entidade ? daLinha(est.vista).filter(p => p.entidade === est.entidade) : daLinha(est.vista);
+  const conj = conjuntoDaVista(est.vista);
+  return est.entidade ? conj.filter(p => p.entidade === est.entidade) : conj;
 }
 
 function ordenaLiturgico(l) {
@@ -122,12 +135,11 @@ function visiveis() {
     return g.pontos.map(acha).filter(Boolean);
   }
 
-  let l = est.vista === 'favoritos'
-    ? PONTOS.filter(p => p.favorito)
-    : daLinha(est.vista);
+  let l = conjuntoDaVista(est.vista);
 
-  if (est.vista !== 'favoritos' && est.entidade) {
-    l = l.filter(p => p.entidade === est.entidade || (p.coringa && p.linha === est.vista));
+  if (est.entidade) {
+    l = l.filter(p => p.entidade === est.entidade ||
+      (p.coringa && est.vista !== 'favoritos' && est.vista !== 'casa' && p.linha === est.vista));
   }
   if (est.momento) l = l.filter(p => p.momento === est.momento);
   if (est.ritmo) l = l.filter(p => p.ritmos.includes(est.ritmo));
@@ -160,6 +172,10 @@ function renderSegundaFaixa() {
     nav.hidden = true;
     return;
   }
+  if (est.vista === 'casa' && !conjuntoDaVista('casa').length) {
+    nav.hidden = true;
+    return;
+  }
   nav.hidden = false;
 
   if (est.vista === 'giras') {
@@ -170,8 +186,8 @@ function renderSegundaFaixa() {
       b.innerHTML = `${escapa(g.nome)}<span class="qtd">${g.pontos.length}</span>`;
       b.onclick = () => {
         est.giraAberta = est.giraAberta === g.id ? null : g.id;
-        // abrir uma gira empilha o roteiro inteiro: é para isso que ela existe
-        est.pilha = est.giraAberta ? g.pontos.filter(id => acha(id)) : [];
+        // no modo tudo o leitor ja segue a lista, que aqui e o roteiro na ordem
+        est.pilha = [];
         render();
       };
       nav.appendChild(b);
@@ -195,7 +211,7 @@ function renderSegundaFaixa() {
     return;
   }
 
-  for (const [nome, qtd] of entidadesDaLinha(est.vista)) {
+  for (const [nome, qtd] of entidadesDaVista(est.vista)) {
     const b = document.createElement('button');
     b.className = 'ent-btn';
     b.setAttribute('aria-selected', String(est.entidade === nome));
@@ -247,23 +263,24 @@ function renderLista() {
   const noRoteiro = Boolean(est.montando && est.verRoteiro);
   ul.innerHTML = '';
   $('contador').textContent = itens.length === 1 ? '1 ponto' : `${itens.length} pontos`;
-  $('empilharTudo').hidden = itens.length < 2;
+  $('empilharTudo').hidden = est.modo === 'tudo';
 
   itens.forEach((p, i) => {
     const li = document.createElement('li');
     li.className = 'item';
-    if (est.pilha.includes(p.id)) li.classList.add('na-pilha');
+    if (est.modo === 'selecao' && est.pilha.includes(p.id)) li.classList.add('na-pilha');
 
     const espec = p.entidade_especifica ? ` · ${p.entidade_especifica}` : '';
     const tagCoringa = p.coringa ? '<span class="tag">coringa</span>' : '';
     const ondeEsta = (est.vista === 'favoritos' || est.busca.trim() || est.vista === 'giras' || noRoteiro)
       ? `<span class="tag">${escapa(p.entidade)}</span>` : '';
+    const tagCasa = (p.da_casa && est.vista !== 'casa') ? '<span class="tag tag-casa">casa</span>' : '';
 
     const corpo = document.createElement('div');
     corpo.className = 'item-corpo';
     corpo.innerHTML =
       `<div class="item-tit">${noRoteiro || est.vista === 'giras' ? `<span class="ordem">${i + 1}</span>` : ''}${escapa(p.titulo)}</div>` +
-      `<div class="item-sub">${ondeEsta}${tagCoringa}<span class="tag">${ROTULO_MOMENTO[p.momento] || p.momento}</span>` +
+      `<div class="item-sub">${ondeEsta}${tagCasa}${tagCoringa}<span class="tag">${ROTULO_MOMENTO[p.momento] || p.momento}</span>` +
       `${escapa(p.ritmos.join(' / '))}${escapa(espec)}</div>`;
     corpo.onclick = () => abrirSozinho(p.id);
     li.appendChild(corpo);
@@ -305,9 +322,11 @@ function renderLista() {
     li.className = 'lista-vazia';
     li.textContent = est.vista === 'favoritos'
       ? 'Nenhum favorito ainda. Toque na estrela de um ponto para marcar.'
-      : est.vista === 'giras' && !est.giraAberta
-        ? 'Escolha uma gira acima, ou crie uma nova.'
-        : 'Nada aqui com esses filtros.';
+      : est.vista === 'casa'
+        ? 'Nenhum ponto da casa ainda. Use o ＋ do topo para cadastrar, ou marque "Ponto da casa" ao editar um ponto que já existe.'
+        : est.vista === 'giras' && !est.giraAberta
+          ? 'Escolha uma gira acima, ou crie uma nova.'
+          : 'Nada aqui com esses filtros.';
     ul.appendChild(li);
   }
 }
@@ -322,22 +341,29 @@ function botaozinho(txt, titulo, onClick, desabilitado = false) {
   return b;
 }
 
+function pontosNoLeitor() {
+  return est.modo === 'tudo' ? visiveis() : est.pilha.map(acha).filter(Boolean);
+}
+
 function renderPilha() {
   const box = $('pilha');
   box.innerHTML = '';
-  const pontos = est.pilha.map(acha).filter(Boolean);
+  const pontos = pontosNoLeitor();
 
+  box.dataset.colunas = String(est.colunas);
   $('vazio').hidden = pontos.length > 0;
-  $('rodapePilha').hidden = pontos.length === 0;
-  if (pontos.length) {
-    $('pilhaInfo').textContent = pontos.length === 1
-      ? '1 ponto na tela'
-      : `${pontos.length} pontos empilhados`;
-  }
+  $('limparPilha').hidden = est.modo !== 'selecao' || !pontos.length;
+  $('pilhaInfo').textContent = !pontos.length
+    ? ''
+    : pontos.length === 1 ? '1 ponto' : `${pontos.length} pontos na tela`;
+
+  for (const b of $('altModo').children) b.setAttribute('aria-pressed', String(b.dataset.modo === est.modo));
+  for (const b of $('altColunas').children) b.setAttribute('aria-pressed', String(Number(b.dataset.colunas) === est.colunas));
 
   pontos.forEach((p, i) => {
     const card = document.createElement('article');
     card.className = 'card';
+    card.id = `card-${p.id}`;
 
     const partes = [
       ROTULO_LINHA[p.linha],
@@ -363,7 +389,9 @@ function renderPilha() {
     const ed = botaozinho('Editar', 'Editar este ponto', () => abrirModal(p));
     ed.classList.add('mini-btn-txt');
     acoes.appendChild(ed);
-    acoes.appendChild(botaozinho('✕', 'Tirar da tela', () => desempilhar(p.id)));
+    if (est.modo === 'selecao') {
+      acoes.appendChild(botaozinho('✕', 'Tirar da tela', () => desempilhar(p.id)));
+    }
     cab.appendChild(acoes);
 
     const letra = document.createElement('pre');
@@ -402,23 +430,41 @@ function aviso(msg) {
 /* ---------------- pilha ---------------- */
 
 function abrirSozinho(id) {
+  if (est.modo === 'tudo') {
+    // o leitor ja tem todos: em vez de trocar a tela, pula ate o ponto
+    document.getElementById(`card-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
   est.pilha = [id];
   renderLista(); renderPilha();
   $('leitor').scrollTop = 0;
 }
 
 function empilhar(id) {
-  if (est.pilha.includes(id)) {
-    aviso('Esse ponto já está na tela.');
+  if (est.modo === 'tudo') {
+    // primeiro ＋ tira do modo tudo e comeca uma selecao com esse ponto
+    est.modo = 'selecao';
+    est.pilha = [id];
+    salvarModo();
+    renderLista(); renderPilha();
+    $('leitor').scrollTop = 0;
+    aviso('Modo seleção. Use o ＋ para juntar mais pontos.');
     return;
   }
+  if (est.pilha.includes(id)) { aviso('Esse ponto já está na tela.'); return; }
   est.pilha.push(id);
   renderLista(); renderPilha();
-  // rola até o que acabou de entrar
   requestAnimationFrame(() => {
     const cards = $('pilha').children;
     cards[cards.length - 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+}
+
+function salvarModo() {
+  try {
+    localStorage.setItem(MODO_KEY, est.modo);
+    localStorage.setItem(COL_KEY, String(est.colunas));
+  } catch (_) {}
 }
 
 function desempilhar(id) {
@@ -506,7 +552,7 @@ async function salvarMontagem() {
     est.verRoteiro = false;
     est.vista = 'giras';
     est.giraAberta = salva.id;
-    est.pilha = salva.pontos.filter(id => acha(id));
+    est.pilha = [];
     render();
     aviso('Gira salva.');
   } catch (_) {
@@ -557,7 +603,7 @@ async function salvarGiraModal(ev) {
     est.montando = null;
     est.vista = 'giras';
     est.giraAberta = salva.id;
-    est.pilha = salva.pontos.filter(pid => acha(pid));
+    est.pilha = [];
     render();
     if (!salva.pontos.length) {
       iniciarMontagem({ id: salva.id, nome: salva.nome, observacao: salva.observacao, pontos: [] });
@@ -590,13 +636,14 @@ function abrirModal(ponto) {
   $('btnExcluir').hidden = !ponto;
   $('formErro').hidden = true;
 
-  const linhaPadrao = LINHAS.includes(est.vista) ? est.vista : 'esquerda';
+  const linhaPadrao = LINHAS.includes(est.vista) ? est.vista : 'ritual';
   $('fLinha').value = ponto?.linha || linhaPadrao;
   $('fEntidade').value = ponto?.entidade || (LINHAS.includes(est.vista) ? est.entidade || '' : '');
   $('fEspecifica').value = ponto?.entidade_especifica || '';
   $('fTitulo').value = ponto?.titulo || '';
   $('fLetra').value = ponto?.letra || '';
   $('fCoringa').checked = Boolean(ponto?.coringa);
+  $('fDaCasa').checked = ponto ? Boolean(ponto.da_casa) : est.vista === 'casa';
   $('fSenha').value = localStorage.getItem(SENHA_KEY) || '';
 
   const sm = $('fMomento');
@@ -653,6 +700,7 @@ async function salvarPonto(ev) {
     momento: $('fMomento').value,
     ritmos: [...$('fRitmos').querySelectorAll('[aria-pressed="true"]')].map(b => b.dataset.ritmo),
     coringa: $('fCoringa').checked,
+    da_casa: $('fDaCasa').checked,
     titulo: $('fTitulo').value.trim(),
     letra: $('fLetra').value.trim()
   };
@@ -675,7 +723,7 @@ async function salvarPonto(ev) {
     const salvo = await r.json();
     await carregar();
     fecharModal();
-    if (!est.montando && est.vista !== 'giras') {
+    if (!est.montando && est.vista !== 'giras' && est.vista !== 'casa' && est.vista !== 'favoritos') {
       est.vista = salvo.linha;
       est.entidade = salvo.entidade;
       est.momento = null; est.ritmo = null; est.busca = '';
@@ -746,11 +794,29 @@ function ligarEventos() {
   $('campoBusca').oninput = e => { est.busca = e.target.value; renderLista(); };
 
   $('empilharTudo').onclick = () => {
-    est.pilha = visiveis().map(p => p.id);
-    renderLista(); renderPilha();
+    est.modo = 'tudo'; est.pilha = [];
+    salvarModo(); renderLista(); renderPilha();
     $('leitor').scrollTop = 0;
   };
-  $('limparPilha').onclick = () => { est.pilha = []; renderLista(); renderPilha(); };
+  $('limparPilha').onclick = () => {
+    est.modo = 'tudo'; est.pilha = [];
+    salvarModo(); renderLista(); renderPilha();
+  };
+
+  for (const b of $('altModo').children) {
+    b.onclick = () => {
+      est.modo = b.dataset.modo;
+      if (est.modo === 'selecao' && !est.pilha.length) {
+        const primeiro = visiveis()[0];
+        if (primeiro) est.pilha = [primeiro.id];
+      }
+      salvarModo(); renderLista(); renderPilha();
+      $('leitor').scrollTop = 0;
+    };
+  }
+  for (const b of $('altColunas').children) {
+    b.onclick = () => { est.colunas = Number(b.dataset.colunas); salvarModo(); renderPilha(); };
+  }
 
   $('btnNovo').onclick = () => abrirModal(null);
   $('fecharModal').onclick = fecharModal;
@@ -794,6 +860,8 @@ async function manterAcesa() {
 (async function () {
   const salvo = localStorage.getItem(TAM_KEY);
   if (salvo) aplicaTamanho(parseInt(salvo, 10));
+  if (localStorage.getItem(MODO_KEY) === 'selecao') est.modo = 'selecao';
+  est.colunas = localStorage.getItem(COL_KEY) === '2' ? 2 : 1;
   await carregar();
   ligarEventos();
   render();

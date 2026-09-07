@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS pontos (
   titulo              TEXT NOT NULL,
   letra               TEXT NOT NULL,
   favorito            BOOLEAN NOT NULL DEFAULT FALSE,
+  da_casa             BOOLEAN NOT NULL DEFAULT FALSE,
   seed_ref            INTEGER,
   editado_manual      BOOLEAN NOT NULL DEFAULT FALSE,
   criado_em           TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -46,11 +47,13 @@ CREATE TABLE IF NOT EXISTS pontos (
 );
 
 -- para bancos criados antes destas colunas existirem
+ALTER TABLE pontos ADD COLUMN IF NOT EXISTS da_casa        BOOLEAN NOT NULL DEFAULT FALSE;
 ALTER TABLE pontos ADD COLUMN IF NOT EXISTS seed_ref       INTEGER;
 ALTER TABLE pontos ADD COLUMN IF NOT EXISTS editado_manual BOOLEAN NOT NULL DEFAULT FALSE;
 CREATE UNIQUE INDEX IF NOT EXISTS idx_pontos_seed_ref ON pontos (seed_ref) WHERE seed_ref IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_pontos_linha    ON pontos (linha);
 CREATE INDEX IF NOT EXISTS idx_pontos_entidade ON pontos (entidade);
+CREATE INDEX IF NOT EXISTS idx_pontos_da_casa  ON pontos (da_casa) WHERE da_casa;
 
 CREATE TABLE IF NOT EXISTS giras (
   id         SERIAL PRIMARY KEY,
@@ -124,14 +127,14 @@ export async function listar() {
 export async function criar(p) {
   if (!useDb) {
     const rows = fileLoad();
-    const novo = { ...p, id: Math.max(0, ...rows.map(r => r.id)) + 1, favorito: false };
+    const novo = { ...p, id: Math.max(0, ...rows.map(r => r.id)) + 1, favorito: false, editado_manual: false, seed_ref: null };
     rows.push(novo); fileSave(rows);
     return novo;
   }
   const { rows } = await pool.query(
-    `INSERT INTO pontos (linha, entidade, entidade_especifica, momento, ritmos, ritmo_original, coringa, titulo, letra)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
-    [p.linha, p.entidade, p.entidade_especifica, p.momento, p.ritmos, p.ritmo_original, p.coringa, p.titulo, p.letra]
+    `INSERT INTO pontos (linha, entidade, entidade_especifica, momento, ritmos, ritmo_original, coringa, da_casa, titulo, letra)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
+    [p.linha, p.entidade, p.entidade_especifica, p.momento, p.ritmos, p.ritmo_original, p.coringa, p.da_casa, p.titulo, p.letra]
   );
   return rows[0];
 }
@@ -147,9 +150,9 @@ export async function atualizar(id, p) {
   }
   const { rows } = await pool.query(
     `UPDATE pontos SET linha=$1, entidade=$2, entidade_especifica=$3, momento=$4, ritmos=$5,
-            coringa=$6, titulo=$7, letra=$8, editado_manual=TRUE, atualizado_em=NOW()
-     WHERE id=$9 RETURNING *`,
-    [p.linha, p.entidade, p.entidade_especifica, p.momento, p.ritmos, p.coringa, p.titulo, p.letra, id]
+            coringa=$6, da_casa=$7, titulo=$8, letra=$9, editado_manual=TRUE, atualizado_em=NOW()
+     WHERE id=$10 RETURNING *`,
+    [p.linha, p.entidade, p.entidade_especifica, p.momento, p.ritmos, p.coringa, p.da_casa, p.titulo, p.letra, id]
   );
   return rows[0] || null;
 }
