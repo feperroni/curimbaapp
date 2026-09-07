@@ -1,0 +1,2106 @@
+[
+ {
+  "linha": "ritual",
+  "entidade": "Abertura",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "abertura",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Vou abrir minha Jurema Vou abrir meu Juremá (bis)\nCom licença de mamãe Oxum\nE de Nosso Pai Oxalá (bis) Já abri minha Jurema Já abri meu Juremá (bis)\nCom licença de mamãe Oxum E de Nosso Pai Oxalá (bis)",
+  "id": 1,
+  "titulo": "Vou abrir minha Jurema Vou abrir meu Juremá"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Abertura",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "abertura",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu abro a nossa gira Com Deus e Nossa Senhora\nEu abro a nossa gira Samborê pemba de angola.\nEstá aberta a nossa gira Com Deus e Nossa Senhora\nEstá aberta a nossa gira Sambo e pemba de angola.",
+  "id": 2,
+  "titulo": "Eu abro a nossa gira Com Deus e Nossa Senhora"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Abertura",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "abertura",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oi abre essa Gira Ogum\nNão deixa demanda entrar (bis)\nÉ hora, é hora, é hora, meu pai É hora de trabalhar (bis)\nÓ meu pai Ogum Aceite essa romaria (bis)\nSeus filhos moram longe meu pai Não podem vir todo dia (bis)",
+  "id": 3,
+  "titulo": "Oi abre essa Gira Ogum"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Lei Maior",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexa",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Ogum, Iansa, Xango e Oroiná\nSalve o ar que nos cerca\nSalve o fogo que vai movimentar\nSalve a fé no sagrado\nQue alivia o meu caminhar\nAh, daqui pra frente, enfrento toda a justiça com xango e oroina!",
+  "id": 4,
+  "titulo": "Ogum, Iansa, Xango e Oroiná"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu vou defumar, descarregar o meu congá (Eu vou) (bis)\nCom a luz e a força dos Orixás, defumar todos os filhos que aqui vem pra Saravá\nCom a luz e a força dos Orixás, defumar esse terreiro pra Aruanda trabalhar (eu vou)\nPai Oxóssi ele traz as suas ervas O fogo vem com a mãe Oroiná Alimentados pelo ar de pai Ogum Iansã vai espalhar a fumaça pelo ar (eu vou)",
+  "id": 5,
+  "titulo": "Eu vou defumar, descarregar o meu congá (Eu…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O juremê, o juremeira, olha as folhas das palmeiras (bis) Juremá vem lá das matas, vem trazer pra esse congá,\nCom seu cheiro de incenso, pra seus filhos defumar\nCheira mirra, benjoim, e também cheira incenso\nDefumar filhos de pemba, com as ervas da jurema",
+  "id": 6,
+  "titulo": "O juremê, o juremeira, olha as folhas das…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu fui na mata, apanhar Guine\nPara defumar, os seus filhos de fé\nDefuma eu baba, defuma eu\nPois essa cada também é de Oxalá",
+  "id": 7,
+  "titulo": "Eu fui na mata, apanhar Guine"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Defuma com as ervas da jurema\nDefuma com arruda e guiné\nBenjoim, alecrim e alfazema Vamos defumar filhos de fé",
+  "id": 8,
+  "titulo": "Defuma com as ervas da jurema"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Ijexá",
+   "Congo"
+  ],
+  "ritmo_original": "Ijexá ou Congo de Ouro",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Corre gira pai Ogum Filhos quer se defumar\nA umbanda tem fundamentos É preciso preparar\nCom incenso e benjoim Alecrim e alfazema\nDefumar filhos de fé Com as ervas da jurema",
+  "id": 9,
+  "titulo": "Corre gira pai Ogum Filhos quer se defumar"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Nossa Senhora incensou a Jesus Cristo Jesus Cristo incensou os filhos seus\nEu incenso, eu incenso essa casa\nNa fé de Oxóssi, de Ogum e de Oxalá\nTo defumando, to incensando A casa do Bom Jesus da Lapa",
+  "id": 10,
+  "titulo": "Nossa Senhora incensou a Jesus Cristo Jesus…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Defuma defumador na casa de Atoto (bis) Defuma os seus filhos na fé de nosso pai Xangô (bis)",
+  "id": 11,
+  "titulo": "Defuma defumador na casa de Atoto Defuma os…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Defumação",
+  "ritmos": [
+   "Ijexá",
+   "Samba"
+  ],
+  "ritmo_original": "Ijexa/Samba",
+  "momento": "defumacao",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Ele é rezador, ele vai defumar\nEle reza seus filhos e o mal vai levar\nDefuma, defuma ele vai defumar\nDefuma seus filhos e o mal vai levar",
+  "id": 12,
+  "titulo": "Ele é rezador, ele vai defumar"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Olorum",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Para tudo existir, e a vida acontecer (bis) Se possível ver a luz, de um novo dia amanhecer (bis)\nIsso é criação de um pai generoso e ele é um Saravá Pai Olorum (bis)",
+  "id": 13,
+  "titulo": "Para tudo existir, e a vida acontecer Se…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Olorum",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Olorum divino criador dê nos licença para trabalhar (bis)\nOferecendo todo nosso amor\nPedindo bênção ao nossos orixás (bis)\nSalve Olorum salve Olorum O criador salve todos os orixás (bis)",
+  "id": 14,
+  "titulo": "Olorum divino criador dê nos licença para…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Sete Linhas",
+  "ritmos": [
+   "Angola",
+   "Ijexá"
+  ],
+  "ritmo_original": "Angola ou Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Rei das demandas é Ogum Megê\nQuem rola as pedras é Xangô Kaô\nFlecha de Oxossi é certeira é É é é\nOxalá é meu Senhor\nSete linhas de Umbanda Sete linhas pra vencer\nDentro da Lei de Oxalá Ninguém pode perecer\nSalve Oxum nas cachoeiras E Iemanjá Deusa do mar Iansã pra defender\nPai Ogum pra demandar",
+  "id": 15,
+  "titulo": "Rei das demandas é Ogum Megê"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Sete Linhas",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oi salve a umbanda, vamos saudar As sete linhas dos orixás\nNa natureza sete são as vibrações Que pai Olorum criou e aqui estão neste congá\nNa linha da sagrada geração Pai Omulu e também Iemanjá\nLá na floresta, a força do conhecimento Saravá meu pai Oxóssi, saravá pra mãe Obá\nQuem movimenta é Iansã Pelos caminhos do pai Ogum\nLinha da lei é linha forte nas demandas Saravá pra lei da umbanda Saravá pra lei maior\nNa força de Xangô e Oroiná\nTem a justiça que vem tudo equilibrar\nNa evolução, quem rege é Obaluaê Que traz todo o seu saber junto com a mamãe Nanã\nA cachoeira é de Oxum E o arco-íris de Oxumaré\nQue são a linha do amor do pai Olorum Que ilumina cada um e engrandece a nossa fé\nSalve a umbanda, salve as sete vibrações São sete cores na coroa de Babá Mãe\nLogunã é a mãe do tempo e da fé E o regente da umbanda é o nosso pai Oxalá!",
+  "id": 16,
+  "titulo": "Oi salve a umbanda, vamos saudar As sete…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Subida de Orixás",
+  "ritmos": [
+   "Angola",
+   "Ijexá"
+  ],
+  "ritmo_original": "Angola/Ijexa",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Tambor você fica aqui\nTambor vou me retirar (2x)\nAdeus Umbanda, Adeus Congá\nAdeus Umbanda e os filhos de Orixá",
+  "id": 17,
+  "titulo": "Tambor você fica aqui"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Subida de Orixás",
+  "ritmos": [
+   "Angola",
+   "Nagô",
+   "Ijexá"
+  ],
+  "ritmo_original": "Angola/Nago/Ijexa",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O lírio branco que eu plantei murchou\nAs folhas verdes, qdo secam, caem\nE aquele abraço que eu te dei chorando\nFoi a despedida desses orixas\nORIXÁS",
+  "id": 18,
+  "titulo": "O lírio branco que eu plantei murchou"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Nagô",
+   "Ijexá"
+  ],
+  "ritmo_original": "Nagô, Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Vou caminhando nas estradas desta vida E me protegem sete luzes de Orixás Filhos de Umbanda Minha fé é o que me guia\nNos caminhos de Aruanda Sob a paz de Oxalá\nOxalá é paz Oxalá é o rei Divino pai Divina força que me encanta Nos caminhos de Aruanda Sua luz é minha lei",
+  "id": 19,
+  "titulo": "Vou caminhando nas estradas desta vida E me…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Nagô",
+   "Ijexá"
+  ],
+  "ritmo_original": "Nagô, Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Divino é viver no céu, divino é viver no mar,\nDivino é viver cantando no mundo lindo de Oxalá\nOxalá meu Pai, venha nos ajudar Venha nos dar as forças,\nMeu Pai E abençoa este congá (bis)",
+  "id": 20,
+  "titulo": "Divino é viver no céu, divino é viver no mar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Nagô",
+   "Ijexá"
+  ],
+  "ritmo_original": "Nagô, Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Está iluminada a nossa umbanda, está cheio de flores o congá (bis)\nMeu Pai Oxalá, por ele tudo eu faço\nMeu Pai Oxalá ilumina os caminhos por onde eu passo (bis)",
+  "id": 21,
+  "titulo": "Está iluminada a nossa umbanda, está cheio de…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Angola",
+   "Ijexá"
+  ],
+  "ritmo_original": "Angola, Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu quero ver o céu iluminar\nIluminar a coroa de Oxalá (bis)\nEu quero ver a coroa de espinhos\nIrradiando energia sobre os filhos do Congá (bis)\nEpababá Oxalá é rei Ele é o rei de todos os Orixás",
+  "id": 22,
+  "titulo": "Eu quero ver o céu iluminar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O branco é a cor de Oxalá\nO lírio a lua linda flor\nA umbanda é a sua igualdade\nEm nome de nosso senhor (bis)",
+  "id": 23,
+  "titulo": "O branco é a cor de Oxalá"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "A luz que brilha\nAqui nesse congá\nÉ a luz divina É luz de Oxalá (bis)\nSe a lua brilha e o céu clareia É pai Oxalá visitando a minha aldeia (bis)",
+  "id": 24,
+  "titulo": "A luz que brilha"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá, Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu vi brilhar, eu vi brilhar\nLá no horizonte eu vi brilhar\nEra uma luz, era uma luz\nEra uma estrela nosso Pai Oxalá (2x)\nEle vem, ele vem Do além, do além\nTraz a paz e o amor A quem ao mundo faz bem\nEra uma luz, era uma luz Era uma estrela nosso Pai Oxalá (2x)",
+  "id": 25,
+  "titulo": "Eu vi brilhar, eu vi brilhar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Ijexá",
+   "Angola"
+  ],
+  "ritmo_original": "Ijexá, Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oxalá é quem governa o mundo Só ele pode governa\nFoi ele quem nos deu a luz\nClareou a Umbanda e nossos Orixás\nOxalá, Oxalá, Oxalá Abre os caminhos pros seus filhos trabalhar",
+  "id": 26,
+  "titulo": "Oxalá é quem governa o mundo Só ele pode…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu quero ver o céu iluminar,\nIluminar a coroa de Oxalá. (2x)\nEu quero ver a coroa de espinhos\nRadiando energia na coroa de Oxalá.\nEu quero ver a coroa de espinhos\nRadiando energia sobre os filhos no Congá.\nEpa Babá, Oxalá! Ele é o Rei.\nEle é o Rei de todos os Orixás. (2x)",
+  "id": 27,
+  "titulo": "Eu quero ver o céu iluminar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxalá",
+  "ritmos": [
+   "Ijexá",
+   "Angola"
+  ],
+  "ritmo_original": "Ijexá, Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oxalá criou a terra, Oxalá criou o mar Oxalá criou o mundo, Onde reina os Orixás A pedra deu pra Xangô meu pai é rei justiceiro As matas deu para Oxossi, caçador grande guerreiro Pescaria farta ele deu para Iemanjá Os rio deu para Oxum Os ventos para Oya Grandes campos de batalha deu pra Ogum guerreiro Campinas pai Oxalá deu para seu boiadeiro Jardins com lindos gramados Deu para as crianças brincar\nOxalá criou a terra, Oxalá criou o mar, Oxalá criou o mundo Onde reina os Orixás O poço deu pra NaNã a mais velha Orixá E o cruzeiro bendito deu pras almas trabalhar\nFinalmente deu as ruas com estrela e luar Para Exu e Pomba gira nossos caminhos guardar\nOxalá criou a terra, Oxalá criou o mar, Oxalá criou o mundo Onde reina os Orixás",
+  "id": 28,
+  "titulo": "Oxalá criou a terra, Oxalá criou o mar Oxalá…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Logunã",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O tempo virou Lá no fim do horizonte\nFoi um lindo clarão É Oyá quem chegou (bis)\nEla vem com sua espada Acompanhada das guerreiras\nVem fazer cumprir, Oyá As leis de Oxalá (bis)",
+  "id": 29,
+  "titulo": "O tempo virou Lá no fim do horizonte"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Logunã",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Mae Oya já girou o tempo\nGira no tempo vem cristalizar\nA mãe é a dona do tempo\nEu toco o BV só pra ver oya girar\nGira minha mãe, quero ver girar\nSalve a força do tempo, salve nosso mãe oya",
+  "id": 30,
+  "titulo": "Mae Oya já girou o tempo"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxum",
+  "ritmos": [
+   "Nagô",
+   "Ijexá"
+  ],
+  "ritmo_original": "Nagô, Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu vi mamãe Oxum na cachoeira\nSentada na beira do rio (Bis)\nColhendo lírio, lírio e\nColhendo lírio, líria a\nColhendo lírio para enfeitar nosso congá (Bis)",
+  "id": 31,
+  "titulo": "Eu vi mamãe Oxum na cachoeira"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxum",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "A minha mamãe Oxum, ora ye ye o\nRainha das cachoeiras\nA deusa da beleza é minha mãe oxum\nOrixa da Natureza\nAi vem mãe oxum passeando\nPasseando no clarao da lua (bis)\nMas como é linda, mas como é linda\nMamãe Oxum passeando no clarão da rua",
+  "id": 32,
+  "titulo": "A minha mamãe Oxum, ora ye ye o"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxum",
+  "ritmos": [
+   "Nagô",
+   "Ijexá"
+  ],
+  "ritmo_original": "Nago/Ijexa",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O brilho que reluz, sua força assim me guia\nA tudo agradeço a minha mãe, Oxum\nAgua doce, ora ye ye, Oxum!\nDoce mel de amor, é meu bem maior\nCachoeira linda mãe, eu sou filho seu\nEu me entrego aqui, Ouro da minha vida\nMinha mãe querida, Linda bela flor\nOoo Oxum (4x)\nAgua doce, ora ye ye, Oxum!",
+  "id": 33,
+  "titulo": "O brilho que reluz, sua força assim me guia"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxumaré",
+  "ritmos": [
+   "Nagô",
+   "Angola"
+  ],
+  "ritmo_original": "Nagô, Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oxumaré Meu pai das cores\nDeu cor a terra Deu cor ao mar\nDeu verde as matas Pintou as flores\nNo azul do céu é o arcoiris a brilhar",
+  "id": 34,
+  "titulo": "Oxumaré Meu pai das cores"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxumaré",
+  "ritmos": [
+   "Angola",
+   "Samba"
+  ],
+  "ritmo_original": "Angola, Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O sol brilhou na Umbanda, Choveu, ventou arco-íris no céu (2x)\nMas vejam só que coisa linda Oxumarê no terreiro de Umbanda (2x)\nAieiueu Oxumarê (4x)",
+  "id": 35,
+  "titulo": "O sol brilhou na Umbanda, Choveu, ventou…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxumaré",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo de Ouro",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O tempo fechou, O céu escureceu Choveu, choveu, Choveu, choveu (2x)\nE as 7 cores, Se estenderam pela eternidade, Anunciando o final da tempestade (2x)\nE quando a chuva parou, Eu vi o sol nascer, Eu vi o arco íris de Oxumarê (2x)\nNão foi ninguém que contou, Estava lá pra ver, Eu vi o arco íris de Oxumarê (2x)\nEu vejo um arco íris, Eu vejo um tesouro, Eu vejo uma serpente, Toda feita de ouro. (2x)",
+  "id": 36,
+  "titulo": "O tempo fechou, O céu escureceu Choveu…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Se meu pai é Oxossi\nEu quero ver balancear Arreia, arreia capangueiro da Jurema Oh Juremá",
+  "id": 37,
+  "titulo": "Se meu pai é Oxossi"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oxossi é rei no céu Oxossi é rei na terra\nEle não desce do céu sem coroa\nSem sua moamba de guerra",
+  "id": 38,
+  "titulo": "Oxossi é rei no céu Oxossi é rei na terra"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nago",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oi não se mexe na espada de Ogum\nOi não se mexe na machada de Xangô\nOi não se mexe nas flechas de Oxossi Que lá nas matas é rei é caçador",
+  "id": 39,
+  "titulo": "Oi não se mexe na espada de Ogum"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu vou, sarava senhor Oxóssi lá no Juremá. Ele é quem manda, ele é o dono das matas; Poderoso Orixá na lei da Umbanda; (bis)  Senhor Oxóssi Lá nas matas da Jurema Confirmou seu diadema que Oxalá lhe ofertou  Flecha de Ouro e a coroa que é de rei é cacique na Jurema a Umbanda confirma a Lei (bis)",
+  "id": 40,
+  "titulo": "Eu vou, sarava senhor Oxóssi lá no Juremá…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Quem mora na mata é Oxossi Oxossi é caçador, Oxossi é caçador.\nEu vi meu pai assobiar, Ele mandou chamar.\nVem de Aruanda ê, Vem de Aruanda a,\nTodos caboclos de umbanda, Vem da Aruanda ê Vem da Aruanda a",
+  "id": 41,
+  "titulo": "Quem mora na mata é Oxossi Oxossi é caçador…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Nagô"
+  ],
+  "ritmo_original": "Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Sou filho do guerreiro de uma flecha só Sou filho de Oxossi caçador\nE todo bom guerreiro não anda só Tem sempre um irmão merecedor\nO Rei das Matas O meu protetor (2x) Sarava meu pai Oxossi Sua benção meu senhor Oke Arô (4x)\nSou filho do guerreiro de uma flecha só Sou filho de Oxossi caçador Ele é mensageiro do Pai maior\nE cumpre sua missão com muito amor O Rei das Matas O meu protetor (2x) Sarava meu pai Oxossi Sua benção meu senhor Oke Arô",
+  "id": 42,
+  "titulo": "Sou filho do guerreiro de uma flecha só Sou…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Barravento"
+  ],
+  "ritmo_original": "barravento",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Senhor Oxóssi é bom cavaleiro, ele é faceiro até no andar (bis)\nMas se não faz o que ele manda, ah ele dá e manda tirar (bis)",
+  "id": 43,
+  "titulo": "Senhor Oxóssi é bom cavaleiro, ele é faceiro…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oxóssi",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu vi chover, eu vi relampear\nMas mesmo assim o céu estava azul\nSamborê, pemba, é folha de jurema\nOxossi reina de norte a sul\nOxossi, filho de Iemanjá\nDivindade do clã de Ogum\nÉ Ibualama, é Inlé, que Oxum levou pro rio\nE nasceu Logunedé\nSua natureza é da Lua\nNa Lua Oxossi é Odé\nOdé, Odé, Odé, Odé\nRei de Keto, caboclo da mata, Odé, Odé\nOdé, Odé, Odé, Odé\nRei de Keto, caboclo da mata, Odé, Odé\nQuinta-feira é seu ossé\nAxoxó, feijão preto, camarão, amendoim\nAzul e verde suas cores\nCalça branca rendada, saia curta enfeitada\nOjá e couraça prateada\nNa mão, ofá, iruquerê\nOkê arô, Oxossi, okê, okê\nA jurema é a árvore sagrada\nOkê arô, Oxossi, okê, okê\nNa Bahia é São Jorge\nNo Rio, São Sebastião\nOxossi é quem manda\nNas bandas do meu coração",
+  "id": 44,
+  "titulo": "Eu vi chover, eu vi relampear"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Obá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexa",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Obá é terra, obá é amor\nOba é nossa mãe, filha do criador\nGuerreira valente, que sua luta venceu\nOxala lhe iluminou, para cuidar dos seus filhos (2x)",
+  "id": 45,
+  "titulo": "Obá é terra, obá é amor"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Obá",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Ela traz conhecimento vem me iluminar\nClareia meu pensamento, minha Mãe Obá\nEla é luz da verdade vem me sustentar\nCom sua sabedoria, minha mãe Obá!\nIrradia o tempo todo, sabe ensinar,\nDona do conhecimento minha Mãe Obá(X2)",
+  "id": 46,
+  "titulo": "Ela traz conhecimento vem me iluminar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Obá",
+  "ritmos": [
+   "Samba",
+   "Ijexá"
+  ],
+  "ritmo_original": "Samba/Ijexa",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Clareia Obá Iê, Clareia Obá Iê!\nMamãe da sabedoria, venha nos valer(X2)\nVocê trouxe elementos, gerou nova energia,\nCriou o conhecimento, é mãe da sabedoria,\nClareia Obá Iê, Clareia Obá Iê!\nMamãe da sabedoria, venha nos valer(X2)\nEla é quem reveste a serra, ela é quem sustenta o mar\nÉ a rainha da terra que expande pelo ar\nClareia Obá Iê, Clareia Obá Iê!\nMamãe da sabedoria, venha nos valer(X2)",
+  "id": 47,
+  "titulo": "Clareia Obá Iê, Clareia Obá Iê!"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Xangô",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Ele bradou na aldeia Bradou na cachoeira, em noite de luar\nNo alto da pedreira Vai fazer justiça, pra nos ajudar\nEle bradou na aldeia, Kao, Kao E aqui vai bradar, Kao, Kao\nEle é Xango da pedreira Ele nasceu na cachoeira La no Juremá",
+  "id": 48,
+  "titulo": "Ele bradou na aldeia Bradou na cachoeira, em…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Xangô",
+  "ritmos": [
+   "Nagô"
+  ],
+  "ritmo_original": "Nago - Rápido",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "70 anos passei no pe da jurema\nEu não tenha pena de que me deseja o mal (2x)\nSe eu me zangar, boto fogo no rochedo\nMeu cachimbo é meu segredo, agora vou me vingar (2x)\nEu quero um mestre que trabalha na jurema, que resolve os meus problemas sempre que eu precisar (2x)\nEu chamei 1, chamei 2, eu chamei 3, chamei 7 de uma vez, pra comigo trabalhar (2x)",
+  "id": 49,
+  "titulo": "70 anos passei no pe da jurema"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Xangô",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Estão queimando velas, Para me derrubar\nEu já fiquei doente meu pai, Sem poder andar\nMas hoje estou aqui, Que é pra saudar Xangô\nE vira essa macumba no peito de quem mandou\nXangô, meu pai, amarra os inimigos e dá um nó\nXangô, meu pai, amarra na pontinha do cipó",
+  "id": 50,
+  "titulo": "Estão queimando velas, Para me derrubar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oroiná",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Dona do fogo, descarrega o meu congá! (2x)\nPurifica esse terreiro pro seus filhos trabalhar! (2x)\nVem de Aruanda mãe guerreira Oroiná (2x)\nIlumina nossa banda, vem na Umbanda trabalhar! (2x)",
+  "id": 51,
+  "titulo": "Dona do fogo, descarrega o meu congá!"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Oroiná",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Que luz é essa que brilhou no meu congá\nÉ chama divina, de mamãe Oroiná\nO raio flamejante, purifique meu pensar\nKali ye minha mãe, divina oroina (2x)",
+  "id": 52,
+  "titulo": "Que luz é essa que brilhou no meu congá"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "Angola",
+   "Nagô"
+  ],
+  "ritmo_original": "Angola/Nago",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "E na lei de Umbanda… Orixá que comanda é Ogum…\nÉ Ogum guerreiro, segura meu terreiro Ogum. Saravá Ogum Iara, Ogum Beira Mar…\nAuê Ogum Rompe Mato, Ogum de Lê… Quem está de ronda é Ogum Megê…",
+  "id": 53,
+  "titulo": "E na lei de Umbanda… Orixá que comanda é Ogum…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Se meu Pai é Ogum,\nOgum Vencedor de demanda\nEle vem de Aruanda Pra salvar filhos de Umbanda Ogum, Ogum Iara (2x)\nSalve os campos de batalha Salve a Sereia do Mar Ogum, Ogum Iara (2x)",
+  "id": 54,
+  "titulo": "Se meu Pai é Ogum"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu tenho 7 Espadas pra me defender\nEu tenho Ogum em minha companhia\nOgum é meu Pai Ogum é meu Guia\nOgum vai vencer Na fé de Zambi e da Virgem Maria",
+  "id": 55,
+  "titulo": "Eu tenho 7 Espadas pra me defender"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Beira rio, beira rio, beira Mar O que se ganha de Ogum Só Ogum pode tirar (2x)",
+  "id": 56,
+  "titulo": "Beira rio, beira rio, beira Mar O que se…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "Nagô"
+  ],
+  "ritmo_original": "Nago",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "La vem Ogum (2x), em seu cavalo (2x)\nCom um sua lança e espada na mão\nSeu campo é largo, deixa correr\nVamos saravá Ogum Megê",
+  "id": 57,
+  "titulo": "La vem Ogum , em seu cavalo"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "Samba",
+   "Angola"
+  ],
+  "ritmo_original": "Samba, Angola",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Mandei selar seu cavalo Para Ogum viajar (2x)\nVai pra casa de Nossa Senhora da Glória Ele vai mas torna a voltar (2x)",
+  "id": 58,
+  "titulo": "Mandei selar seu cavalo Para Ogum viajar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Selei seu cavalo Selei, selei Seu cavalo eu selei (2x) Seu Ogum já vai embora Seu cavalo eu selei (2x)",
+  "id": 59,
+  "titulo": "Selei seu cavalo Selei, selei Seu cavalo eu…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Ogum",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Mandei selar seu cavalo, para Ogum viajar\nEle vai para bem longe, bem pertinho de Oxala",
+  "id": 60,
+  "titulo": "Mandei selar seu cavalo, para Ogum viajar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Iansã",
+  "ritmos": [
+   "BV",
+   "Congo"
+  ],
+  "ritmo_original": "BV/Congo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Olha que o céu clareou Quando o dia raiou Fez o filho pensar\nA mãe do tempo mandou A nova era chegou Agora vamos plantar\nDo Humaitá Ogum bradou Senhor Oxossi atinou Iansã vai chegar\nO ogã já firmou Atabaque afinou Agora vamos cantar\nAh! Eparrei! Ela é Oyá! Ela é Oyá! Ah! Eparrei! É Iansã! É Iansã! Ah! Eparrei!\nQuando Iansã vai pra batalha Todos cavaleiros param Só pra ver ela passar. (2x)",
+  "id": 61,
+  "titulo": "Olha que o céu clareou Quando o dia raiou Fez…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Iansã",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Iansã ela é dona do mundo Dona do fogo, da faísca e do trovão Eparrey Iansã na Aruanda Santa Bárbara com a espada na mão (2x)",
+  "id": 62,
+  "titulo": "Iansã ela é dona do mundo Dona do fogo, da…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Iansã",
+  "ritmos": [
+   "Ijexá",
+   "BV"
+  ],
+  "ritmo_original": "Ijexá, BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "E olha eu, olha eu E olha eu Bela Oyá E olha eu, olha eu Ela é Iansã é o meu Orixá (2x)",
+  "id": 63,
+  "titulo": "E olha eu, olha eu E olha eu Bela Oyá E olha…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Iansã",
+  "ritmos": [
+   "Barravento"
+  ],
+  "ritmo_original": "Barravento",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Meu (pai), que barulho é esse Que vem lá do bambuzal (2x) É Iansã de Bile Oi dando o Ilá para guerrear (2x)\nO seu bailar é como ventania, Seu grito e forte como um trovão Sarava bela Iansã, e só Egun que fica no chão\nNa mão direita traz sua espada,  Na mão esquerda seu Patakoto\nCoroada com seu Adê,  Foi Omolu quem te consagrou (ô, ô, ô, ô)\nMeu pai, que barulho é esse Que vem lá do bambuzal (2x) É Iansã de Baile Oi dando o Ilá para guerrear (2x)\nTem o poder da feitiçaria Não teme nada, nem a ninguém\nE guerreira e poderosa Quem leva as almas para o além\nEla é rainha do meu Ilê Quem traz a força e nos dá axé\nVamos todos cantar juntos Para saudar Iansã com fé",
+  "id": 64,
+  "titulo": "Meu (pai), que barulho é esse Que vem lá do…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Iansã",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Iansã vai embora eê Iansã vai embora ea Iansã vai embora Logo no romper da aurora (2x)",
+  "id": 65,
+  "titulo": "Iansã vai embora eê Iansã vai embora ea Iansã…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Obaluaê",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Vem, vem, vem Meu padim Obaluaê Venha nessa casa Venha aqui pra nos benzer (2x)\nEle tira quebranto Tira ziquizira Ele cura doença E até feitiçaria\nCom pipoca e azeite de dendê,\nNos traz a proteção Meu padim Obaluaê",
+  "id": 66,
+  "titulo": "Vem, vem, vem Meu padim Obaluaê Venha nessa…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Obaluaê",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Na pedra fria, no pé do morro, Dizem que mora, um velho lá. (2x)\nEle é rezador, ele é curador, Ele é Xapanã, ele vai te curar. (2x)",
+  "id": 67,
+  "titulo": "Na pedra fria, no pé do morro, Dizem que…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Obaluaê",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "É Obaluaê (3x)\nSe você está sofrendo no leito frio e com dor\nCom pipoca e com dendê muita gente Ele curou\nSe seu corpo está ferido e não pode mais suportar Peça proteção á Ele, que Ele vai lhe ajudar Obaluayê,\nÉ Obaluayê É Obaluayê, É Atotô\nTenho o segredo da vida, do começo e do fim\nÓ meu senhor das palhas tenha muita dó de mim\nNa procissão das almas que partem pro infinito\nEle vai mostrando a elas outro mundo mais bonito.\nMuros que foram erguidos, acreditem serão derrubados (bis)",
+  "id": 68,
+  "titulo": "É Obaluaê"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Nanã",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Sou de Na(nã) Ewá, Ewá Ewá êê (2x)\nEu olhei pro céu Pedi a Oxalá Que me desse as estrelas\nPara Iluminar aaa... Quando eu avistei um anjo E veio me dizer...eêê\nSou de Nanã Ewá, Ewá Ewá êê (2x)",
+  "id": 69,
+  "titulo": "Sou de Na(nã) Ewá, Ewá Ewá êê"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Yemanjá",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Hoje… hoje eu vou (cantar)! Hoje eu vou cantar!\nVou louvar na areia, Em lua cheia, a mãe Iemanjá! (BIS)\nRosa do mar, Minha Estrela do céu azul, Não é história de um pescador\nQue o meu amor, eu vou lhe entregar! Iê iêê (BIS)\nDeixa… deixa as ondas do mar passar, Ouça o canto da bela Odoyá.\nOxalá quem mandou Um grande amor do fundo do mar! Iê Iêê(BIS)",
+  "id": 70,
+  "titulo": "Hoje… hoje eu vou (cantar)! Hoje eu vou…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Yemanjá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Brilhou, brilhou brilhou no mar\nO manto de nossa Mãe lemanjá - bis\nBrilhou , brilhou no mar\nE agora vai brilhar neste Congá\nA marola do mar vai levando\nYemanja é quem vai carregando\nA morala da mar vai levando\nYemanja é quem vai carregando",
+  "id": 71,
+  "titulo": "Brilhou, brilhou brilhou no mar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Yemanjá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oh Dai-me licença ê,\no dai-me licença\nAlode lemanjá\nOh, Daí-me licença ê ..",
+  "id": 72,
+  "titulo": "Oh Dai-me licença ê"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Yemanjá",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexa/nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Mãe (d'água) ,Rainha das ondas sereia do mar Mãe d'água, seu canto é bonito quando tem luar\nIeeeeee Iemanjá Rainha das ondas sereia do mar\nIeeeeee Rainha das ondas sereia do mar\nComo é lindo o canto de Iemanjá Faz até o pescador Chorar\nQuem escuta a Mãe d'água cantar Vai com ela profundo do mar\nMãe d'água Rainha das ondas sereia do mar\nMãe d'água seu canto é bonito quando tem lua",
+  "id": 73,
+  "titulo": "Mãe (d'água) ,Rainha das ondas sereia do mar…"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Yemanjá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Que canto lindo que vem la do mar\nParece que as ondas estão a cantar - bis\nle lemanjá\nRainha das ondas, A dona do Mar -bis",
+  "id": 74,
+  "titulo": "Que canto lindo que vem la do mar"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Yemanjá",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Mae dagua, rainha da candeiras\nIlumina a terra e o mar\nMandai um pouquinho de areia\nTraz forcas aos nossos orixas7",
+  "id": 75,
+  "titulo": "Mae dagua, rainha da candeiras"
+ },
+ {
+  "linha": "orixas",
+  "entidade": "Omulu",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Ele é um (velho), é muito velho, ele carrega as palhas na mão (4x)\nEle veio do céu, Pra dentro da Terra É força sagrada, que nos governa!\nOrixá das palhas, Orixá da Dor Orixá da Cura, Orixá do amor\nEle é um velho, é muito velho, ele carrega as palhas na mão (Bis)\nVou fazer um tapete, de doborô, Para oferecer, a Seu Omolu\nE na casa santa, vou entregar. Vou Pedir a proteção deste grande Orixá\nEle é um velho, é muito velho, ele carrega as palhas na mão (Bis)\nGUIAS",
+  "id": 76,
+  "titulo": "Ele é um (velho), é muito velho, ele carrega…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Hoje a festa é sua\nNesse terreiro vim louvar a ti\nVeio da encruza\nDaqui um abraço o meu amigo Tiriri",
+  "id": 77,
+  "titulo": "Hoje a festa é sua"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Fé não é pra qualquer um Quem tem fé respeita Exu (bis)\nNão adianta, bater no peito, Saudar a encruza, e não agir direito\nViver só de traição Fazendo inimigos, maltratando o seu irmão\nNinguém engana a nenhuma entidade\nPorque Exu é a própria verdade Refrão:\nPor isso venho com amor e humildade Saudar as comadres, e os compadres\nLembrando que Exu é guardião Exu é caminho, Exu é evolução.",
+  "id": 78,
+  "titulo": "Fé não é pra qualquer um Quem tem fé respeita…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexa/Nago",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Tava curiando na encruza\nQuando a banda me chamou\nExu no Terreiro é Rei,\nNa Umbanda, ele é doutor\nExu vence demanda, Exu é curador",
+  "id": 79,
+  "titulo": "Tava curiando na encruza"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Angola",
+   "Nagô"
+  ],
+  "ritmo_original": "Angola/Nagô",
+  "momento": "saudacao",
+  "entidade_especifica": "Tiriri",
+  "coringa": false,
+  "letra": "Tenho 7 Encruzilhadas com Caveira na porteira, guardando a minha gira\nQuem ajuda é Tatá, Seu Morcego, Gato Preto 7 Montanhas está lá\nTenho ainda Capa Preta, Tranca Tudo, o Tiriri E o Seu Pantera Negra 7 Covas, Meia Noite, Tranca Rua das Almas\nSem licença na Porteira Quero ver quem vai passar. (2x)",
+  "id": 80,
+  "titulo": "Tenho 7 Encruzilhadas com Caveira na…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "chamada",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Apaga a luz, acende as velas, Que a magia vai começar (bis)\nUmbanda sem Exu não existe, Umbanda sem Exu não há\nAcenda uma vela preta, que é o senhor Exu que vem pra nos ajudar (bis)",
+  "id": 81,
+  "titulo": "Apaga a luz, acende as velas, Que a magia vai…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "chamada",
+  "entidade_especifica": null,
+  "coringa": true,
+  "letra": "Olha quem está lá no portão, de capa e cartola e um tridente na mão (mas olha lá) (bis)\nSerá Seo... (será? Será) 3x Mas olha lá\nOlha quem está lá no portão, de saia vermelha e uma rosa na mão (mas olha lá) (bis) Será Maria... (será? Será) 3x",
+  "id": 82,
+  "titulo": "Olha quem está lá no portão, de capa e…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "chamada",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Portão de ferro, cadeado é de madeira (bis) Na porta do cemitério, onde mora Exu Caveira (bis)",
+  "id": 83,
+  "titulo": "Portão de ferro, cadeado é de madeira Na…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo de Ouro",
+  "momento": "chamada",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "A sua casa, não tem parede, não tem janela e não tem nada (bis) Aonde é, onde é que Exu mora? O Exu mora na encruzilhada (bis)",
+  "id": 84,
+  "titulo": "A sua casa, não tem parede, não tem janela e…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "chamada",
+  "entidade_especifica": "Tranca Ruas",
+  "coringa": false,
+  "letra": "Deu clarão na encruzilhada, e no clarão surgiu uma gargalhada (bis)\nNão era o sol, nem era a lua O que brilhava era o mestre Tranca Ruas (bis)",
+  "id": 85,
+  "titulo": "Deu clarão na encruzilhada, e no clarão…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "chamada",
+  "entidade_especifica": "Tranca Ruas",
+  "coringa": false,
+  "letra": "Lugar distante Numa rua tão deserta Tinha um cemitério antigo\nTinha uma catacumba aberta Dentro da cova Tinha pano de caixão\nTinha osso de defunto Cravejado um coração Raspa de vela Sete novelos de linha\nTinha cadeado velho Tinha sangue de galinha\nDentro da cova Havia um vulto ajoelhado Era o Seo Tranca Ruas Trabalhando pro diabo",
+  "id": 86,
+  "titulo": "Lugar distante Numa rua tão deserta Tinha um…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "saudacao",
+  "entidade_especifica": "Tranca Ruas",
+  "coringa": false,
+  "letra": "Seo Tranca Ruas, dá uma volta lá fora (bis)\nQuem for bom, bota pra dentro, quem não for deixa lá fora (bis)\nSe tem problema a resolver (o luar)\nE sentir dificuldades (o luar)\nDentro das leis do universo (o luar)\nExu também faz caridade O luar, o luar (o luar)\nEle é o dono da rua (o luar)\nQuem cometeu as suas faltas (o luar) Peça perdão ao Tranca Ruas",
+  "id": 87,
+  "titulo": "Seo Tranca Ruas, dá uma volta lá fora"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo",
+  "momento": "saudacao",
+  "entidade_especifica": "Tranca Ruas",
+  "coringa": false,
+  "letra": "Deu meia noite, a lua se escondeu, lá na encruzilhada dando a sua gargalhada Tranca Ruas apareceu (bis) É laroiê! É laroiê! É laroiê! É mojubá! É mojubá! É mojubá\nEle é odara dando a sua gargalhada Quem tem fé em Tranca-Rua é só pedir, que ele dá (bis)",
+  "id": 88,
+  "titulo": "Deu meia noite, a lua se escondeu, lá na…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo",
+  "momento": "saudacao",
+  "entidade_especifica": "Tranca Ruas",
+  "coringa": false,
+  "letra": "O sino da igrejinha faz: \"belém\", \"blém\", \"blom\" (bis) Deu meia noite e o galo já cantou Seu Tranca Ruas é o dono da gira Oi, corre gira que Ogum mandou (bis)",
+  "id": 89,
+  "titulo": "O sino da igrejinha faz: \"belém\", \"blém\"…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "saudacao",
+  "entidade_especifica": "Tranca Ruas",
+  "coringa": false,
+  "letra": "Quando o sol aqui não mais brilhar Quando a lua o seu clarão refletir\nÉ sinal que está na hora É ele quem chega agora Já deu meia noite Tranca rua é quem chega aqui (bis)\nJurou amar alguém na encruzilhada Jurou fazer o bem de madrugada E hoje com fé Companheiro e amigo leal\nQuebra feitiço e também desfaz o mal E toda vez que na rua eu caminhar E ouvir ao longe sua voz a ecoar\nTenho certeza que agora não ando sozinho Seo Tranca Ruas é o dono do meu caminho",
+  "id": 90,
+  "titulo": "Quando o sol aqui não mais brilhar Quando a…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Ijexá",
+   "Samba"
+  ],
+  "ritmo_original": "Ijexá/Samba",
+  "momento": "saudacao",
+  "entidade_especifica": "Tranca Ruas",
+  "coringa": false,
+  "letra": "Soltaram um bode preto\nMeia noite na calunga (2x)\nEle correu os 4 cantos\nFoi parar lá na porteira\nBebeu marafo com XX Caveira",
+  "id": 91,
+  "titulo": "Soltaram um bode preto"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "paga",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Exu é moço bom, e é parceiro do congá Tem mistério de Exu, que só se ativa ao pagar (bis)",
+  "id": 92,
+  "titulo": "Exu é moço bom, e é parceiro do congá Tem…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Exu trabalhou, Exu curiou Exu vai embora, sua hora chegou (bis) Pombagira leva, leva, levou Leva todas quinzilas, leva pro fundo do mar (bis)",
+  "id": 93,
+  "titulo": "Exu trabalhou, Exu curiou Exu vai embora, sua…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Quem sou eu pra mandar seu Tranca embora? (bis) Gira, gira, gira, já chegou a sua hora (bis)",
+  "id": 94,
+  "titulo": "Quem sou eu pra mandar seu Tranca embora?…"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Descarrego",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "descarrego",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Que vento que vem de lá\ntá na hora Exu, vem descarregar\nQue vento é esse, é rodamoinho\nQuem tem Exu, não está sozinho",
+  "id": 95,
+  "titulo": "Que vento que vem de lá"
+ },
+ {
+  "linha": "ritual",
+  "entidade": "Descarrego",
+  "ritmos": [
+   "Nagô"
+  ],
+  "ritmo_original": "Nago",
+  "momento": "descarrego",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O garfo de Exu é firme\nO garfo de Exu me rodeia\nPassei pela calunga (3x)\nExu não bambeia\nPasseia pela calunga (3x)\nExu não bambeia\nQuem nunca viu, venha ver\nCaldeirão sem fundo ferver\nQuem nunca viu, venha ver\nCaldeirão sem fundo ferver\nDeu meia noite, Cemitério treme,\ncatacumba racha e defunto geme",
+  "id": 96,
+  "titulo": "O garfo de Exu é firme"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Pombagira",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Tem perfume no ar, a pomba gira chegou Que cheirinho gostoso, nessa casa ficou (bis)\nOi, é ela, essa casa está com o cheiro dela Oi, é ela, mais formosa e muito mais bela (bis)",
+  "id": 97,
+  "titulo": "Tem perfume no ar, a pomba gira chegou Que…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Pombagira",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "De vermelho e negro vestindo a noite o mistério traz\nDe colar de cor de brinco dourado a promessa faz\nSe é preciso ir você pode ir peça o que quiser\nMas cuidado amigo ela é bonita ela é mulher\nE num canto da rua zombando, zombando, zombando está\nEle é pomba gira, girando, girando, girando lá Oi girando lá oie, oi girando lá",
+  "id": 98,
+  "titulo": "De vermelho e negro vestindo a noite o…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Pombagira",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Vinha, caminhando a pé, para ver se encontrava Pomba-gira Cigana de fé (bis)\nEla parou e leu minha mão, e disse, disse toda a verdade E eu só queria saber, se ela é Pomba-gira de fé (bis)",
+  "id": 99,
+  "titulo": "Vinha, caminhando a pé, para ver se…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Pombagira",
+  "ritmos": [
+   "Samba de Caboclo"
+  ],
+  "ritmo_original": "Samba de Caboclo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Dizem que PG é uma rosa\nUma rosa que nasceu entre os espinhos\nDizem que PG é uma rosa PG é uma rosa\nque floresceu nos meus caminhos",
+  "id": 100,
+  "titulo": "Dizem que PG é uma rosa"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Pombagira",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Ela vence demandas, ela tira agulha do fundo do mar (bis) Aee Pombogirê, Pombogira (bis) Ela vence demandas, ela tira agulha do fundo do mar",
+  "id": 101,
+  "titulo": "Ela vence demandas, ela tira agulha do fundo…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu Mirim",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "É mirim de pirlimpimpim (2x) Pisa no galho pisa no toco Tira encrenca tira sufoco",
+  "id": 102,
+  "titulo": "É mirim de pirlimpimpim Pisa no galho pisa no…"
+ },
+ {
+  "linha": "esquerda",
+  "entidade": "Exu Mirim",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo de Ouro",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Vai mirim vai passear (2x) Numa noite tão bonita numa noite de luar",
+  "id": 103,
+  "titulo": "Vai mirim vai passear Numa noite tão bonita…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Com uma vela no pé, Um pito e um café\nEla faz suas mirongas, com arruda e guiné\nÉ mironga de vó, é segredo de ancião\nDe um navio negreiro, trouxe luz para o amanhã\nEla vai ajudar a quem for, porque é tudo sobre o amor\nVo Cambinda chegou, veio para ajudar\nPros filhos que tem fé, fez o nosso casuá (bis)",
+  "id": 104,
+  "titulo": "Com uma vela no pé, Um pito e um café"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oi salve a luz e as santas almas do congá, saravá Vó Benedita quem vem nesse chão pisar (bis) No cativeiro, ela nasceu, oi na senzala sobreviveu (bis) Vó Benedita, ela chega de mansinho, ela fala bem baixinho, pra ajudar filho de fé. Saravá vó benedita, ela traz o seu axé (bis)",
+  "id": 105,
+  "titulo": "Oi salve a luz e as santas almas do congá…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Fio, se suncê precisá É só pensá na Vovó Que Ela vem te ajuda Pensa numa estrada longa, zifio Lá no seu jacutá E numa casinha branca, zifio Que a vovó tá lá Sentada num banquinho tosco, zifio Com sua rosário na mão Pensa na Vó Cambinda, zifio Fazendo Oração",
+  "id": 106,
+  "titulo": "Fio, se suncê precisá É só pensá na Vovó Que…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Lá vem vovó descendo a serra com sua sacola\nVem com seu rosário, com seu patuá ela vem de Angola\nEu quero ver Vovó eu quero ver Eu quero ver se filho de pemba tem querer",
+  "id": 107,
+  "titulo": "Lá vem vovó descendo a serra com sua sacola"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Lá no cruzeiro das almas Tem fita verde e amarela Quem não conhece das almas É bom não mexer com elas",
+  "id": 108,
+  "titulo": "Lá no cruzeiro das almas Tem fita verde e…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Vovó não quer casca de coco no terreiro (bis) Pra não lembrar do tempo do cativeiro",
+  "id": 109,
+  "titulo": "Vovó não quer casca de coco no terreiro Pra…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Subi a escada de Jacó à procura de Oxalá (bis)\nEu encontrei os pretos velhos sentadinhos a trabalhar (bis)",
+  "id": 110,
+  "titulo": "Subi a escada de Jacó à procura de Oxalá"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Adorei as almas as almas me atenderam (bis) Eram as santas almas lá no cruzeiro (bis)",
+  "id": 111,
+  "titulo": "Adorei as almas as almas me atenderam Eram as…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Angola",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Angola/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Quem é aquele velhinho que vem no caminho cantando devagar\nCom seu cachimbo na boca Fazendo fumaça pro ar\nEle é do cativeiro Meu Pai Benedito Ele é mirongueiro",
+  "id": 112,
+  "titulo": "Quem é aquele velhinho que vem no caminho…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Vovo quando vem de Angola\nAtravessou cachoeirinha\nVovo cachoeira é sua\nVovo cachoeira é minha",
+  "id": 113,
+  "titulo": "Vovo quando vem de Angola"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Quantas estrelas tem no céu PV já contou (2x) No rosário de Maria meu Senhor PV já rezou",
+  "id": 114,
+  "titulo": "Quantas estrelas tem no céu PV já contou No…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá",
+   "Angola",
+   "Nagô"
+  ],
+  "ritmo_original": "Ijexá/Angola/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Preto-velho trabalha sentado Se for preciso trabalha em pé (2x)\nMandinga de preto-velho é galho de arruda, É folha de guiné (2x)",
+  "id": 115,
+  "titulo": "Preto-velho trabalha sentado Se for preciso…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Adorei, adorei, Adorei as almas adorei (2x)\nNegro vem lá de Aruanda Vem trazer a sua luz Com a sua humildade Negro traz felicidade Traz a paz e o amor\nAdorei, adorei, Adorei as almas adorei (2x)\nCom os seus ensinamentos Com a sua proteção Negro cura os enfermos E desfaz todo lamento Purifica o coração\nAdorei, adorei, Adorei as almas adorei (2x)\nAgradeço a nossa Umbanda Agradeço a Oxalá Pela oportunidade De fazer a caridade Agradeço ao meu bom Deus",
+  "id": 116,
+  "titulo": "Adorei, adorei, Adorei as almas adorei"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Preto Velho",
+  "ritmos": [
+   "Angola",
+   "Nagô"
+  ],
+  "ritmo_original": "Angola/Nagô",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "A sineta do céu bateu Oxalá já diz que é hora (2x)\nEu vou eu vou eu vou ficar com Deus e Nossa Senhora (bis)",
+  "id": 117,
+  "titulo": "A sineta do céu bateu Oxalá já diz que é hora"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Ah ah ah boca da mata\nDeixa os caboclos passar boca da mata",
+  "id": 118,
+  "titulo": "Ah ah ah boca da mata"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Portão da aldeia abriu Para os caboclos passar (bis)\nÉ hora é hora é hora caboclo É hora de trabalhar (bis)",
+  "id": 119,
+  "titulo": "Portão da aldeia abriu Para os caboclos passar"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Sou da mata, sou da mata, sou da mata Eu avisei (bis)",
+  "id": 120,
+  "titulo": "Sou da mata, sou da mata, sou da mata Eu…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Foi numa tarde serena Lá nas matas da Jurema Que eu vi um caboclo bradar Kioooo kiooo kiera\nToda mata está festa Saravá todos caboclos Ele são o rei da floresta",
+  "id": 121,
+  "titulo": "Foi numa tarde serena Lá nas matas da Jurema…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Uma estrela cor de prata, brilhando anunciou,\nEram os caboclos que chegavam, vindo a mando de nosso Senhor (bis)\nEle é caboclo, ele é flecheiro, ele é de Oxossi, ele é caçador (bis)",
+  "id": 122,
+  "titulo": "Uma estrela cor de prata, brilhando anunciou"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Minhas caboclas vamos trabalhar Mostrar a força que a Jurema tem (bis) Salve a Jurema, Salve a Jurema Ela é uma linda cabocla de pena (bis)",
+  "id": 123,
+  "titulo": "Minhas caboclas vamos trabalhar Mostrar a…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu já mandei fazer, três capacetes de penas (bis) Um é pra cabocla Iara, pra cabocla Jussara, pra cabocla Jurema (bis)",
+  "id": 124,
+  "titulo": "Eu já mandei fazer, três capacetes de penas…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo de Ouro",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oxalá mandou, ele mandou a buscar Todo povo da Jurema lá no Juremá\nPai Oxalá é rei do mundo inteiro Já deu ordens pra jurema\nChamar seus capangueiros\nMandai mandai os caboclos da Jurema No seu terreiro essa é a ordem suprema",
+  "id": 125,
+  "titulo": "Oxalá mandou, ele mandou a buscar Todo povo…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Caboclo",
+  "ritmos": [
+   "Congo"
+  ],
+  "ritmo_original": "Congo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Lá na (ma)ta tem um caboclo\nTão lindo como beija-flor (bis)\nSentado no pé da jurema Rezando para nosso senhor (bis)",
+  "id": 126,
+  "titulo": "Lá na (ma)ta tem um caboclo"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Baiano",
+  "ritmos": [
+   "Ijexá",
+   "BV"
+  ],
+  "ritmo_original": "Ijexá/BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Baiano bom, baiano bom, baiano bom é que sabe trabalhar (bis) Baiano bom é o que sobe no coqueiro, tira o coco e bebe a água, e deixa o coco no lugar (bis)",
+  "id": 127,
+  "titulo": "Baiano bom, baiano bom, baiano bom é que sabe…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Baiano",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Baiana boa Gosta do samba Entra na roda E diz que é bamba\nOlha toca curimba que ela quer sambar Olha toca curimba ele quer rebolar\nÊ baiana, ê baianaaa, ê ê ê baiana, baianinha",
+  "id": 128,
+  "titulo": "Baiana boa Gosta do samba Entra na roda E diz…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Baiano",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Salve o povo da Bahia\nÉ pra Bahia, pai\nSaravá, seu Zé do Coco!\nLá na Bahia tem um homem feiticeiro.\nTem fama de mandingueiro\nDizem que não morre não.\nJá foi rasgado na ponta de uma peixeira\nJá levou bala certeira, mas da morte ele voltou.\nFoi tocaiado, mas sumiu no meio do mato\nFoi prisioneiro, mas das grades escapou\nDizem que é bruxo e tem o corpo fechado\nZé do coco é bom de papo\nE até a morte ele enganou.",
+  "id": 129,
+  "titulo": "Salve o povo da Bahia"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Malandro",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "De terno branco seu punhal de aço puro Seu ponto é bem seguro quando vem pra trabalhar Segura o negro que esse negro é ZP , lá na descida do morro Ele vem pra trabalhar",
+  "id": 130,
+  "titulo": "De terno branco seu punhal de aço puro Seu…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Malandro",
+  "ritmos": [
+   "Samba"
+  ],
+  "ritmo_original": "Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Dou boa noite pra quem é de boa noite Dou bom dia pra quem é de bom dia A benção meu papai a benção Seu Zé Pilintra é o rei da boemia",
+  "id": 131,
+  "titulo": "Dou boa noite pra quem é de boa noite Dou bom…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Malandro",
+  "ritmos": [
+   "Ijexá",
+   "Samba"
+  ],
+  "ritmo_original": "Ijexá/Samba",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu envergo mas não quebro\nDessa vida não me deixa levar\nPela dor, do meu caminhar\nDissabor, não vou me entregar\nPara esperança de um novo dia vai raiar e assim, vem pra nos iluminar, pra curar\nToda ferida que há em nosso olhar, vai ser sempre uma saída, nossa estrela vai brilhar\nVai clarear, já clareou e eu vou\nNa fé, de Olorum o criador\nVai clarear, já clareou e eu vou\nAcreditar, que os malandros vão chegar",
+  "id": 132,
+  "titulo": "Eu envergo mas não quebro"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Marinheiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Oh marinheiro, marinheiro, marinheiro só Oi quem te ensinou a nadar, marinheiro só\nOu foi o tombo do navio, marinheiro só Ou foi o balanço do mar, marinheiro só\nLá vem, lá vem, marinheiro só\nEle vem faceiro, marinheiro só\nTodo de branco, marinheiro só\nCom seu bonezinho, marinheiro só",
+  "id": 133,
+  "titulo": "Oh marinheiro, marinheiro, marinheiro só Oi…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Marinheiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Sei, sei, sei, sei quem sou eu (bis) Sou das águas sagradas, de mamãe Iemanjá Sou Martim pescador, do fundo do mar (bis)",
+  "id": 134,
+  "titulo": "Sei, sei, sei, sei quem sou eu Sou das águas…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Marinheiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "O seu Martim, cadê as ondas do mar? (bis) Não sei, deixei muito longe, pisei na umbanda e vim trabalhar (bis)",
+  "id": 135,
+  "titulo": "O seu Martim, cadê as ondas do mar? Não sei…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Marinheiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu sou um marujo velho, na terra sou pescador (bis) O mar é quem me balança, as ondas que me criou (bis)",
+  "id": 136,
+  "titulo": "Eu sou um marujo velho, na terra sou pescador…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Marinheiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Seu marinheiro sua morada é no mar (bis) Eu vou, eu vou remando, remando para o mar (bis) Oh marinheiro que balanço é esse É o meu barquinho, que vai para o mar Levando flores belas pra mãe Iemanjá",
+  "id": 137,
+  "titulo": "Seu marinheiro sua morada é no mar Eu vou, eu…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Marinheiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Martim pescador, tá na hora A sua jangada tá no mar (bis) A onda já lhe chamou Iemanjá vai te levar (bis)",
+  "id": 138,
+  "titulo": "Martim pescador, tá na hora A sua jangada tá…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Boiadeiro",
+  "ritmos": [
+   "Samba",
+   "BV"
+  ],
+  "ritmo_original": "Samba/BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu tenho meu chapéu de couro\nEu tenho a minha guiada\nEu tenho meu lenço vermelho\nPara tocar a minha vaquejada",
+  "id": 139,
+  "titulo": "Eu tenho meu chapéu de couro"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Boiadeiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Pedrinha miudinha Pedrinha na aruanda ê Lajedo tão grande Tão grande na aruanda",
+  "id": 140,
+  "titulo": "Pedrinha miudinha Pedrinha na aruanda ê…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Boiadeiro",
+  "ritmos": [
+   "BV"
+  ],
+  "ritmo_original": "BV",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Acende uma vela por detrás da bananeira\nDe repente pegou fogo e depois virou fogueira\ntá tá tá faltando boi, tá tá tá faltando boi",
+  "id": 141,
+  "titulo": "Acende uma vela por detrás da bananeira"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Boiadeiro",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "A minha boiada é de 31 Na minha boiada tá faltando um boi Tá faltando e eu não sei pra onde foi A minha boiada é de 31 Eu contei só 30 tá faltando__",
+  "id": 142,
+  "titulo": "A minha boiada é de 31 Na minha boiada tá…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Cigano",
+  "ritmos": [
+   "Ijexá",
+   "Samba",
+   "Congo"
+  ],
+  "ritmo_original": "Ijexá/Samba/Congo",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Abre a roda da caravana, são os Ciganos e as Ciganas da Umbanda (2x)\nRegidos por Oroiná, de muito longe eles vem pra trabalhar (2x)\nSalve a roda e a fortuna, Cigana dança com moedas na cintura (2x)\nNão peça pra saber do futuro, tenha mais fé que o caminho está seguro (2x)",
+  "id": 143,
+  "titulo": "Abre a roda da caravana, são os Ciganos e as…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Erê",
+  "ritmos": [
+   "Angola",
+   "Samba",
+   "Nagô"
+  ],
+  "ritmo_original": "Angola/Samba/Nagô",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Papai me manda um balão Com todas as crianças que tem lá no céu (bis)\nTem doce papai tem doce mamãe Tem doce lá no jardim (bis)",
+  "id": 144,
+  "titulo": "Papai me manda um balão Com todas as crianças…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Erê",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexá",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Eu quero doce, eu quero bala\nEu quero açúcar pra passar na sua cara (bis)",
+  "id": 145,
+  "titulo": "Eu quero doce, eu quero bala"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Erê",
+  "ritmos": [
+   "Ijexá"
+  ],
+  "ritmo_original": "Ijexa",
+  "momento": "firmeza",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Brilha Brilha estrelinha, Brilha Brilha lá no céu\nBrilha Brilha lá no mar,Lá no manto de yemanja",
+  "id": 146,
+  "titulo": "Brilha Brilha estrelinha, Brilha Brilha lá no…"
+ },
+ {
+  "linha": "direita",
+  "entidade": "Erê",
+  "ritmos": [
+   "Angola"
+  ],
+  "ritmo_original": "Angola",
+  "momento": "subida",
+  "entidade_especifica": null,
+  "coringa": false,
+  "letra": "Adeus Umbanda Umbanda de alegria. Fica com Deus e a Virgem Maria E até outro dia. Fica com Deus e a Virgem Maria",
+  "id": 147,
+  "titulo": "Adeus Umbanda Umbanda de alegria. Fica com…"
+ }
+]

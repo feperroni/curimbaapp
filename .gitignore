@@ -1,0 +1,5 @@
+node_modules/
+.env
+seed/.dev-db.json
+*.log
+.DS_Store
