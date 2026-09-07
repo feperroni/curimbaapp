@@ -591,3 +591,25 @@ body[data-cheia="1"] .card-acoes:hover { opacity: 1; }
 }
 /* a pílula flutuante não pode cobrir as ações do primeiro card */
 body[data-cheia="1"] .pilha > .card:first-child { padding-top: 68px; }
+
+/* toques: um padrão só, sem separar Rum, Rumpi e Lê */
+.card-toque .card-tit { margin: 0; }
+.card-toque .card-meta { margin: 6px 0 16px; }
+.toque-figura { flex: 0 0 150px; }
+.toque-figura .atabaque { max-width: 150px; margin: 0; }
+.card-toque .grade { margin-bottom: 16px; }
+.card-toque .tempo { min-width: 88px; }
+.card-toque .golpe { font-size: 16px; padding: 4px 11px; }
+.card-toque .zonas { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 14px; }
+.card-toque .zonas li { margin-bottom: 0; }
+
+/* rolagem automática */
+.rolar-btn { min-width: 46px; min-height: 42px; font-size: 15px; }
+.rolar-btn[aria-pressed="true"] { background: var(--acento); border-color: var(--acento); color: #14110f; }
+#velocidades button { min-height: 42px; padding: 0 12px; font-size: 13px; }
+
+@media (max-width: 1150px) {
+  #velocidades button { padding: 0 9px; font-size: 12px; }
+  #telaCheia { padding: 0 12px; }
+}
+.leitor.sem-snap { scroll-snap-type: none; }

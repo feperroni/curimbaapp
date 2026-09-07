@@ -5,6 +5,7 @@ const SENHA_KEY = 'curimba.senha';
 const TAM_KEY = 'curimba.tamanho';
 const MODO_KEY = 'curimba.modo';
 const COL_KEY = 'curimba.colunas';
+const VEL_KEY = 'curimba.velocidade';
 
 const LINHAS = ['ritual', 'orixas', 'esquerda', 'direita'];
 const ROTULO_LINHA = { ritual: 'Ritual', orixas: 'Orixás', esquerda: 'Esquerda', direita: 'Direita' };
@@ -45,7 +46,8 @@ const est = {
   montando: null,         // { id|null, nome, observacao, pontos:[ids] }
   verRoteiro: false,      // na montagem, mostra o roteiro em vez do acervo
   editandoPonto: null,
-  cheia: false            // esconde menus e lista, so as letras na tela
+  cheia: false,           // esconde menus e lista, so as letras na tela
+  velocidade: 'lento'     // da rolagem automatica
 };
 
 const $ = id => document.getElementById(id);
@@ -173,75 +175,50 @@ const TOQUES = [
     id: 'angola', nome: 'Angola', tempo: 'Ternário, 3 tempos',
     clima: 'Terra firme, ancestralidade, peso',
     uso: 'Exus, Pombagiras, Pretos Velhos, Caboclos, Ogum nas chamadas, abertura de gira',
-    nota: 'Pesado e arrastado. Não corra: o peso é o que caracteriza o toque.',
-    vozes: [
-      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — pa — DUM — pa' },
-      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'pa-ca — pa — pa-ca' },
-      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tique-tique — tique — tique' }
-    ]
+    padrao: 'DUM — pa — DUM — pa',
+    nota: 'Pesado e arrastado. Não corra: o peso é o que caracteriza o toque.'
   },
   {
     id: 'ijexa', nome: 'Ijexá', tempo: 'Binário, 2 tempos',
     clima: 'Água corrente, leveza, suavidade',
     uso: 'Oxum, Iemanjá, Oxalá, Obaluaê, Pretos Velhos, Oxóssi, Iansã',
-    nota: 'Fluido e ondulante. É o toque mais usado do acervo, com 70 pontos.',
-    vozes: [
-      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — ca-DUM — ca' },
-      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'pa — tchê — pa — tchê' },
-      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi-ca — tchi — ca-tchi' }
-    ]
+    padrao: 'DUM — ca-DUM — ca',
+    nota: 'Fluido e ondulante. É o toque mais usado do acervo, com 70 pontos.'
   },
   {
     id: 'nago', nome: 'Nagô', tempo: 'Ternário, 3 tempos',
     clima: 'Majestade, reverência, fundamento',
     uso: 'Oxalá nos pontos solenes, Oxóssi, Xangô, abertura de fundamentos',
-    nota: 'Mais aberto e solene que o Angola. Mesmo compasso ternário, outra intenção.',
-    vozes: [
-      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — DUM — pa — DUM' },
-      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'ca-pa — ca — pa-ca' },
-      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi — ca-tchi — ca — tchi' }
-    ]
+    padrao: 'DUM — DUM — pa — DUM',
+    nota: 'Mais aberto e solene que o Angola. Mesmo compasso ternário, outra intenção.'
   },
   {
     id: 'congo', nome: 'Congo', tempo: 'Binário, 2 tempos',
     clima: 'Festa, movimento, leveza alegre',
     uso: 'Baianos, Ciganos, Exu Mirim, Oxumaré, entidades festivas',
-    nota: 'Também chamado Congo de Ouro. Alegre e bem marcado.',
-    vozes: [
-      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM-pa — DUM — DUM-pa' },
-      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'ca-pa-ca — pa — ca-pa' },
-      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi-ca-tchi — tchi-ca — tchi' }
-    ]
+    padrao: 'DUM-pa — DUM — DUM-pa',
+    nota: 'Também chamado Congo de Ouro. Alegre e bem marcado.'
   },
   {
     id: 'samba', nome: 'Samba de Caboclo', tempo: 'Binário, 2 tempos',
     clima: 'Mata, galope, natureza viva',
     uso: 'Caboclos, Baianos, Boiadeiros, Marinheiros, pontos animados',
-    nota: 'Sincopado, ágil e saltitante. A síncope é o que separa ele do Congo.',
-    vozes: [
-      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — ca-DUM — pa-DUM' },
-      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'pa-ca — tchê-ca — pa' },
-      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi-ca-tchi-ca — tchi-ca' }
-    ]
+    padrao: 'DUM — ca-DUM — pa-DUM',
+    nota: 'Sincopado, ágil e saltitante. A síncope é o que separa ele do Congo.'
   },
   {
     id: 'cabula', nome: 'Angola / Samba Cabula', tempo: 'Ternário puxado',
     clima: 'Chão batido, cadência de roda',
     uso: 'Variação do Angola em pontos que pedem mais movimento',
-    nota: 'No songbook aparece só como sequência de golpes, sem separar as vozes.',
-    vozes: [
-      { nome: 'Base', papel: 'sequência única', padrao: 'TUM — TA — TA — TUM — TUM' },
-      { nome: 'Volta', papel: 'segunda metade', padrao: 'TA — TA — TUM — TUM — TUM' }
-    ]
+    padrao: 'TUM — TA — TA — TUM — TUM',
+    nota: 'A volta repete começando pelo TA: TA — TA — TUM — TUM — TUM.'
   },
   {
     id: 'bv', nome: 'BV (Batucada Variada)', tempo: 'Livre ou misto',
     clima: 'Suporte neutro, acompanhamento',
     uso: 'Pontos de abertura geral, entidades diversas, transições',
-    nota: 'Não tem padrão fixo. O ogã acompanha a melodia do ponto. A base abaixo é ponto de partida, não regra.',
-    vozes: [
-      { nome: 'Rum', papel: 'base sugerida', padrao: 'DUM — pa — DUM-DUM — pa' }
-    ]
+    padrao: 'DUM — pa — DUM-DUM — pa',
+    nota: 'Não tem padrão fixo. O ogã acompanha a melodia do ponto; a base acima é ponto de partida, não regra.'
   }
 ];
 
@@ -299,51 +276,39 @@ function gradeDoPadrao(padrao) {
   });
 }
 
-function htmlDaVoz(v) {
-  const grade = gradeDoPadrao(v.padrao);
-  return `
-  <div class="voz">
-    <div class="voz-cab"><b>${escapa(v.nome)}</b><span>${escapa(v.papel)}</span></div>
-    <div class="grade">
-      ${grade.map(c => `
-        <div class="tempo">
-          <span class="tempo-n">${c.n}</span>
-          <div class="golpes">
-            ${c.golpes.length
-              ? c.golpes.map(g => `<span class="golpe z-${g.zona}">${escapa(g.texto)}</span>`).join('')
-              : '<span class="golpe pausa">·</span>'}
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
-}
-
 function renderToques() {
   const box = $('pilha');
   box.innerHTML = '';
   box.dataset.colunas = '1';
   poe('vazio', 'hidden', true);
-  poe('rodapePilha', 'hidden', true);
+  poe('rodapePilha', 'hidden', false);
+  poe('pilhaInfo', 'textContent', `${TOQUES.length} toques`);
+  poe('limparPilha', 'hidden', true);
 
   for (const t of TOQUES) {
+    const grade = gradeDoPadrao(t.padrao);
     const card = document.createElement('article');
     card.className = 'card card-toque';
     card.id = `toque-${t.id}`;
     card.innerHTML = `
-      <div class="card-cab">
-        <div class="card-tit-wrap">
-          <h2 class="card-tit">${escapa(t.nome)}</h2>
-          <p class="card-meta">${escapa(t.tempo)}  ·  ${escapa(t.clima)}</p>
-        </div>
-      </div>
+      <h2 class="card-tit">${escapa(t.nome)}</h2>
+      <p class="card-meta">${escapa(t.tempo)}  ·  ${escapa(t.clima)}</p>
       <div class="toque-corpo">
-        <div class="toque-figura">
-          ${svgAtabaque()}
-          ${svgLegendaZonas()}
-        </div>
+        <div class="toque-figura">${svgAtabaque()}</div>
         <div class="toque-vozes">
+          <div class="grade">
+            ${grade.map(c => `
+              <div class="tempo">
+                <span class="tempo-n">${c.n}</span>
+                <div class="golpes">
+                  ${c.golpes.length
+                    ? c.golpes.map(g => `<span class="golpe z-${g.zona}">${escapa(g.texto)}</span>`).join('')
+                    : '<span class="golpe pausa">·</span>'}
+                </div>
+              </div>`).join('')}
+          </div>
+          ${svgLegendaZonas()}
           <p class="toque-uso"><b>Quando:</b> ${escapa(t.uso)}</p>
-          ${t.vozes.map(htmlDaVoz).join('')}
           <p class="toque-nota">${escapa(t.nota)}</p>
         </div>
       </div>`;
@@ -999,6 +964,66 @@ async function excluirPonto() {
   aviso('Ponto excluído.');
 }
 
+/* ---------------- rolagem automática ----------------
+ * Para cantar sem tirar a mão do atabaque. Anda por tempo decorrido, nao por
+ * quadro, entao a velocidade e a mesma em tablet lento ou rapido.
+ * Encostar na tela pausa: se voce tocou, e porque quis intervir. */
+
+const VELOCIDADES = { lento: 10, medio: 20, rapido: 36 }; // pixels por segundo
+let rolagem = null;   // id do requestAnimationFrame
+let ultimoQuadro = 0;
+let sobra = 0;        // fracao de pixel guardada entre quadros
+
+function rolando() { return rolagem !== null; }
+
+function passoRolagem(agora) {
+  const leitor = $('leitor');
+  if (!leitor) return pararRolagem();
+  const dt = Math.min((agora - ultimoQuadro) / 1000, 0.1); // ignora pausas longas de aba
+  ultimoQuadro = agora;
+
+  const avanco = VELOCIDADES[est.velocidade] * dt + sobra;
+  const px = Math.floor(avanco);
+  sobra = avanco - px;
+  if (px > 0) leitor.scrollTop += px;
+
+  const fim = leitor.scrollHeight - leitor.clientHeight;
+  if (leitor.scrollTop >= fim - 1) {
+    pararRolagem();
+    aviso('Chegou ao fim.');
+    return;
+  }
+  rolagem = requestAnimationFrame(passoRolagem);
+}
+
+function comecarRolagem() {
+  if (rolando()) return;
+  /* O scroll-snap do leitor puxa de volta a cada pixel andado, entao a rolagem
+     automatica ficava parada no lugar. Desligo o snap enquanto ela roda. */
+  $('leitor')?.classList.add('sem-snap');
+  ultimoQuadro = performance.now();
+  sobra = 0;
+  rolagem = requestAnimationFrame(passoRolagem);
+  atualizaBotaoRolagem();
+}
+
+function pararRolagem() {
+  if (rolagem !== null) cancelAnimationFrame(rolagem);
+  rolagem = null;
+  $('leitor')?.classList.remove('sem-snap');
+  atualizaBotaoRolagem();
+}
+
+function atualizaBotaoRolagem() {
+  poe('rolar', 'textContent', rolando() ? '❚❚' : '▶');
+  poe('rolar', 'title', rolando() ? 'Parar a rolagem' : 'Rolar sozinho');
+  const el = $('rolar');
+  if (el) el.setAttribute('aria-pressed', String(rolando()));
+  for (const b of ($('velocidades')?.children || [])) {
+    b.setAttribute('aria-pressed', String(b.dataset.vel === est.velocidade));
+  }
+}
+
 /* ---------------- tela cheia ----------------
  * Duas camadas: a classe no body esconde os menus, e a API de fullscreen do
  * navegador tira as barras do sistema no tablet. A segunda pode falhar sem o
@@ -1054,6 +1079,7 @@ function liga(id, evento, fn) {
 function ligarEventos() {
   for (const b of document.querySelectorAll('.linha-btn')) {
     b.onclick = () => {
+      pararRolagem();
       est.vista = b.dataset.vista;
       est.entidade = null; est.momento = null; est.ritmo = null;
       est.verRoteiro = false;
@@ -1121,6 +1147,18 @@ function ligarEventos() {
   $('btnExcluirGira').onclick = excluirGira;
   $('modalGira').onclick = e => { if (e.target === $('modalGira')) $('modalGira').hidden = true; };
 
+  liga('rolar', 'onclick', () => (rolando() ? pararRolagem() : comecarRolagem()));
+  for (const b of ($('velocidades')?.children || [])) {
+    b.onclick = () => {
+      est.velocidade = b.dataset.vel;
+      try { localStorage.setItem(VEL_KEY, est.velocidade); } catch (_) {}
+      atualizaBotaoRolagem();
+    };
+  }
+  // encostar na tela do leitor pausa
+  $('leitor')?.addEventListener('touchstart', () => { if (rolando()) pararRolagem(); }, { passive: true });
+  $('leitor')?.addEventListener('wheel', () => { if (rolando()) pararRolagem(); }, { passive: true });
+
   liga('telaCheia', 'onclick', () => aplicaCheia(!est.cheia));
   liga('sairCheia', 'onclick', () => aplicaCheia(false));
 
@@ -1159,8 +1197,11 @@ async function manterAcesa() {
   if (salvo) aplicaTamanho(parseInt(salvo, 10));
   if (localStorage.getItem(MODO_KEY) === 'selecao') est.modo = 'selecao';
   est.colunas = localStorage.getItem(COL_KEY) === '2' ? 2 : 1;
+  const vel = localStorage.getItem(VEL_KEY);
+  if (vel && VELOCIDADES[vel]) est.velocidade = vel;
   await carregar();
   try { ligarEventos(); } catch (e) { console.error('[curimba] falha ao ligar eventos', e); }
+  atualizaBotaoRolagem();
   try { render(); } catch (e) {
     console.error('[curimba] falha ao desenhar', e);
     aviso('Algo quebrou ao desenhar a tela. Recarregue com Ctrl+Shift+R.');
