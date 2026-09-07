@@ -9,7 +9,17 @@ const PORT = process.env.PORT || 3000;
 const SENHA = process.env.SENHA_EDICAO || 'cazua';
 
 app.use(express.json({ limit: '256kb' }));
-app.use(express.static(path.join(__dirname, '..', 'public'), { maxAge: '1h' }));
+/* Sem cache longo de proposito. Com maxAge alto, depois de um deploy o navegador
+   pode servir um app.js velho junto de um index.html novo (ou o contrario), e a
+   tela abre em branco. Os arquivos sao pequenos; revalidar sempre sai barato. */
+app.use(express.static(path.join(__dirname, '..', 'public'), {
+  etag: true,
+  maxAge: 0,
+  setHeaders(res, caminho) {
+    if (caminho.endsWith('.html')) res.setHeader('Cache-Control', 'no-store');
+    else res.setHeader('Cache-Control', 'no-cache');
+  }
+}));
 
 function exigeSenha(req, res, next) {
   const enviada = req.get('x-senha') || '';

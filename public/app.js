@@ -50,6 +50,13 @@ const est = {
 const $ = id => document.getElementById(id);
 const acha = id => PONTOS.find(p => p.id === id);
 
+/* Escreve numa propriedade de um elemento que pode nao existir. Protege contra
+   o caso de um index.html velho em cache do navegador com um app.js novo. */
+function poe(id, prop, valor) {
+  const el = $(id);
+  if (el) el[prop] = valor;
+}
+
 /* ---------------- carga ---------------- */
 
 async function carregar() {
@@ -263,7 +270,7 @@ function renderLista() {
   const noRoteiro = Boolean(est.montando && est.verRoteiro);
   ul.innerHTML = '';
   $('contador').textContent = itens.length === 1 ? '1 ponto' : `${itens.length} pontos`;
-  $('empilharTudo').hidden = est.modo === 'tudo';
+  poe('empilharTudo', 'hidden', est.modo === 'tudo');
 
   itens.forEach((p, i) => {
     const li = document.createElement('li');
@@ -351,14 +358,14 @@ function renderPilha() {
   const pontos = pontosNoLeitor();
 
   box.dataset.colunas = String(est.colunas);
-  $('vazio').hidden = pontos.length > 0;
-  $('limparPilha').hidden = est.modo !== 'selecao' || !pontos.length;
-  $('pilhaInfo').textContent = !pontos.length
+  poe('vazio', 'hidden', pontos.length > 0);
+  poe('limparPilha', 'hidden', est.modo !== 'selecao' || !pontos.length);
+  poe('pilhaInfo', 'textContent', !pontos.length
     ? ''
-    : pontos.length === 1 ? '1 ponto' : `${pontos.length} pontos na tela`;
+    : pontos.length === 1 ? '1 ponto' : `${pontos.length} pontos na tela`);
 
-  for (const b of $('altModo').children) b.setAttribute('aria-pressed', String(b.dataset.modo === est.modo));
-  for (const b of $('altColunas').children) b.setAttribute('aria-pressed', String(Number(b.dataset.colunas) === est.colunas));
+  for (const b of ($('altModo')?.children || [])) b.setAttribute('aria-pressed', String(b.dataset.modo === est.modo));
+  for (const b of ($('altColunas')?.children || [])) b.setAttribute('aria-pressed', String(Number(b.dataset.colunas) === est.colunas));
 
   pontos.forEach((p, i) => {
     const card = document.createElement('article');
@@ -769,6 +776,13 @@ function tamanhoAtual() {
 
 /* ---------------- eventos ---------------- */
 
+function liga(id, evento, fn) {
+  const el = $(id);
+  if (!el) { console.warn(`[curimba] elemento ausente: ${id}`); return null; }
+  el[evento] = fn;
+  return el;
+}
+
 function ligarEventos() {
   for (const b of document.querySelectorAll('.linha-btn')) {
     b.onclick = () => {
@@ -803,7 +817,7 @@ function ligarEventos() {
     salvarModo(); renderLista(); renderPilha();
   };
 
-  for (const b of $('altModo').children) {
+  for (const b of ($('altModo')?.children || [])) {
     b.onclick = () => {
       est.modo = b.dataset.modo;
       if (est.modo === 'selecao' && !est.pilha.length) {
@@ -814,7 +828,7 @@ function ligarEventos() {
       $('leitor').scrollTop = 0;
     };
   }
-  for (const b of $('altColunas').children) {
+  for (const b of ($('altColunas')?.children || [])) {
     b.onclick = () => { est.colunas = Number(b.dataset.colunas); salvarModo(); renderPilha(); };
   }
 
@@ -863,7 +877,10 @@ async function manterAcesa() {
   if (localStorage.getItem(MODO_KEY) === 'selecao') est.modo = 'selecao';
   est.colunas = localStorage.getItem(COL_KEY) === '2' ? 2 : 1;
   await carregar();
-  ligarEventos();
-  render();
+  try { ligarEventos(); } catch (e) { console.error('[curimba] falha ao ligar eventos', e); }
+  try { render(); } catch (e) {
+    console.error('[curimba] falha ao desenhar', e);
+    aviso('Algo quebrou ao desenhar a tela. Recarregue com Ctrl+Shift+R.');
+  }
   manterAcesa();
 })();
