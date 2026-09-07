@@ -287,7 +287,7 @@ function renderLista() {
     corpo.className = 'item-corpo';
     corpo.innerHTML =
       `<div class="item-tit">${noRoteiro || est.vista === 'giras' ? `<span class="ordem">${i + 1}</span>` : ''}${escapa(p.titulo)}</div>` +
-      `<div class="item-sub">${ondeEsta}${tagCasa}${tagCoringa}<span class="tag">${ROTULO_MOMENTO[p.momento] || p.momento}</span>` +
+      `<div class="item-sub">${ondeEsta}${tagCasa}${tagCoringa}<span class="tag">${escapa(ROTULO_MOMENTO[p.momento] || p.momento)}</span>` +
       `${escapa(p.ritmos.join(' / '))}${escapa(espec)}</div>`;
     corpo.onclick = () => abrirSozinho(p.id);
     li.appendChild(corpo);
@@ -552,6 +552,7 @@ async function salvarMontagem() {
       body: JSON.stringify(g)
     });
     if (r.status === 401) { abrirModalGira(g, true); return aviso('Confirme a senha.'); }
+    if (r.status === 429) return aviso((await r.json()).erro || 'Muitas tentativas. Espere um pouco.');
     if (!r.ok) return aviso('Não consegui salvar a gira.');
     const salva = await r.json();
     await carregar();
@@ -602,6 +603,7 @@ async function salvarGiraModal(ev) {
       body: JSON.stringify(corpo)
     });
     if (r.status === 401) { $('giraErro').textContent = 'Senha incorreta.'; $('giraErro').hidden = false; return; }
+    if (r.status === 429) { $('giraErro').textContent = (await r.json()).erro || 'Muitas tentativas.'; $('giraErro').hidden = false; return; }
     if (!r.ok) { $('giraErro').textContent = 'Não consegui salvar.'; $('giraErro').hidden = false; return; }
     localStorage.setItem(SENHA_KEY, senha);
     const salva = await r.json();
@@ -629,6 +631,7 @@ async function excluirGira() {
   if (!id || !confirm(`Excluir a gira "${g?.nome || ''}"? Os pontos continuam no acervo.`)) return;
   const r = await fetch(`/api/giras/${id}`, { method: 'DELETE', headers: { 'x-senha': $('gSenha').value } });
   if (r.status === 401) { $('giraErro').textContent = 'Senha incorreta.'; $('giraErro').hidden = false; return; }
+  if (r.status === 429) { $('giraErro').textContent = (await r.json()).erro || 'Muitas tentativas.'; $('giraErro').hidden = false; return; }
   await carregar();
   $('modalGira').hidden = true;
   est.giraAberta = null;
@@ -724,6 +727,7 @@ async function salvarPonto(ev) {
       body: JSON.stringify(corpo)
     });
     if (r.status === 401) return erroForm('Senha incorreta.');
+    if (r.status === 429) return erroForm((await r.json()).erro || 'Muitas tentativas. Espere um pouco.');
     if (!r.ok) return erroForm((await r.json()).erro || 'Não foi possível salvar.');
 
     localStorage.setItem(SENHA_KEY, senha);
@@ -756,6 +760,7 @@ async function excluirPonto() {
   if (!p || !confirm(`Excluir "${p.titulo}"? Isso não tem volta.`)) return;
   const r = await fetch(`/api/pontos/${p.id}`, { method: 'DELETE', headers: { 'x-senha': $('fSenha').value } });
   if (r.status === 401) return erroForm('Senha incorreta.');
+  if (r.status === 429) return erroForm((await r.json()).erro || 'Muitas tentativas. Espere um pouco.');
   if (!r.ok) return erroForm('Não foi possível excluir.');
   await carregar();
   fecharModal();

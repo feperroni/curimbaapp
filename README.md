@@ -115,7 +115,7 @@ npm run dev
 Abre em `http://localhost:3000`. Sem `DATABASE_URL` o app usa um arquivo JSON local
 (`seed/.dev-db.json`, ignorado pelo git) e não precisa de banco nenhum para você mexer no layout.
 
-Senha de edição padrão em desenvolvimento: `cazua`. **Troque a `SENHA_EDICAO` em produção.**
+Senha de edição padrão em desenvolvimento: `casua`. **Troque a `SENHA_EDICAO` em produção.**
 
 ## Deploy no Railway
 
@@ -137,7 +137,6 @@ sem barra de endereço comendo espaço vertical.
 |---|---|---|---|
 | GET | `/api/pontos` | não | Lista todos os pontos |
 | GET | `/api/meta` | não | Linhas, momentos e ritmos válidos |
-| POST | `/api/login` | corpo | Confere a senha |
 | POST | `/api/pontos` | header | Cria ponto |
 | PUT | `/api/pontos/:id` | header | Edita ponto |
 | DELETE | `/api/pontos/:id` | header | Exclui ponto |
@@ -158,6 +157,40 @@ A senha vai no header `x-senha`.
   última cópia que o tablet viu, em vez de tela branca. Não substitui um PWA de verdade, mas evita o pior.
 - **Cores por linha**: âmbar no Ritual, azul nos Orixás, vermelho na Esquerda, verde na Direita. Serve para
   você saber onde está pelo canto do olho, sem ler.
+
+## Segurança
+
+O que está no lugar:
+
+- **Senha em tempo constante.** Compara o SHA-256 dos dois lados, então nem o valor nem o
+  tamanho da senha vazam por timing.
+- **Limitador de força bruta.** Conta só as tentativas que falham, então corrigir cinquenta
+  pontos numa sessão nunca esbarra nele. Passadas 10 falhas em 15 minutos, o IP fica bloqueado
+  por 1 min, depois 5, 15 e 60 a cada nova rodada. Toda falha ainda leva 400ms fixos de atraso,
+  o que encarece força bruta mesmo distribuída. É em memória: reiniciar o serviço zera, e se um
+  dia rodar em mais de uma instância isto precisa ir para Redis ou para o banco.
+- **Teto de volume no favorito**, que é a única rota de escrita sem senha: 120 chamadas por
+  minuto por IP, muito acima de qualquer uso humano.
+- **Cabeçalhos**: CSP restrita a `'self'` (o app não tem script nem style inline),
+  `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy: no-referrer`, `Permissions-Policy`
+  liberando só o wake lock, e HSTS quando servido por HTTPS.
+- **`trust proxy` ligado**, senão atrás do proxy do Railway todos os acessos teriam o mesmo IP e
+  um atacante bloquearia o terreiro inteiro.
+- **SQL sempre parametrizado**, inclusive no resync.
+- **Sem CORS aberto.** Como a senha vai num header customizado, o navegador não a envia em
+  requisição cross-origin sem preflight, o que já protege contra CSRF.
+- Corpo limitado a 256kb, erro genérico sem stack, e linha, momento e ritmo validados contra
+  allowlist.
+
+O que continua sendo risco, de propósito ou por decisão sua:
+
+- **Quem tem a URL lê o acervo inteiro.** Não há autenticação de leitura.
+- **A senha fica em `localStorage` no tablet**, em texto plano, para não redigitar. Num aparelho
+  compartilhado, qualquer um lê pelo devtools.
+- **Uma senha só, para todo mundo.** Não há como saber quem editou o quê.
+- **Sem backup e sem lixeira.** Quem tem a senha apaga em definitivo. Vale um `pg_dump` periódico.
+- **`rejectUnauthorized: false`** na conexão com o Postgres. Baixo risco na rede interna do
+  Railway, mas é verificação de certificado desligada. Passe `PGSSL=disable` em ambiente sem TLS.
 
 ## Estrutura
 
