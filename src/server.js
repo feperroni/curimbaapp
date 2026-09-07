@@ -6,7 +6,7 @@ import * as db from './db.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SENHA = process.env.SENHA_EDICAO || 'cazua';
+const SENHA = process.env.SENHA_EDICAO || 'casua';
 
 app.use(express.json({ limit: '256kb' }));
 /* Sem cache longo de proposito. Com maxAge alto, depois de um deploy o navegador
