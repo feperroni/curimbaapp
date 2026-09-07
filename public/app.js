@@ -44,7 +44,8 @@ const est = {
   pilha: [],              // ids, usado apenas no modo 'selecao'
   montando: null,         // { id|null, nome, observacao, pontos:[ids] }
   verRoteiro: false,      // na montagem, mostra o roteiro em vez do acervo
-  editandoPonto: null
+  editandoPonto: null,
+  cheia: false            // esconde menus e lista, so as letras na tela
 };
 
 const $ = id => document.getElementById(id);
@@ -153,10 +154,238 @@ function visiveis() {
   return ordenaLiturgico(l);
 }
 
+
+/* ---------------- toques de atabaque ----------------
+ * Fonte: o guia de toques do proprio songbook do terreiro, no fim do Word.
+ * As figuras e a grade de batidas foram desenhadas aqui a partir dele.
+ * Nada foi copiado de livro: o que existe de material publicado sobre toque
+ * de umbanda e obra protegida, e alem disso a grafia varia de casa para casa.
+ * Confira com o oga da casa antes de tomar isto como padrao.
+ */
+const ZONAS = {
+  grave: { nome: 'Centro', como: 'mão aberta no meio da pele', som: 'DUM, TUM' },
+  medio: { nome: 'Meia pele', como: 'mão chapada entre o centro e a borda', som: 'pa, ta, tchê' },
+  agudo: { nome: 'Borda', como: 'ponta dos dedos junto ao aro', som: 'tchi, ca, tique' }
+};
+
+const TOQUES = [
+  {
+    id: 'angola', nome: 'Angola', tempo: 'Ternário, 3 tempos',
+    clima: 'Terra firme, ancestralidade, peso',
+    uso: 'Exus, Pombagiras, Pretos Velhos, Caboclos, Ogum nas chamadas, abertura de gira',
+    nota: 'Pesado e arrastado. Não corra: o peso é o que caracteriza o toque.',
+    vozes: [
+      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — pa — DUM — pa' },
+      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'pa-ca — pa — pa-ca' },
+      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tique-tique — tique — tique' }
+    ]
+  },
+  {
+    id: 'ijexa', nome: 'Ijexá', tempo: 'Binário, 2 tempos',
+    clima: 'Água corrente, leveza, suavidade',
+    uso: 'Oxum, Iemanjá, Oxalá, Obaluaê, Pretos Velhos, Oxóssi, Iansã',
+    nota: 'Fluido e ondulante. É o toque mais usado do acervo, com 70 pontos.',
+    vozes: [
+      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — ca-DUM — ca' },
+      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'pa — tchê — pa — tchê' },
+      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi-ca — tchi — ca-tchi' }
+    ]
+  },
+  {
+    id: 'nago', nome: 'Nagô', tempo: 'Ternário, 3 tempos',
+    clima: 'Majestade, reverência, fundamento',
+    uso: 'Oxalá nos pontos solenes, Oxóssi, Xangô, abertura de fundamentos',
+    nota: 'Mais aberto e solene que o Angola. Mesmo compasso ternário, outra intenção.',
+    vozes: [
+      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — DUM — pa — DUM' },
+      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'ca-pa — ca — pa-ca' },
+      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi — ca-tchi — ca — tchi' }
+    ]
+  },
+  {
+    id: 'congo', nome: 'Congo', tempo: 'Binário, 2 tempos',
+    clima: 'Festa, movimento, leveza alegre',
+    uso: 'Baianos, Ciganos, Exu Mirim, Oxumaré, entidades festivas',
+    nota: 'Também chamado Congo de Ouro. Alegre e bem marcado.',
+    vozes: [
+      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM-pa — DUM — DUM-pa' },
+      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'ca-pa-ca — pa — ca-pa' },
+      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi-ca-tchi — tchi-ca — tchi' }
+    ]
+  },
+  {
+    id: 'samba', nome: 'Samba de Caboclo', tempo: 'Binário, 2 tempos',
+    clima: 'Mata, galope, natureza viva',
+    uso: 'Caboclos, Baianos, Boiadeiros, Marinheiros, pontos animados',
+    nota: 'Sincopado, ágil e saltitante. A síncope é o que separa ele do Congo.',
+    vozes: [
+      { nome: 'Rum', papel: 'o grave, conduz', padrao: 'DUM — ca-DUM — pa-DUM' },
+      { nome: 'Rumpi', papel: 'o médio, amarra', padrao: 'pa-ca — tchê-ca — pa' },
+      { nome: 'Lê', papel: 'o agudo, enfeita', padrao: 'tchi-ca-tchi-ca — tchi-ca' }
+    ]
+  },
+  {
+    id: 'cabula', nome: 'Angola / Samba Cabula', tempo: 'Ternário puxado',
+    clima: 'Chão batido, cadência de roda',
+    uso: 'Variação do Angola em pontos que pedem mais movimento',
+    nota: 'No songbook aparece só como sequência de golpes, sem separar as vozes.',
+    vozes: [
+      { nome: 'Base', papel: 'sequência única', padrao: 'TUM — TA — TA — TUM — TUM' },
+      { nome: 'Volta', papel: 'segunda metade', padrao: 'TA — TA — TUM — TUM — TUM' }
+    ]
+  },
+  {
+    id: 'bv', nome: 'BV (Batucada Variada)', tempo: 'Livre ou misto',
+    clima: 'Suporte neutro, acompanhamento',
+    uso: 'Pontos de abertura geral, entidades diversas, transições',
+    nota: 'Não tem padrão fixo. O ogã acompanha a melodia do ponto. A base abaixo é ponto de partida, não regra.',
+    vozes: [
+      { nome: 'Rum', papel: 'base sugerida', padrao: 'DUM — pa — DUM-DUM — pa' }
+    ]
+  }
+];
+
+function zonaDoGolpe(g) {
+  const t = g.toLowerCase();
+  if (t.startsWith('dum') || t.startsWith('tum')) return 'grave';
+  if (t.startsWith('pa') || t.startsWith('ta') || t.startsWith('tch\u00ea')) return 'medio';
+  return 'agudo';
+}
+
+/* Desenho do atabaque com as tres zonas marcadas. Vale para qualquer toque:
+   o que muda de um para outro e a sequencia, nao onde se bate. */
+function svgAtabaque() {
+  return `
+  <svg class="atabaque" viewBox="0 0 150 165" role="img" aria-label="Atabaque visto de frente, com as três zonas de batida">
+    <defs>
+      <linearGradient id="corpoAtb" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#6d4a2f"/><stop offset=".45" stop-color="#9a6b41"/><stop offset="1" stop-color="#5c3d26"/>
+      </linearGradient>
+    </defs>
+    <path d="M28,40 L40,140 Q75,152 110,140 L122,40 Z" fill="url(#corpoAtb)"/>
+    <path d="M40,140 Q75,152 110,140 L108,148 Q75,159 42,148 Z" fill="#4a3020"/>
+    <ellipse cx="75" cy="40" rx="47" ry="18" fill="#e8d5b5"/>
+    <ellipse cx="75" cy="40" rx="47" ry="18" fill="none" stroke="#3a2a1c" stroke-width="4"/>
+    <ellipse cx="75" cy="40" rx="47" ry="18" fill="none" stroke="var(--z-agudo)" stroke-width="2.5" stroke-dasharray="5 4"/>
+    <ellipse cx="75" cy="40" rx="30" ry="11" fill="none" stroke="var(--z-medio)" stroke-width="2.5" stroke-dasharray="5 4"/>
+    <ellipse cx="75" cy="40" rx="14" ry="5.5" fill="var(--z-grave)" opacity=".85"/>
+  </svg>`;
+}
+
+function svgLegendaZonas() {
+  return `<ul class="zonas">
+    ${Object.entries(ZONAS).map(([k, z]) => `
+      <li>
+        <span class="bola z-${k}"></span>
+        <div>
+          <b>${escapa(z.nome)}</b><span class="silaba">${escapa(z.som)}</span>
+          <em>${escapa(z.como)}</em>
+        </div>
+      </li>`).join('')}
+  </ul>`;
+}
+
+/* Transforma "DUM — ca-DUM — ca" numa grade de tempos.
+   Cada tempo vira uma celula; golpes ligados por hifen dividem o mesmo tempo. */
+function gradeDoPadrao(padrao) {
+  const tempos = padrao.split(/\s*[\u2014-]{1}\s+|\s+[\u2014]\s*/)
+    .map(t => t.trim()).filter(Boolean);
+  const celulas = padrao.split(/\s+\u2014\s+/).map(t => t.trim()).filter(Boolean);
+  return celulas.map((cel, i) => {
+    if (cel === '\u2014' || !cel) return { n: i + 1, golpes: [] };
+    const golpes = cel.split('-').map(g => g.trim()).filter(Boolean)
+      .map(g => ({ texto: g, zona: zonaDoGolpe(g) }));
+    return { n: i + 1, golpes };
+  });
+}
+
+function htmlDaVoz(v) {
+  const grade = gradeDoPadrao(v.padrao);
+  return `
+  <div class="voz">
+    <div class="voz-cab"><b>${escapa(v.nome)}</b><span>${escapa(v.papel)}</span></div>
+    <div class="grade">
+      ${grade.map(c => `
+        <div class="tempo">
+          <span class="tempo-n">${c.n}</span>
+          <div class="golpes">
+            ${c.golpes.length
+              ? c.golpes.map(g => `<span class="golpe z-${g.zona}">${escapa(g.texto)}</span>`).join('')
+              : '<span class="golpe pausa">·</span>'}
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderToques() {
+  const box = $('pilha');
+  box.innerHTML = '';
+  box.dataset.colunas = '1';
+  poe('vazio', 'hidden', true);
+  poe('rodapePilha', 'hidden', true);
+
+  for (const t of TOQUES) {
+    const card = document.createElement('article');
+    card.className = 'card card-toque';
+    card.id = `toque-${t.id}`;
+    card.innerHTML = `
+      <div class="card-cab">
+        <div class="card-tit-wrap">
+          <h2 class="card-tit">${escapa(t.nome)}</h2>
+          <p class="card-meta">${escapa(t.tempo)}  ·  ${escapa(t.clima)}</p>
+        </div>
+      </div>
+      <div class="toque-corpo">
+        <div class="toque-figura">
+          ${svgAtabaque()}
+          ${svgLegendaZonas()}
+        </div>
+        <div class="toque-vozes">
+          <p class="toque-uso"><b>Quando:</b> ${escapa(t.uso)}</p>
+          ${t.vozes.map(htmlDaVoz).join('')}
+          <p class="toque-nota">${escapa(t.nota)}</p>
+        </div>
+      </div>`;
+    box.appendChild(card);
+  }
+}
+
+function renderListaToques() {
+  const ul = $('lista');
+  ul.innerHTML = '';
+  poe('contador', 'textContent', `${TOQUES.length} toques`);
+  poe('empilharTudo', 'hidden', true);
+
+  for (const t of TOQUES) {
+    const li = document.createElement('li');
+    li.className = 'item';
+    const corpo = document.createElement('div');
+    corpo.className = 'item-corpo';
+    corpo.innerHTML =
+      `<div class="item-tit">${escapa(t.nome)}</div>` +
+      `<div class="item-sub"><span class="tag">${escapa(t.tempo.split(',')[0])}</span>${escapa(t.clima)}</div>`;
+    corpo.onclick = () => document.getElementById(`toque-${t.id}`)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    li.appendChild(corpo);
+    ul.appendChild(li);
+  }
+}
+
 /* ---------------- render ---------------- */
 
 function render() {
   renderVista();
+  if (est.vista === 'toques') {
+    $('navEntidades').hidden = true;
+    $('filtros').hidden = true;
+    $('buscaBarra').hidden = true;
+    renderListaToques();
+    renderToques();
+    renderBanner();
+    $('leitor').scrollTop = 0;
+    return;
+  }
   renderSegundaFaixa();
   renderFiltros();
   renderLista();
@@ -165,6 +394,7 @@ function render() {
 }
 
 function renderVista() {
+  if (est.cheia) poe('cheiaOnde', 'textContent', ondeEstou());
   for (const b of document.querySelectorAll('.linha-btn')) {
     b.setAttribute('aria-selected', String(b.dataset.vista === est.vista));
   }
@@ -769,6 +999,39 @@ async function excluirPonto() {
   aviso('Ponto excluído.');
 }
 
+/* ---------------- tela cheia ----------------
+ * Duas camadas: a classe no body esconde os menus, e a API de fullscreen do
+ * navegador tira as barras do sistema no tablet. A segunda pode falhar sem o
+ * gesto do usuario ou em navegador que nao suporta, e ai a primeira ja resolve
+ * a maior parte do ganho de tela. */
+
+function ondeEstou() {
+  if (est.vista === 'toques') return 'Toques';
+  if (est.vista === 'favoritos') return 'Favoritos';
+  if (est.vista === 'giras') {
+    const g = GIRAS.find(x => x.id === est.giraAberta);
+    return g ? g.nome : 'Giras';
+  }
+  const linha = ROTULO_LINHA[est.vista] || (est.vista === 'casa' ? 'Casa' : est.vista);
+  return est.entidade ? `${linha} · ${est.entidade}` : linha;
+}
+
+function aplicaCheia(ligar) {
+  est.cheia = ligar;
+  document.body.dataset.cheia = ligar ? '1' : '';
+  poe('sairCheia', 'hidden', !ligar);
+  poe('cheiaOnde', 'textContent', ligar ? ondeEstou() : '');
+  poe('telaCheia', 'textContent', ligar ? '⤡ Reduzir' : '⤢ Tela cheia');
+
+  try {
+    if (ligar && !document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+    } else if (!ligar && document.fullscreenElement) {
+      document.exitFullscreen?.().catch(() => {});
+    }
+  } catch (_) {}
+}
+
 /* ---------------- tamanho da letra ---------------- */
 
 function aplicaTamanho(px) {
@@ -810,7 +1073,11 @@ function ligarEventos() {
     est.busca = '';
     renderLista();
   };
-  $('campoBusca').oninput = e => { est.busca = e.target.value; renderLista(); };
+  $('campoBusca').oninput = e => {
+    est.busca = e.target.value;
+    if (est.vista === 'toques') est.vista = 'ritual';
+    render();
+  };
 
   $('empilharTudo').onclick = () => {
     est.modo = 'tudo'; est.pilha = [];
@@ -854,11 +1121,22 @@ function ligarEventos() {
   $('btnExcluirGira').onclick = excluirGira;
   $('modalGira').onclick = e => { if (e.target === $('modalGira')) $('modalGira').hidden = true; };
 
+  liga('telaCheia', 'onclick', () => aplicaCheia(!est.cheia));
+  liga('sairCheia', 'onclick', () => aplicaCheia(false));
+
+  // sair pelo Esc ou pelo botao voltar do tablet devolve os menus
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && est.cheia) aplicaCheia(false);
+  });
+
   $('btnMaior').onclick = () => aplicaTamanho(Math.min(56, tamanhoAtual() + 3));
   $('btnMenor').onclick = () => aplicaTamanho(Math.max(17, tamanhoAtual() - 3));
 
   document.onkeydown = e => {
-    if (e.key === 'Escape') { fecharModal(); $('modalGira').hidden = true; }
+    if (e.key === 'Escape') {
+      if (!$('modal').hidden || !$('modalGira').hidden) { fecharModal(); $('modalGira').hidden = true; return; }
+      if (est.cheia) aplicaCheia(false);
+    }
   };
 }
 

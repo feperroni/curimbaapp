@@ -482,3 +482,112 @@ button { cursor: pointer; }
 }
 .alternador button + button { border-left: 1px solid var(--borda); }
 .alternador button[aria-pressed="true"] { background: var(--acento); color: #14110f; }
+
+/* ---------- toques de atabaque ---------- */
+:root {
+  --z-grave: #e0733f;
+  --z-medio: #dbb43c;
+  --z-agudo: #6fb3e0;
+}
+body[data-vista="toques"] { --acento: #c98a5e; }
+
+.card-toque { min-height: auto; padding-bottom: 28px; }
+.toque-corpo { display: flex; gap: 26px; align-items: flex-start; }
+.toque-figura { flex: 0 0 240px; }
+.atabaque { width: 100%; max-width: 220px; display: block; margin: 0 auto 10px; }
+
+.zonas { list-style: none; margin: 0; padding: 0; font-size: 13px; line-height: 1.5; color: var(--texto-fraco); }
+.zonas li { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 9px; }
+.zonas b { color: var(--texto); font-weight: 600; margin-right: 8px; }
+.zonas em { display: block; font-style: normal; font-size: 12.5px; margin-top: 1px; }
+.bola { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.bola.z-grave { background: var(--z-grave); }
+.bola.z-medio { background: var(--z-medio); }
+.bola.z-agudo { background: var(--z-agudo); }
+.silaba { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--texto); opacity: .75; }
+
+.toque-vozes { flex: 1; min-width: 0; }
+.toque-uso { margin: 0 0 16px; font-size: 15px; line-height: 1.5; color: var(--texto-fraco); }
+.toque-uso b { color: var(--texto); }
+.toque-nota { margin: 14px 0 0; font-size: 13px; line-height: 1.55; color: var(--texto-fraco); border-left: 3px solid var(--borda); padding-left: 12px; }
+
+.voz + .voz { margin-top: 14px; }
+.voz-cab { display: flex; align-items: baseline; gap: 9px; margin-bottom: 6px; font-size: 14px; }
+.voz-cab b { font-size: 16px; }
+.voz-cab span { color: var(--texto-fraco); font-size: 13px; }
+
+.grade { display: flex; gap: 6px; flex-wrap: wrap; }
+.tempo {
+  flex: 1 1 auto;
+  min-width: 74px;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  background: var(--fundo);
+  padding: 5px 7px 8px;
+}
+.tempo-n { display: block; font-size: 10px; color: var(--texto-fraco); letter-spacing: .1em; margin-bottom: 4px; }
+.golpes { display: flex; gap: 4px; flex-wrap: wrap; }
+.golpe {
+  padding: 3px 9px;
+  border-radius: 7px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #14110f;
+}
+.golpe.z-grave { background: var(--z-grave); }
+.golpe.z-medio { background: var(--z-medio); }
+.golpe.z-agudo { background: var(--z-agudo); }
+.golpe.pausa { background: transparent; color: var(--texto-fraco); border: 1px dashed var(--borda); }
+
+@media (max-width: 1100px) {
+  .toque-corpo { flex-direction: column; }
+  .toque-figura { flex: 1 1 auto; display: flex; gap: 18px; align-items: center; width: 100%; }
+  .atabaque { max-width: 150px; margin: 0; }
+}
+
+/* ---------- tela cheia: só as letras ---------- */
+body[data-cheia="1"] .topo,
+body[data-cheia="1"] .entidades,
+body[data-cheia="1"] .filtros,
+body[data-cheia="1"] .busca-barra,
+body[data-cheia="1"] .banner,
+body[data-cheia="1"] .lista-wrap { display: none !important; }
+
+body[data-cheia="1"] .leitor { padding-top: 4px; }
+body[data-cheia="1"] .card { padding-left: 46px; padding-right: 46px; }
+body[data-cheia="1"] .card-acoes { opacity: .35; }
+body[data-cheia="1"] .card-acoes:hover { opacity: 1; }
+
+/* pílula flutuante: diz onde você está e devolve os menus num toque */
+.sair-cheia {
+  position: fixed;
+  top: 12px;
+  right: 14px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  padding: 0 8px 0 18px;
+  border: 1px solid var(--acento);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--acento) 16%, var(--fundo-2));
+  color: var(--texto);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 4px 18px rgba(0,0,0,.45);
+}
+.sair-cheia .sair-ico {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--acento);
+  color: #14110f;
+  font-size: 16px;
+}
+/* a pílula flutuante não pode cobrir as ações do primeiro card */
+body[data-cheia="1"] .pilha > .card:first-child { padding-top: 68px; }

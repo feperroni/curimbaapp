@@ -22,6 +22,7 @@
     <button class="linha-btn" data-vista="esquerda">Esquerda</button>
     <button class="linha-btn" data-vista="direita">Direita</button>
     <button class="linha-btn" data-vista="casa">Casa</button>
+    <button class="linha-btn" data-vista="toques">Toques</button>
     <button class="linha-btn estreito" data-vista="favoritos" title="Favoritos">★</button>
     <button class="linha-btn estreito" data-vista="giras" title="Giras">Giras</button>
   </nav>
@@ -87,6 +88,7 @@
   <button class="icone" id="btnMenor" title="Diminuir letra">A−</button>
   <button class="icone" id="btnMaior" title="Aumentar letra">A+</button>
   <button class="icone icone-txt" id="limparPilha" hidden>Limpar</button>
+  <button class="icone icone-txt" id="telaCheia" title="Esconder menus e ver só as letras">⤢ Tela cheia</button>
 </div>
 
 <!-- modal de ponto -->
@@ -185,6 +187,11 @@
     </div>
   </form>
 </div>
+
+<button class="sair-cheia" id="sairCheia" hidden title="Sair da tela cheia">
+  <span id="cheiaOnde"></span>
+  <span class="sair-ico">⤡</span>
+</button>
 
 <div class="aviso" id="aviso" hidden></div>
 
