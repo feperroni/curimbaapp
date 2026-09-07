@@ -71,6 +71,40 @@ Vale usar isso para arrumar o que a importação automática não teve como acer
 vários versos numa linha só em muitos pontos, e o título sai truncado quando a primeira linha
 é longa demais.
 
+## Garantir que um deploy não apague nada
+
+Duas travas, nessa ordem de importância.
+
+**O app se recusa a subir em produção sem banco.** O modo arquivo grava no disco do container,
+que o Railway recria a cada deploy. Rodar assim em produção apaga tudo que foi cadastrado sem
+mostrar erro nenhum: a tela abre normal, com os 147 do seed, e o resto sumiu. Por isso, quando
+detecta ambiente de produção (`NODE_ENV=production` ou qualquer variável `RAILWAY_*`) e não
+encontra `DATABASE_URL`, o processo para com uma mensagem explicando o que fazer. O deploy falha
+no healthcheck e o Railway mantém no ar a versão anterior, com os dados dela intactos. Falha
+barulhenta em vez de perda silenciosa. Para rodar sem banco de propósito, passe
+`PERMITIR_MODO_ARQUIVO=1`.
+
+**Com o Postgres ligado, deploy nenhum apaga dado.** O seed só roda com a tabela vazia, e não
+existe caminho no código que apague algo no boot. Quem apaga é só você, pelo botão Excluir da
+interface.
+
+**Backup e restauração:**
+
+```bash
+npm run backup                                       # salva em backups/curimba-AAAA-MM-DD.json
+npm run backup -- --restaurar arquivo.json           # mostra o que entraria, não grava
+npm run backup -- --restaurar arquivo.json --apply   # grava
+```
+
+Contra o banco do Railway, use `railway run npm run backup`.
+
+A restauração só **insere o que está faltando**. Nunca apaga e nunca sobrescreve o que já existe,
+então rodar duas vezes não duplica nem estraga nada. Ela casa os pontos por `seed_ref` e, para os
+que você criou, pela dupla entidade mais letra. As giras são recriadas com os ids remapeados,
+então o roteiro continua apontando para os pontos certos mesmo que os ids tenham mudado.
+
+A pasta `backups/` está no `.gitignore`: o repositório é público e o acervo não precisa ir junto.
+
 ## Levar correções do JSON para o banco (`npm run resync`)
 
 O seed automático só roda com a tabela vazia, de propósito: senão todo deploy sobrescreveria

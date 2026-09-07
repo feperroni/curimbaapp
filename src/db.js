@@ -19,6 +19,43 @@ const RITMOS = ['Angola', 'Ijexá', 'Nagô', 'Congo', 'Samba', 'Samba de Caboclo
 const useDb = Boolean(process.env.DATABASE_URL);
 let pool = null;
 
+/* Trava contra perda silenciosa de dados.
+ *
+ * O modo arquivo grava no disco do container, que o Railway recria a cada
+ * deploy. Rodar assim em producao apaga tudo que foi cadastrado, sem erro
+ * nenhum na tela: o app abre normal, com os 147 do seed, e o resto sumiu.
+ *
+ * Entao aqui, se estamos na nuvem e o DATABASE_URL nao chegou, o processo
+ * recusa subir. O deploy falha no healthcheck, o Railway mantem no ar a versao
+ * anterior, e os dados dela continuam vivos. Falha barulhenta em vez de perda
+ * silenciosa.
+ *
+ * Para rodar sem banco de proposito (um teste na nuvem, por exemplo), passe
+ * PERMITIR_MODO_ARQUIVO=1. */
+const naNuvem = process.env.NODE_ENV === 'production' ||
+  Object.keys(process.env).some(k => k.startsWith('RAILWAY_'));
+
+if (!useDb && naNuvem && process.env.PERMITIR_MODO_ARQUIVO !== '1') {
+  console.error([
+    '',
+    '  PAREI ANTES DE SUBIR.',
+    '',
+    '  Este ambiente parece ser de producao, mas DATABASE_URL nao esta definida.',
+    '  Sem ela o app grava no disco do container, que some no proximo deploy:',
+    '  todo ponto e toda gira que voce cadastrar seriam perdidos sem aviso.',
+    '',
+    '  Como resolver, no servico do app em Variables:',
+    '    DATABASE_URL = ${{Postgres.DATABASE_URL}}',
+    '  (referencia, nao o valor colado; troque Postgres pelo nome do seu servico',
+    '   de banco se ele tiver outro nome)',
+    '',
+    '  A versao que ja estava no ar continua rodando, com os dados dela.',
+    '  Para rodar sem banco de proposito: PERMITIR_MODO_ARQUIVO=1',
+    ''
+  ].join('\n'));
+  process.exit(1);
+}
+
 if (useDb) {
   pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
