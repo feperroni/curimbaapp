@@ -83,6 +83,61 @@ app.delete('/api/pontos/:id', exigeSenha, async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
+/* Favorito nao pede senha de proposito: e um toque so, durante a gira,
+   e totalmente reversivel. Exigir senha aqui atrapalharia o uso ao vivo. */
+app.patch('/api/pontos/:id/favorito', async (req, res, next) => {
+  try {
+    const p = await db.marcarFavorito(Number(req.params.id), Boolean(req.body?.favorito));
+    if (!p) return res.status(404).json({ erro: 'Ponto nao encontrado' });
+    res.json(p);
+  } catch (e) { next(e); }
+});
+
+/* ---------- giras (roteiros ordenados) ---------- */
+
+function validarGira(body) {
+  const nome = String(body?.nome || '').trim();
+  const observacao = body?.observacao ? String(body.observacao).trim() : null;
+  const pontos = Array.isArray(body?.pontos)
+    ? [...new Set(body.pontos.map(Number).filter(Number.isInteger))]
+    : [];
+  const erros = [];
+  if (!nome) erros.push('a gira precisa de um nome');
+  if (nome.length > 80) erros.push('nome muito longo');
+  return { gira: { nome, observacao, pontos }, erros };
+}
+
+app.get('/api/giras', async (req, res, next) => {
+  try {
+    res.json(await db.listarGiras());
+  } catch (e) { next(e); }
+});
+
+app.post('/api/giras', exigeSenha, async (req, res, next) => {
+  try {
+    const { gira, erros } = validarGira(req.body);
+    if (erros.length) return res.status(400).json({ erro: erros.join('; ') });
+    res.status(201).json(await db.criarGira(gira));
+  } catch (e) { next(e); }
+});
+
+app.put('/api/giras/:id', exigeSenha, async (req, res, next) => {
+  try {
+    const { gira, erros } = validarGira(req.body);
+    if (erros.length) return res.status(400).json({ erro: erros.join('; ') });
+    const atualizada = await db.atualizarGira(Number(req.params.id), gira);
+    if (!atualizada) return res.status(404).json({ erro: 'Gira nao encontrada' });
+    res.json(atualizada);
+  } catch (e) { next(e); }
+});
+
+app.delete('/api/giras/:id', exigeSenha, async (req, res, next) => {
+  try {
+    const ok = await db.excluirGira(Number(req.params.id));
+    res.status(ok ? 204 : 404).end();
+  } catch (e) { next(e); }
+});
+
 app.get('/health', (req, res) => res.json({ ok: true }));
 
 app.use((err, req, res, _next) => {

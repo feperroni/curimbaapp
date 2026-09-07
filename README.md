@@ -26,6 +26,42 @@ abertura, defumação, chamada, saudação, firmeza, paga, descarrego, subida.
 Títulos foram gerados a partir da primeira linha cantada, que é como o ponto é chamado na prática.
 São editáveis pela interface.
 
+Preto Velho e Caboclo ficam agrupados só pela entidade, sem nome próprio. `entidade_especifica`
+existe e é preenchida onde o songbook marcava explicitamente (Tranca Ruas, Tiriri), mas não é
+usada para subdividir as demais linhas.
+
+## Favoritos, giras e pilha
+
+**Favoritos.** Estrela em cada ponto, na lista e no card. Fica no servidor, então vale para
+qualquer aparelho que abra a URL. É o único endpoint de escrita que não pede senha: é um toque
+durante a gira, totalmente reversível, e exigir senha ali atrapalharia o uso ao vivo.
+
+**Giras.** Roteiro nomeado e ordenado. Você cria a gira, navega pelo acervo normalmente e usa o
+`＋` de cada ponto para escolher, na ordem. "Ver roteiro" mostra o que já entrou, com `↑ ↓ ✕`
+para reordenar e tirar. Salvar exige a senha. Abrir uma gira empilha o roteiro inteiro no leitor.
+
+**Pilha.** O leitor mostra vários pontos ao mesmo tempo, um embaixo do outro. Cada card ocupa
+metade da altura útil, então dois cabem por tela, e cresce sozinho quando a letra é mais longa.
+O scroll tem snap, então o card seguinte encaixa no topo. A lista lateral continua sempre
+visível para você trocar rápido, e os pontos que estão na tela ficam marcados nela.
+
+- Toque no corpo do item: abre sozinho, trocando o que estava na tela.
+- `＋` no item: acrescenta à pilha sem tirar o que já está.
+- "Empilhar tudo": joga a lista filtrada inteira na pilha.
+- `✕` no card ou "Limpar" no rodapé: esvazia.
+
+## Corrigir pontos
+
+Todos os pontos são editáveis, os 147 importados do Word inclusive. O lápis fica direto na
+lista, ao lado da estrela e do `＋`, e também no cabeçalho de cada card da pilha. Abre o mesmo
+formulário do cadastro, já preenchido, onde dá para mexer em linha, entidade, momento, ritmos,
+título e letra. Salvar e excluir pedem a senha; a senha fica guardada no tablet depois da
+primeira vez, então numa sessão de correção você digita uma vez só.
+
+Vale usar isso para arrumar o que a importação automática não teve como acertar: o Word junta
+vários versos numa linha só em muitos pontos, e o título sai truncado quando a primeira linha
+é longa demais.
+
 ## Rodar local
 
 ```bash
