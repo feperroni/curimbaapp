@@ -190,6 +190,13 @@ function visiveis() {
  * Nada foi copiado de livro: o que existe de material publicado sobre toque
  * de umbanda e obra protegida, e alem disso a grafia varia de casa para casa.
  * Confira com o oga da casa antes de tomar isto como padrao.
+ *
+ * Cada card responde quatro coisas, nesta ordem: de onde o toque vem, que
+ * energia ele carrega, quando se usa, e o que o separa do toque vizinho --
+ * que e a duvida real na hora de escolher.
+ *
+ * Nenhum toque e amarrado a um orixa: quem decide e quem compos o ponto.
+ * As entidades listadas em "Quando" sao o uso comum, nao regra.
  */
 const ZONAS = {
   grave: { nome: 'Centro', como: 'mão aberta no meio da pele', som: 'DUM, TUM' },
@@ -199,55 +206,70 @@ const ZONAS = {
 
 const TOQUES = [
   {
-    id: 'angola', nome: 'Angola', tempo: 'Ternário, 3 tempos',
-    clima: 'Terra firme, ancestralidade, peso',
-    uso: 'Exus, Pombagiras, Pretos Velhos, Caboclos, Ogum nas chamadas, abertura de gira',
-    padrao: 'DUM — pa — DUM — pa',
-    nota: 'Pesado e arrastado. Não corra: o peso é o que caracteriza o toque.'
-  },
-  {
-    id: 'ijexa', nome: 'Ijexá', tempo: 'Binário, 2 tempos',
-    clima: 'Água corrente, leveza, suavidade',
-    uso: 'Oxum, Iemanjá, Oxalá, Obaluaê, Pretos Velhos, Oxóssi, Iansã',
+    id: 'ijexa', nome: 'Ijexá', tempo: 'Binário, cadenciado',
+    origem: 'Nação iorubá, da cidade de Ilexá; chegou ao Brasil pela Bahia',
+    clima: 'Água corrente, acolhimento, tranquilidade',
+    uso: 'Oxum e Logunã por fundamento, mas serve quase todas as linhas: Yemanjá, Oxalá, Obaluaiê, Oxóssi, Iansã, Pretos Velhos',
     padrao: 'DUM — ca-DUM — ca',
-    nota: 'Fluido e ondulante. É o toque mais usado do acervo, com 70 pontos.'
+    diferenca: 'É o avesso do Barra-Vento, que vem da mesma raiz: onde o Barra-Vento acelera e arrebata, o Ijexá acalma.',
+    nota: 'Tocado só com as mãos, fluido e sem pressa. É o toque mais usado do acervo.'
   },
   {
-    id: 'nago', nome: 'Nagô', tempo: 'Ternário, 3 tempos',
+    id: 'nago', nome: 'Nagô', tempo: 'Marcado, solene',
+    origem: 'Nação iorubá (nagô)',
     clima: 'Majestade, reverência, fundamento',
-    uso: 'Oxalá nos pontos solenes, Oxóssi, Xangô, abertura de fundamentos',
+    uso: 'Pontos solenes de orixá e abertura de fundamento: Oxalá, Oxóssi, Xangô, Ogum',
     padrao: 'DUM — DUM — pa — DUM',
-    nota: 'Mais aberto e solene que o Angola. Mesmo compasso ternário, outra intenção.'
+    diferenca: 'Mais grave e mais quadrado que o Ijexá; mais sério que o Congo. É o toque de reverência, não de festa.',
+    nota: 'Aberto e sem correria. A solenidade está no espaço entre as batidas.'
   },
   {
-    id: 'congo', nome: 'Congo', tempo: 'Binário, 2 tempos',
-    clima: 'Festa, movimento, leveza alegre',
-    uso: 'Baianos, Ciganos, Exu Mirim, Oxumaré, entidades festivas',
+    id: 'angola', nome: 'Angola', tempo: 'Pesado, arrastado',
+    origem: 'Família banto (Angola)',
+    clima: 'Terra firme, ancestralidade, peso',
+    uso: 'Pretos Velhos, Exus, Pombagiras, Caboclos, Ogum nas chamadas, abertura de gira',
+    padrao: 'DUM — pa — DUM — pa',
+    diferenca: 'Mesma família do Congo, intenção oposta: o Congo é festa, o Angola é chão.',
+    nota: 'Não corra: o peso é o que caracteriza o toque. Angola apressado vira outra coisa.'
+  },
+  {
+    id: 'congo', nome: 'Congo (Congo de Ouro)', tempo: 'Binário, bem marcado',
+    origem: 'Família banto (Congo)',
+    clima: 'Festa, movimento, alegria marcada',
+    uso: 'Ogum, Oxóssi, Xangô, Iansã, Oxumaré e as linhas festivas: baianos, ciganos, marinheiros, Exu Mirim',
     padrao: 'DUM-pa — DUM — DUM-pa',
-    nota: 'Também chamado Congo de Ouro. Alegre e bem marcado.'
+    diferenca: 'Marca em cima do tempo, sem a síncope do Samba de Caboclo; e sem o peso do Angola.',
+    nota: 'Alegre e bem marcado. É o toque que levanta a roda sem acelerar a gira.'
   },
   {
-    id: 'samba', nome: 'Samba de Caboclo', tempo: 'Binário, 2 tempos',
+    id: 'samba', nome: 'Samba de Caboclo', tempo: 'Binário, sincopado',
+    origem: 'Raiz banto, pelo samba de roda brasileiro',
     clima: 'Mata, galope, natureza viva',
-    uso: 'Caboclos, Baianos, Boiadeiros, Marinheiros, pontos animados',
+    uso: 'Caboclos, Boiadeiros, Baianos, Marinheiros, pontos animados',
     padrao: 'DUM — ca-DUM — pa-DUM',
-    nota: 'Sincopado, ágil e saltitante. A síncope é o que separa ele do Congo.'
+    diferenca: 'A síncope é o que separa ele do Congo: o Congo marca no tempo, o samba adianta.',
+    nota: 'Ágil e saltitante. Pede corpo se mexendo, não só mão no couro.'
   },
   {
-    id: 'cabula', nome: 'Angola / Samba Cabula', tempo: 'Ternário puxado',
-    clima: 'Chão batido, cadência de roda',
-    uso: 'Variação do Angola em pontos que pedem mais movimento',
+    id: 'cabula', nome: 'Cabula (Samba de Cabula)', tempo: 'Cadência de roda',
+    origem: 'Família banto; aparece tanto no terreiro quanto na roda de capoeira',
+    clima: 'Chão batido, corpo em movimento',
+    uso: 'Pontos que pedem mais movimento que o Angola sem chegar na festa do Congo',
     padrao: 'TUM — TA — TA — TUM — TUM',
+    diferenca: 'Fica entre o Angola e o Congo: mantém o chão do Angola, mas com a roda girando.',
     nota: 'A volta repete começando pelo TA: TA — TA — TUM — TUM — TUM.'
   },
   {
-    id: 'bv', nome: 'BV (Batucada Variada)', tempo: 'Livre ou misto',
-    clima: 'Suporte neutro, acompanhamento',
-    uso: 'Pontos de abertura geral, entidades diversas, transições',
-    padrao: 'DUM — pa — DUM-DUM — pa',
-    nota: 'Não tem padrão fixo. O ogã acompanha a melodia do ponto; a base acima é ponto de partida, não regra.'
+    id: 'barravento', nome: 'Barra-Vento (BV)', tempo: 'Cíclico e acelerado',
+    origem: 'Família banto; também usado na capoeira',
+    clima: 'Movimento, energia, arrebatamento',
+    uso: 'Iansã; toque de puxada, para levantar a gira e firmar a chegada',
+    padrao: null,
+    diferenca: 'O contrário do Ijexá: mais rápido e mais forte, cadência cíclica, sem começo nem fim marcados.',
+    nota: 'BV é a sigla de Barra-Vento — não é batida livre. A batida da casa ainda não está registrada aqui: confira com o ogã antes de tomar qualquer coisa como padrão.'
   }
 ];
+
 
 function zonaDoGolpe(g) {
   const t = g.toLowerCase();
@@ -313,18 +335,13 @@ function renderToques() {
   poe('limparPilha', 'hidden', true);
 
   for (const t of TOQUES) {
-    const grade = gradeDoPadrao(t.padrao);
     const card = document.createElement('article');
     card.className = 'card card-toque';
     card.id = `toque-${t.id}`;
-    card.innerHTML = `
-      <h2 class="card-tit">${escapa(t.nome)}</h2>
-      <p class="card-meta">${escapa(t.tempo)}  ·  ${escapa(t.clima)}</p>
-      <div class="toque-corpo">
-        <div class="toque-figura">${svgAtabaque()}</div>
-        <div class="toque-vozes">
-          <div class="grade">
-            ${grade.map(c => `
+
+    // toque sem batida registrada mostra um aviso no lugar da grade
+    const grade = t.padrao
+      ? `<div class="grade">${gradeDoPadrao(t.padrao).map(c => `
               <div class="tempo">
                 <span class="tempo-n">${c.n}</span>
                 <div class="golpes">
@@ -332,10 +349,19 @@ function renderToques() {
                     ? c.golpes.map(g => `<span class="golpe z-${g.zona}">${escapa(g.texto)}</span>`).join('')
                     : '<span class="golpe pausa">·</span>'}
                 </div>
-              </div>`).join('')}
-          </div>
-          ${svgLegendaZonas()}
+              </div>`).join('')}</div>${svgLegendaZonas()}`
+      : `<p class="toque-sem-grade">Batida ainda não registrada nesta casa.</p>`;
+
+    card.innerHTML = `
+      <h2 class="card-tit">${escapa(t.nome)}</h2>
+      <p class="card-meta">${escapa(t.tempo)}  ·  ${escapa(t.clima)}</p>
+      <div class="toque-corpo">
+        <div class="toque-figura">${svgAtabaque()}</div>
+        <div class="toque-vozes">
+          ${grade}
+          <p class="toque-uso"><b>De onde vem:</b> ${escapa(t.origem)}</p>
           <p class="toque-uso"><b>Quando:</b> ${escapa(t.uso)}</p>
+          <p class="toque-uso"><b>Diferença:</b> ${escapa(t.diferenca)}</p>
           <p class="toque-nota">${escapa(t.nota)}</p>
         </div>
       </div>`;

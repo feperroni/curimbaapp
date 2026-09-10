@@ -422,7 +422,7 @@
   "linha": "orixas",
   "entidade": "Logunã",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -651,7 +651,7 @@
   "linha": "orixas",
   "entidade": "Obá",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -722,7 +722,7 @@
   "linha": "orixas",
   "entidade": "Oroiná",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -836,7 +836,7 @@
   "linha": "orixas",
   "entidade": "Ogum",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "subida",
@@ -864,7 +864,7 @@
   "linha": "orixas",
   "entidade": "Iansã",
   "ritmos": [
-   "BV",
+   "Barravento",
    "Congo"
   ],
   "ritmo_original": "BV/Congo",
@@ -879,7 +879,7 @@
   "linha": "orixas",
   "entidade": "Iansã",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -894,7 +894,7 @@
   "entidade": "Iansã",
   "ritmos": [
    "Ijexá",
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "Ijexá, BV",
   "momento": "firmeza",
@@ -1346,7 +1346,7 @@
   "linha": "ritual",
   "entidade": "Descarrego",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "descarrego",
@@ -1680,7 +1680,7 @@
   "linha": "direita",
   "entidade": "Caboclo",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -1694,7 +1694,7 @@
   "linha": "direita",
   "entidade": "Caboclo",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -1708,7 +1708,7 @@
   "linha": "direita",
   "entidade": "Caboclo",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -1807,7 +1807,7 @@
   "entidade": "Baiano",
   "ritmos": [
    "Ijexá",
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "Ijexá/BV",
   "momento": "firmeza",
@@ -1835,7 +1835,7 @@
   "linha": "direita",
   "entidade": "Baiano",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",
@@ -1977,7 +1977,7 @@
   "entidade": "Boiadeiro",
   "ritmos": [
    "Samba",
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "Samba/BV",
   "momento": "firmeza",
@@ -2005,7 +2005,7 @@
   "linha": "direita",
   "entidade": "Boiadeiro",
   "ritmos": [
-   "BV"
+   "Barravento"
   ],
   "ritmo_original": "BV",
   "momento": "firmeza",

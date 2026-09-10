@@ -10,7 +10,7 @@ const DEV_GIRAS = path.join(__dirname, '..', 'seed', '.dev-giras.json');
 
 const LINHAS = ['ritual', 'orixas', 'esquerda', 'direita'];
 const MOMENTOS = ['abertura', 'defumacao', 'chamada', 'saudacao', 'firmeza', 'paga', 'descarrego', 'subida'];
-const RITMOS = ['Angola', 'Ijexá', 'Nagô', 'Congo', 'Samba', 'Samba de Caboclo', 'BV', 'Barravento', 'Cabula'];
+const RITMOS = ['Angola', 'Ijexá', 'Nagô', 'Congo', 'Samba', 'Samba de Caboclo', 'Barravento', 'Cabula'];
 
 /*
  * Camada de dados. Com DATABASE_URL definida usa Postgres.

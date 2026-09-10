@@ -555,6 +555,14 @@ body[data-vista="toques"] { --acento: #c98a5e; }
 .toque-vozes { flex: 1; min-width: 0; }
 .toque-uso { margin: 0 0 16px; font-size: 15px; line-height: 1.5; color: var(--texto-fraco); }
 .toque-uso b { color: var(--texto); }
+.toque-sem-grade {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border: 1px dashed var(--borda);
+  border-radius: 12px;
+  font-size: 15px;
+  color: var(--texto-fraco);
+}
 .toque-nota { margin: 14px 0 0; font-size: 13px; line-height: 1.55; color: var(--texto-fraco); border-left: 3px solid var(--borda); padding-left: 12px; }
 
 .voz + .voz { margin-top: 14px; }

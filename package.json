@@ -8,7 +8,8 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "resync": "node src/resync.js",
-    "backup": "node src/backup.js"
+    "backup": "node src/backup.js",
+    "renomeia-ritmo": "node src/renomeia-ritmo.js"
   },
   "engines": {
     "node": ">=20"
