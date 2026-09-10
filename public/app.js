@@ -467,7 +467,10 @@ function renderFiltros() {
     b.className = 'chip';
     b.textContent = ROTULO_MOMENTO[m];
     b.setAttribute('aria-pressed', String(est.momento === m));
-    b.onclick = () => { est.momento = est.momento === m ? null : m; renderFiltros(); renderLista(); };
+    b.onclick = () => {
+      est.momento = est.momento === m ? null : m;
+      renderFiltros(); renderLista(); renderPilha();
+    };
     cm.appendChild(b);
   }
 
@@ -479,7 +482,10 @@ function renderFiltros() {
     b.className = 'chip';
     b.textContent = r;
     b.setAttribute('aria-pressed', String(est.ritmo === r));
-    b.onclick = () => { est.ritmo = est.ritmo === r ? null : r; renderFiltros(); renderLista(); };
+    b.onclick = () => {
+      est.ritmo = est.ritmo === r ? null : r;
+      renderFiltros(); renderLista(); renderPilha();
+    };
     cr.appendChild(b);
   }
 
@@ -748,7 +754,7 @@ function porNoRoteiro(id) {
 
 function tirarDoRoteiro(id) {
   est.montando.pontos = est.montando.pontos.filter(x => x !== id);
-  renderLista(); renderBanner();
+  renderLista(); renderPilha(); renderBanner();
 }
 
 function moverNoRoteiro(id, passo) {
@@ -757,7 +763,7 @@ function moverNoRoteiro(id, passo) {
   const j = i + passo;
   if (i === -1 || j < 0 || j >= l.length) return;
   [l[i], l[j]] = [l[j], l[i]];
-  renderLista();
+  renderLista(); renderPilha();
 }
 
 async function salvarMontagem() {
@@ -1124,7 +1130,7 @@ function ligarEventos() {
     $('buscaBarra').hidden = true;
     $('campoBusca').value = '';
     est.busca = '';
-    renderLista();
+    renderLista(); renderPilha();
   };
   $('campoBusca').oninput = e => {
     est.busca = e.target.value;
