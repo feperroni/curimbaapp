@@ -330,17 +330,21 @@ button { cursor: pointer; }
 .pilha[data-colunas="2"] { grid-template-columns: 1fr 1fr; }
 
 .card {
-  min-height: 50cqh;
+  height: 50cqh;
   padding: 20px 34px 26px;
   border-bottom: 1px solid var(--borda);
   scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 .pilha[data-colunas="2"] .card { padding: 18px 22px 22px; }
 .pilha[data-colunas="2"] .card:nth-child(odd) { border-right: 1px solid var(--borda); }
-.pilha[data-colunas="1"] .card:last-child { border-bottom: 0; padding-bottom: 90px; }
-.pilha[data-colunas="2"] .card:nth-last-child(-n+2) { padding-bottom: 90px; }
+.pilha[data-colunas="1"] .card:last-child { border-bottom: 0; }
+.pilha[data-colunas="2"] .card:nth-last-child(-n+2) { border-bottom: 0; }
 
-.card-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+.card-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; flex-shrink: 0; }
 .card-tit-wrap { min-width: 0; }
 .card-tit { margin: 0; font-size: 21px; line-height: 1.25; font-weight: 700; }
 .card-num {
@@ -362,14 +366,50 @@ button { cursor: pointer; }
 .card-acoes { display: flex; gap: 4px; flex-shrink: 0; }
 .card-acoes .mini-btn { min-width: 42px; min-height: 38px; border-color: var(--borda); font-size: 17px; }
 
+/* a letra ocupa o que sobra da caixa. O tamanho da fonte e ajustado no app.js
+   para o ponto caber inteiro; so o ponto muito longo rola aqui dentro. */
 .letra {
   margin: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   font-family: inherit;
   font-size: var(--letra-tam);
   line-height: 1.58;
   white-space: pre-wrap;
   word-break: break-word;
+  scrollbar-width: thin;
+  scrollbar-color: var(--borda) transparent;
 }
+/* aviso de que a letra continua abaixo */
+.card.tem-mais { position: relative; }
+.card.tem-mais::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 30px;
+  background: linear-gradient(to top, var(--fundo), transparent);
+  pointer-events: none;
+}
+.card.tem-mais::before {
+  content: 'continua ⌄';
+  position: absolute;
+  right: 16px;
+  bottom: 7px;
+  z-index: 1;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--fundo-3);
+  border: 1px solid var(--borda);
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: var(--texto-fraco);
+  pointer-events: none;
+}
+
+.letra::-webkit-scrollbar { width: 6px; }
+.letra::-webkit-scrollbar-thumb { background: var(--borda); border-radius: 3px; }
 
 .rodape-pilha {
   display: flex;
@@ -497,7 +537,7 @@ button { cursor: pointer; }
 }
 body[data-vista="toques"] { --acento: #c98a5e; }
 
-.card-toque { min-height: auto; padding-bottom: 28px; }
+.card-toque { height: auto; min-height: auto; padding-bottom: 28px; display: block; overflow: visible; }
 .toque-corpo { display: flex; gap: 26px; align-items: flex-start; }
 .toque-figura { flex: 0 0 240px; }
 .atabaque { width: 100%; max-width: 220px; display: block; margin: 0 auto 10px; }

@@ -631,13 +631,102 @@ function renderPilha() {
 
     const letra = document.createElement('pre');
     letra.className = 'letra';
+    letra.dataset.id = String(p.id);
     letra.textContent = p.letra;
 
     card.appendChild(cab);
     card.appendChild(letra);
     box.appendChild(card);
   });
+
+  ajustarLetras();
 }
+
+/* ---------------- tamanho automatico da letra ----------------
+ * Toda caixa tem a mesma altura (meia tela), entao ponto curto e ponto longo
+ * ocupam o mesmo espaco. Para nao sobrar buraco no curto nem cortar o longo,
+ * a fonte de cada ponto cresce ou encolhe ate a letra caber na caixa.
+ * Ponto comprido demais para o menor tamanho rola dentro da propria caixa.
+ */
+const FIT_CACHE = new Map();
+let observadorLetra = null;
+
+// tamanho de referencia: o que o A+/A- define, menor em duas colunas
+function tamanhoAlvo() {
+  const base = tamanhoAtual();
+  return est.colunas === 2 ? Math.round(base * 0.8) : base;
+}
+
+function ajustaUmaLetra(pre) {
+  const alt = pre.clientHeight;
+  const larg = pre.clientWidth;
+  if (!alt || !larg) return;                 // caixa ainda sem medida
+
+  const alvo = tamanhoAlvo();
+  const chave = `${pre.dataset.id}|${larg}x${alt}|${alvo}`;
+  const guardado = FIT_CACHE.get(chave);
+  if (guardado) { pre.style.fontSize = guardado + 'px'; marcaSobra(pre); return; }
+
+  const min = Math.max(16, Math.round(alvo * 0.55));   // piso de leitura no tablet
+  const max = Math.round(alvo * 2);                    // ponto curto ocupa a caixa toda
+
+  // busca binaria: o maior tamanho em que a letra ainda cabe sem rolar
+  let lo = min, hi = max, melhor = min;
+  while (lo <= hi) {
+    const meio = Math.floor((lo + hi) / 2);
+    pre.style.fontSize = meio + 'px';
+    if (pre.scrollHeight <= pre.clientHeight + 1) { melhor = meio; lo = meio + 1; }
+    else hi = meio - 1;
+  }
+  pre.style.fontSize = melhor + 'px';
+  FIT_CACHE.set(chave, melhor);
+  marcaSobra(pre);
+}
+
+// ponto que nem no menor tamanho coube: a caixa ganha uma sombra no pe avisando
+// que tem mais letra pra baixo
+function marcaSobra(pre) {
+  const card = pre.closest('.card');
+  if (card) card.classList.toggle('tem-mais', pre.scrollHeight > pre.clientHeight + 1);
+}
+
+/* Ajusta so o que esta perto da tela: com 50 pontos na lista, medir todos de
+   uma vez travaria o tablet. O observer cuida do resto conforme voce rola. */
+function ajustarLetras() {
+  const leitor = $('leitor');
+  const pilha = $('pilha');
+  if (!leitor || !pilha) return;
+
+  if (observadorLetra) observadorLetra.disconnect();
+  const pres = [...pilha.querySelectorAll('.letra')];
+  if (!pres.length) return;
+
+  // as primeiras caixas ja entram ajustadas, sem piscar
+  for (const pre of pres.slice(0, est.colunas === 2 ? 4 : 2)) ajustaUmaLetra(pre);
+
+  if (!('IntersectionObserver' in window)) {
+    for (const pre of pres) ajustaUmaLetra(pre);
+    return;
+  }
+  observadorLetra = new IntersectionObserver(entradas => {
+    for (const e of entradas) if (e.isIntersecting) ajustaUmaLetra(e.target);
+  }, { root: leitor, rootMargin: '400px 0px' });
+  for (const pre of pres) {
+    observadorLetra.observe(pre);
+    pre.onscroll = () => {
+      const card = pre.closest('.card');
+      if (card) card.classList.toggle('tem-mais',
+        pre.scrollTop + pre.clientHeight < pre.scrollHeight - 1);
+    };
+  }
+}
+
+// girar o tablet ou mudar a janela muda a altura da caixa
+let respiroResize = null;
+window.addEventListener('resize', () => {
+  clearTimeout(respiroResize);
+  respiroResize = setTimeout(ajustarLetras, 150);
+});
 
 function renderBanner() {
   const b = $('banner');
@@ -1081,6 +1170,9 @@ function aplicaCheia(ligar) {
   poe('cheiaOnde', 'textContent', ligar ? ondeEstou() : '');
   poe('telaCheia', 'textContent', ligar ? '⤡ Reduzir' : '⤢ Tela cheia');
 
+  // a caixa muda de tamanho: refaz o ajuste da letra
+  requestAnimationFrame(() => ajustarLetras());
+
   try {
     if (ligar && !document.fullscreenElement) {
       document.documentElement.requestFullscreen?.().catch(() => {});
@@ -1095,6 +1187,7 @@ function aplicaCheia(ligar) {
 function aplicaTamanho(px) {
   document.documentElement.style.setProperty('--letra-tam', px + 'px');
   try { localStorage.setItem(TAM_KEY, String(px)); } catch (_) {}
+  ajustarLetras();
 }
 function tamanhoAtual() {
   return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--letra-tam'), 10) || 30;
