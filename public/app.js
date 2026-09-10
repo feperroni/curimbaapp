@@ -19,6 +19,27 @@ const ORDEM_MOMENTO = ['abertura', 'defumacao', 'chamada', 'saudacao', 'firmeza'
 // entidades que devem aparecer no menu mesmo sem ponto cadastrado
 const ENTIDADES_EXTRA = { esquerda: ['Pombagira Mirim'] };
 
+// ordem fixa dos orixás no menu, da esquerda para a direita (não é alfabética)
+const ORDEM_ORIXAS = [
+  'Oxalá', 'Logunã', 'Oxum', 'Oxumaré', 'Oxóssi', 'Obá', 'Xangô',
+  'Oroiná', 'Ogum', 'Iansã', 'Obaluaê', 'Nanã', 'Yemanjá', 'Omulu'
+];
+// grafias alternativas que devem cair na mesma posição da lista acima
+const VARIANTES_ORIXAS = {
+  'Obaluaê': ['Obaluaiê', 'Obaluaye'],
+  'Yemanjá': ['Iemanjá'],
+  'Iansã': ['Yansã', 'Oyá'],
+  'Oxóssi': ['Oxosse'],
+  'Oxalá': ['Oxalufã', 'Oxaguiã']
+};
+
+// nome normalizado -> posição no menu
+const POS_ORIXA = new Map();
+ORDEM_ORIXAS.forEach((nome, i) => {
+  POS_ORIXA.set(normaliza(nome), i);
+  for (const alt of (VARIANTES_ORIXAS[nome] || [])) POS_ORIXA.set(normaliza(alt), i);
+});
+
 const SAUDACOES = {
   'Oxalá': 'Exê Babá', 'Logunã': 'Olha o tempo minha mãe', 'Yemanjá': 'Adociaba minha mãe',
   'Omulu': 'Atotô meu pai', 'Obaluaê': 'Atotô meu pai', 'Oxum': 'Ora iê iê mamãe Oxum',
@@ -107,7 +128,13 @@ function entidadesDaVista(vista) {
   if (vista !== 'casa') {
     for (const nome of (ENTIDADES_EXTRA[vista] || [])) if (!mapa.has(nome)) mapa.set(nome, 0);
   }
-  return [...mapa.entries()];
+  const lista = [...mapa.entries()];
+  if (vista === 'orixas') {
+    // fora da lista fixa vai para o fim, em ordem alfabética
+    const pos = n => POS_ORIXA.has(normaliza(n)) ? POS_ORIXA.get(normaliza(n)) : ORDEM_ORIXAS.length;
+    lista.sort((a, b) => pos(a[0]) - pos(b[0]) || a[0].localeCompare(b[0], 'pt-BR'));
+  }
+  return lista;
 }
 
 // pontos que servem de base para os chips de filtro

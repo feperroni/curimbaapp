@@ -77,6 +77,8 @@ button { cursor: pointer; }
   color: var(--texto-fraco);
   font-size: 16px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
   transition: background .12s, color .12s, border-color .12s;
 }
 .linha-btn.estreito { flex: 0 0 auto; min-width: 64px; }
@@ -142,6 +144,8 @@ button { cursor: pointer; }
   background: var(--fundo-2);
   font-size: 16px;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
   white-space: nowrap;
 }
 .ent-btn[aria-selected="true"] {
@@ -176,6 +180,8 @@ button { cursor: pointer; }
   background: transparent;
   color: var(--texto-fraco);
   font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
   white-space: nowrap;
 }
 .chip[aria-pressed="true"] {
