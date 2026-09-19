@@ -56,7 +56,9 @@ let META = { linhas: [], momentos: [], ritmos: [] };
 
 const est = {
   vista: 'ritual',        // uma das LINHAS, ou 'favoritos', ou 'giras'
-  entidade: null,
+  entidades: [],          // entidade escolhida; duas quando o lado a lado esta ligado
+  comparar: false,        // modo lado a lado: duas entidades, uma coluna cada
+  paneAtiva: 0,           // no lado a lado, a coluna que os botoes de ponto comandam
   giraAberta: null,       // id da gira sendo tocada
   momento: null,
   ritmo: null,
@@ -73,6 +75,11 @@ const est = {
 
 const $ = id => document.getElementById(id);
 const acha = id => PONTOS.find(p => p.id === id);
+
+// a primeira entidade escolhida, para quando so uma faz sentido
+const entidadeAtual = () => est.entidades[0] || null;
+// a tela esta partida em duas colunas de entidade?
+const dividido = () => est.comparar && est.entidades.length >= 2;
 
 /* Escreve numa propriedade de um elemento que pode nao existir. Protege contra
    o caso de um index.html velho em cache do navegador com um app.js novo. */
@@ -140,7 +147,21 @@ function entidadesDaVista(vista) {
 // pontos que servem de base para os chips de filtro
 function baseAtual() {
   const conj = conjuntoDaVista(est.vista);
-  return est.entidade ? conj.filter(p => p.entidade === est.entidade) : conj;
+  if (!est.entidades.length) return conj;
+  return conj.filter(p => est.entidades.includes(p.entidade));
+}
+
+// coringa serve qualquer entidade da propria linha
+function daEntidade(lista, nome) {
+  return lista.filter(p => p.entidade === nome ||
+    (p.coringa && LINHAS.includes(est.vista) && p.linha === est.vista));
+}
+
+function aplicaFiltros(lista) {
+  let l = lista;
+  if (est.momento) l = l.filter(p => p.momento === est.momento);
+  if (est.ritmo) l = l.filter(p => p.ritmos.includes(est.ritmo));
+  return l;
 }
 
 function ordenaLiturgico(l) {
@@ -174,13 +195,11 @@ function visiveis() {
 
   let l = conjuntoDaVista(est.vista);
 
-  if (est.entidade) {
-    l = l.filter(p => p.entidade === est.entidade ||
-      (p.coringa && est.vista !== 'favoritos' && est.vista !== 'casa' && p.linha === est.vista));
+  if (est.entidades.length) {
+    l = l.filter(p => est.entidades.includes(p.entidade) ||
+      (p.coringa && LINHAS.includes(est.vista) && p.linha === est.vista));
   }
-  if (est.momento) l = l.filter(p => p.momento === est.momento);
-  if (est.ritmo) l = l.filter(p => p.ritmos.includes(est.ritmo));
-  return ordenaLiturgico(l);
+  return ordenaLiturgico(aplicaFiltros(l));
 }
 
 
@@ -466,14 +485,53 @@ function renderSegundaFaixa() {
     return;
   }
 
+  /* Lado a lado: com o modo ligado, dois toques escolhem duas entidades e o
+     leitor parte em duas colunas. Desligado, um toque troca de entidade como
+     sempre -- o gesto de sempre nao pode ficar mais lento por causa do modo. */
+  const cmp = document.createElement('button');
+  cmp.className = 'ent-btn ent-btn-modo';
+  cmp.textContent = '⇆ Lado a lado';
+  cmp.setAttribute('aria-pressed', String(est.comparar));
+  cmp.title = est.comparar
+    ? 'Sair do lado a lado'
+    : 'Escolher duas entidades e ver uma em cada coluna';
+  cmp.onclick = () => {
+    est.comparar = !est.comparar;
+    if (!est.comparar) est.entidades = est.entidades.slice(0, 1);
+    if (est.comparar) est.modo = 'tudo';   // selecao manual nao vale no lado a lado
+    render();
+  };
+  nav.appendChild(cmp);
+
+  if (est.comparar && est.entidades.length < 2) {
+    const dica = document.createElement('span');
+    dica.className = 'dica-modo';
+    dica.textContent = est.entidades.length
+      ? 'escolha a segunda →'
+      : 'escolha duas entidades →';
+    nav.appendChild(dica);
+  }
+
   for (const [nome, qtd] of entidadesDaVista(est.vista)) {
+    const i = est.entidades.indexOf(nome);
     const b = document.createElement('button');
     b.className = 'ent-btn';
-    b.setAttribute('aria-selected', String(est.entidade === nome));
-    b.innerHTML = `${escapa(nome)}<span class="qtd">${qtd}</span>`;
+    b.setAttribute('aria-selected', String(i !== -1));
+    const lado = (est.comparar && i !== -1) ? `<span class="lado">${i + 1}</span>` : '';
+    b.innerHTML = `${lado}${escapa(nome)}<span class="qtd">${qtd}</span>`;
     b.onclick = () => {
-      est.entidade = est.entidade === nome ? null : nome;
+      if (est.comparar) {
+        if (i !== -1) est.entidades.splice(i, 1);
+        else {
+          // a terceira escolhida empurra a mais antiga para fora
+          if (est.entidades.length >= 2) est.entidades.shift();
+          est.entidades.push(nome);
+        }
+      } else {
+        est.entidades = (i !== -1) ? [] : [nome];
+      }
       est.momento = null;
+      est.paneAtiva = 0;
       render();
     };
     nav.appendChild(b);
@@ -519,12 +577,64 @@ function renderFiltros() {
 }
 
 function renderLista() {
-  const itens = visiveis();
   const ul = $('lista');
   const noRoteiro = Boolean(est.montando && est.verRoteiro);
   ul.innerHTML = '';
+  poe('empilharTudo', 'hidden', est.modo === 'tudo' || dividido());
+
+  /* No lado a lado a lista vira indice das duas colunas: cada grupo tem o nome
+     da entidade e tocar num item salta na coluna daquela entidade. */
+  if (dividido()) {
+    const colunas = colunasDoLeitor();
+    const total = colunas.reduce((n, c) => n + c.pontos.length, 0);
+    $('contador').textContent = total === 1 ? '1 ponto' : `${total} pontos`;
+    colunas.forEach((col, ci) => {
+      const tit = document.createElement('li');
+      tit.className = 'grupo-ent';
+      tit.innerHTML = `<span class="lado">${ci + 1}</span>${escapa(col.nome)}` +
+        `<span class="grupo-qtd">${col.pontos.length}</span>`;
+      tit.onclick = () => marcaPaneAtiva(ci);
+      ul.appendChild(tit);
+
+      if (!col.pontos.length) {
+        const vazio = document.createElement('li');
+        vazio.className = 'lista-vazia';
+        vazio.textContent = 'Nada aqui com esses filtros.';
+        ul.appendChild(vazio);
+        return;
+      }
+
+      col.pontos.forEach((p, i) => {
+        const li = document.createElement('li');
+        li.className = 'item';
+        const corpo = document.createElement('div');
+        corpo.className = 'item-corpo';
+        corpo.innerHTML =
+          `<div class="item-tit"><span class="ordem">${i + 1}</span>${escapa(p.titulo)}</div>` +
+          `<div class="item-sub"><span class="tag">${escapa(ROTULO_MOMENTO[p.momento] || p.momento)}</span>` +
+          `${escapa(p.ritmos.join(' / '))}</div>`;
+        corpo.onclick = () => {
+          marcaPaneAtiva(ci);
+          document.getElementById(`card-${p.id}-c${ci}`)
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        li.appendChild(corpo);
+
+        const acoes = document.createElement('div');
+        acoes.className = 'item-acoes';
+        const fav = botaozinho(p.favorito ? '★' : '☆', 'Favorito', () => alternarFavorito(p.id));
+        if (p.favorito) fav.classList.add('ativo');
+        acoes.appendChild(fav);
+        acoes.appendChild(botaozinho('✏️', `Editar "${p.titulo}"`, () => abrirModal(p)));
+        li.appendChild(acoes);
+        ul.appendChild(li);
+      });
+    });
+    return;
+  }
+
+  const itens = visiveis();
   $('contador').textContent = itens.length === 1 ? '1 ponto' : `${itens.length} pontos`;
-  poe('empilharTudo', 'hidden', est.modo === 'tudo');
 
   itens.forEach((p, i) => {
     const li = document.createElement('li');
@@ -606,153 +716,137 @@ function pontosNoLeitor() {
   return est.modo === 'tudo' ? visiveis() : est.pilha.map(acha).filter(Boolean);
 }
 
+/* O leitor e sempre uma lista de colunas. Normalmente uma so; no lado a lado,
+   uma por entidade, cada uma com a propria rolagem. */
+function colunasDoLeitor() {
+  if (!dividido()) return [{ nome: null, pontos: pontosNoLeitor() }];
+  const base = conjuntoDaVista(est.vista);
+  return est.entidades.map(nome => ({
+    nome,
+    pontos: ordenaLiturgico(aplicaFiltros(daEntidade(base, nome)))
+  }));
+}
+
+function criaCard(p, i, sufixo) {
+  const card = document.createElement('article');
+  card.className = 'card';
+  card.id = `card-${p.id}${sufixo}`;
+
+  const partes = [
+    ROTULO_LINHA[p.linha],
+    p.entidade + (p.entidade_especifica ? ` · ${p.entidade_especifica}` : ''),
+    ROTULO_MOMENTO[p.momento] || p.momento,
+    p.ritmos.join(' / ')
+  ];
+  const sauda = SAUDACOES[p.entidade];
+  if (sauda) partes.push(sauda);
+
+  const cab = document.createElement('div');
+  cab.className = 'card-cab';
+  cab.innerHTML =
+    `<div class="card-tit-wrap">` +
+    `<h2 class="card-tit"><span class="card-num">${i + 1}</span>${escapa(p.titulo)}</h2>` +
+    `<p class="card-meta">${escapa(partes.join('  ·  '))}</p></div>`;
+
+  const acoes = document.createElement('div');
+  acoes.className = 'card-acoes';
+  const fav = botaozinho(p.favorito ? '★' : '☆', 'Favorito', () => alternarFavorito(p.id));
+  if (p.favorito) fav.classList.add('ativo');
+  acoes.appendChild(fav);
+  const ed = botaozinho('Editar', 'Editar este ponto', () => abrirModal(p));
+  ed.classList.add('mini-btn-txt');
+  acoes.appendChild(ed);
+  if (est.modo === 'selecao') {
+    acoes.appendChild(botaozinho('✕', 'Tirar da tela', () => desempilhar(p.id)));
+  }
+  cab.appendChild(acoes);
+
+  const letra = document.createElement('pre');
+  letra.className = 'letra';
+  letra.dataset.id = String(p.id);
+  letra.textContent = p.letra;
+
+  card.appendChild(cab);
+  card.appendChild(letra);
+  return card;
+}
+
 function renderPilha() {
   const box = $('pilha');
   box.innerHTML = '';
-  const pontos = pontosNoLeitor();
+  const colunas = colunasDoLeitor();
+  const total = colunas.reduce((n, c) => n + c.pontos.length, 0);
+  const parte = dividido();
 
-  box.dataset.colunas = String(est.colunas);
-  poe('vazio', 'hidden', pontos.length > 0);
-  poe('limparPilha', 'hidden', est.modo !== 'selecao' || !pontos.length);
-  poe('pilhaInfo', 'textContent', !pontos.length
+  box.dataset.colunas = String(parte ? 1 : est.colunas);
+  box.classList.toggle('dividido', parte);
+  $('leitor').classList.toggle('dividido', parte);
+  poe('vazio', 'hidden', total > 0 || parte);
+  poe('limparPilha', 'hidden', est.modo !== 'selecao' || !total);
+  poe('pilhaInfo', 'textContent', !total
     ? ''
-    : pontos.length === 1 ? '1 ponto' : `${pontos.length} pontos na tela`);
+    : total === 1 ? '1 ponto' : `${total} pontos na tela`);
 
+  // no lado a lado nao existe "seleção" nem 2 colunas de card: some com os botões
+  poe('altModo', 'hidden', parte);
+  poe('altColunas', 'hidden', parte);
   for (const b of ($('altModo')?.children || [])) b.setAttribute('aria-pressed', String(b.dataset.modo === est.modo));
   for (const b of ($('altColunas')?.children || [])) b.setAttribute('aria-pressed', String(Number(b.dataset.colunas) === est.colunas));
 
-  pontos.forEach((p, i) => {
-    const card = document.createElement('article');
-    card.className = 'card';
-    card.id = `card-${p.id}`;
-
-    const partes = [
-      ROTULO_LINHA[p.linha],
-      p.entidade + (p.entidade_especifica ? ` · ${p.entidade_especifica}` : ''),
-      ROTULO_MOMENTO[p.momento] || p.momento,
-      p.ritmos.join(' / ')
-    ];
-    const sauda = SAUDACOES[p.entidade];
-    if (sauda) partes.push(sauda);
-
-    const cab = document.createElement('div');
-    cab.className = 'card-cab';
-    cab.innerHTML =
-      `<div class="card-tit-wrap">` +
-      `<h2 class="card-tit"><span class="card-num">${i + 1}</span>${escapa(p.titulo)}</h2>` +
-      `<p class="card-meta">${escapa(partes.join('  ·  '))}</p></div>`;
-
-    const acoes = document.createElement('div');
-    acoes.className = 'card-acoes';
-    const fav = botaozinho(p.favorito ? '★' : '☆', 'Favorito', () => alternarFavorito(p.id));
-    if (p.favorito) fav.classList.add('ativo');
-    acoes.appendChild(fav);
-    const ed = botaozinho('Editar', 'Editar este ponto', () => abrirModal(p));
-    ed.classList.add('mini-btn-txt');
-    acoes.appendChild(ed);
-    if (est.modo === 'selecao') {
-      acoes.appendChild(botaozinho('✕', 'Tirar da tela', () => desempilhar(p.id)));
-    }
-    cab.appendChild(acoes);
-
-    const letra = document.createElement('pre');
-    letra.className = 'letra';
-    letra.dataset.id = String(p.id);
-    letra.textContent = p.letra;
-
-    card.appendChild(cab);
-    card.appendChild(letra);
-    box.appendChild(card);
-  });
-
-  ajustarLetras();
-}
-
-/* ---------------- tamanho automatico da letra ----------------
- * Toda caixa tem a mesma altura (meia tela), entao ponto curto e ponto longo
- * ocupam o mesmo espaco. Para nao sobrar buraco no curto nem cortar o longo,
- * a fonte de cada ponto cresce ou encolhe ate a letra caber na caixa.
- * Ponto comprido demais para o menor tamanho rola dentro da propria caixa.
- */
-const FIT_CACHE = new Map();
-let observadorLetra = null;
-
-// tamanho de referencia: o que o A+/A- define, menor em duas colunas
-function tamanhoAlvo() {
-  const base = tamanhoAtual();
-  return est.colunas === 2 ? Math.round(base * 0.8) : base;
-}
-
-function ajustaUmaLetra(pre) {
-  const alt = pre.clientHeight;
-  const larg = pre.clientWidth;
-  if (!alt || !larg) return;                 // caixa ainda sem medida
-
-  const alvo = tamanhoAlvo();
-  const chave = `${pre.dataset.id}|${larg}x${alt}|${alvo}`;
-  const guardado = FIT_CACHE.get(chave);
-  if (guardado) { pre.style.fontSize = guardado + 'px'; marcaSobra(pre); return; }
-
-  const min = Math.max(16, Math.round(alvo * 0.55));   // piso de leitura no tablet
-  const max = Math.round(alvo * 2);                    // ponto curto ocupa a caixa toda
-
-  // busca binaria: o maior tamanho em que a letra ainda cabe sem rolar
-  let lo = min, hi = max, melhor = min;
-  while (lo <= hi) {
-    const meio = Math.floor((lo + hi) / 2);
-    pre.style.fontSize = meio + 'px';
-    if (pre.scrollHeight <= pre.clientHeight + 1) { melhor = meio; lo = meio + 1; }
-    else hi = meio - 1;
-  }
-  pre.style.fontSize = melhor + 'px';
-  FIT_CACHE.set(chave, melhor);
-  marcaSobra(pre);
-}
-
-// ponto que nem no menor tamanho coube: a caixa ganha uma sombra no pe avisando
-// que tem mais letra pra baixo
-function marcaSobra(pre) {
-  const card = pre.closest('.card');
-  if (card) card.classList.toggle('tem-mais', pre.scrollHeight > pre.clientHeight + 1);
-}
-
-/* Ajusta so o que esta perto da tela: com 50 pontos na lista, medir todos de
-   uma vez travaria o tablet. O observer cuida do resto conforme voce rola. */
-function ajustarLetras() {
-  const leitor = $('leitor');
-  const pilha = $('pilha');
-  if (!leitor || !pilha) return;
-
-  if (observadorLetra) observadorLetra.disconnect();
-  const pres = [...pilha.querySelectorAll('.letra')];
-  if (!pres.length) return;
-
-  // as primeiras caixas ja entram ajustadas, sem piscar
-  for (const pre of pres.slice(0, est.colunas === 2 ? 4 : 2)) ajustaUmaLetra(pre);
-
-  if (!('IntersectionObserver' in window)) {
-    for (const pre of pres) ajustaUmaLetra(pre);
+  if (!parte) {
+    colunas[0].pontos.forEach((p, i) => box.appendChild(criaCard(p, i, '')));
     return;
   }
-  observadorLetra = new IntersectionObserver(entradas => {
-    for (const e of entradas) if (e.isIntersecting) ajustaUmaLetra(e.target);
-  }, { root: leitor, rootMargin: '400px 0px' });
-  for (const pre of pres) {
-    observadorLetra.observe(pre);
-    pre.onscroll = () => {
-      const card = pre.closest('.card');
-      if (card) card.classList.toggle('tem-mais',
-        pre.scrollTop + pre.clientHeight < pre.scrollHeight - 1);
-    };
+
+  colunas.forEach((col, ci) => {
+    const pane = document.createElement('section');
+    pane.className = 'pane';
+    pane.dataset.coluna = String(ci);
+    pane.setAttribute('aria-current', String(ci === est.paneAtiva));
+
+    const cab = document.createElement('header');
+    cab.className = 'pane-cab';
+    cab.innerHTML = `<b>${escapa(col.nome)}</b>` +
+      `<span>${col.pontos.length === 1 ? '1 ponto' : col.pontos.length + ' pontos'}</span>`;
+    pane.appendChild(cab);
+
+    const dentro = document.createElement('div');
+    dentro.className = 'pane-pontos';
+    if (!col.pontos.length) {
+      const vazio = document.createElement('p');
+      vazio.className = 'pane-vazio';
+      vazio.textContent = 'Nada aqui com esses filtros.';
+      dentro.appendChild(vazio);
+    }
+    col.pontos.forEach((p, i) => dentro.appendChild(criaCard(p, i, `-c${ci}`)));
+    pane.appendChild(dentro);
+
+    // a coluna em que voce encostou por ultimo e a que os botoes de ponto comandam
+    pane.addEventListener('pointerdown', () => marcaPaneAtiva(ci), { passive: true });
+    box.appendChild(pane);
+  });
+}
+
+function marcaPaneAtiva(ci) {
+  if (est.paneAtiva === ci) return;
+  est.paneAtiva = ci;
+  for (const pane of $('pilha').querySelectorAll('.pane')) {
+    pane.setAttribute('aria-current', String(Number(pane.dataset.coluna) === ci));
   }
 }
 
-// girar o tablet ou mudar a janela muda a altura da caixa
-let respiroResize = null;
-window.addEventListener('resize', () => {
-  clearTimeout(respiroResize);
-  respiroResize = setTimeout(ajustarLetras, 150);
-});
+/* ---------------- enquadramento da letra ----------------
+ * O ponto aparece inteiro, sempre: a caixa tem a altura que a letra pedir e
+ * nada rola dentro dela. A fonte e a mesma em todos os pontos, a que voce
+ * escolheu no A+/A-.
+ *
+ * Tentei dividir o ponto longo em duas colunas de texto para ele caber numa
+ * tela so. Nao serve para este acervo: as letras vem do songbook em linhas
+ * corridas e compridas, que ja quebram sozinhas na largura da tela. Em duas
+ * colunas cada linha quebra o dobro de vezes e a altura fica igual -- medido,
+ * 758px nos dois casos. Entao a rolagem e mesmo o caminho, e o que da para
+ * fazer e ela ser boa: veja pulaPonto() e a rolagem automatica mais abaixo.
+ */
 
 function renderBanner() {
   const b = $('banner');
@@ -991,7 +1085,7 @@ function abrirModal(ponto) {
 
   const linhaPadrao = LINHAS.includes(est.vista) ? est.vista : 'ritual';
   $('fLinha').value = ponto?.linha || linhaPadrao;
-  $('fEntidade').value = ponto?.entidade || (LINHAS.includes(est.vista) ? est.entidade || '' : '');
+  $('fEntidade').value = ponto?.entidade || (LINHAS.includes(est.vista) ? entidadeAtual() || '' : '');
   $('fEspecifica').value = ponto?.entidade_especifica || '';
   $('fTitulo').value = ponto?.titulo || '';
   $('fLetra').value = ponto?.letra || '';
@@ -1079,7 +1173,7 @@ async function salvarPonto(ev) {
     fecharModal();
     if (!est.montando && est.vista !== 'giras' && est.vista !== 'casa' && est.vista !== 'favoritos') {
       est.vista = salvo.linha;
-      est.entidade = salvo.entidade;
+      est.entidades = [salvo.entidade];
       est.momento = null; est.ritmo = null; est.busca = '';
       $('campoBusca').value = '';
       $('buscaBarra').hidden = true;
@@ -1112,31 +1206,62 @@ async function excluirPonto() {
   aviso('Ponto excluído.');
 }
 
-/* ---------------- rolagem automática ----------------
- * Para cantar sem tirar a mão do atabaque. Anda por tempo decorrido, nao por
- * quadro, entao a velocidade e a mesma em tablet lento ou rapido.
- * Encostar na tela pausa: se voce tocou, e porque quis intervir. */
+/* ---------------- rolagem ----------------
+ * Tres coisas diferentes:
+ *   1. a rolagem automatica, para cantar sem tirar a mao do atabaque;
+ *   2. os botoes de ponto anterior / proximo ponto, que sao o jeito preciso de
+ *      andar no acervo -- melhor que arrastar com a mao suada no meio da gira;
+ *   3. no lado a lado, tudo isso vale para a coluna em que voce encostou.
+ *
+ * A rolagem automatica anda por tempo decorrido e guarda a posicao em numero
+ * quebrado, atribuindo o valor com casa decimal. A versao antiga somava pixels
+ * inteiros por quadro: no passo lento dava um pulo de 1px a cada 100ms, que e
+ * exatamente a tranquinha que incomodava.
+ */
 
-const VELOCIDADES = { lento: 10, medio: 20, rapido: 36 }; // pixels por segundo
-let rolagem = null;   // id do requestAnimationFrame
+// velocidade em LINHAS por minuto: mudar o tamanho da letra nao muda o ritmo
+const VELOCIDADES = { lento: 14, medio: 24, rapido: 40 };
+let rolagem = null;      // id do requestAnimationFrame
 let ultimoQuadro = 0;
-let sobra = 0;        // fracao de pixel guardada entre quadros
+let posicoes = [];       // posicao em numero quebrado, uma por area
 
 function rolando() { return rolagem !== null; }
 
+// onde a rolagem acontece: o leitor inteiro, ou cada coluna do lado a lado
+function areasDeRolagem() {
+  const colunas = [...$('pilha').querySelectorAll('.pane-pontos')];
+  return colunas.length ? colunas : [$('leitor')];
+}
+
+function areaAtiva() {
+  const areas = areasDeRolagem();
+  return areas[Math.min(est.paneAtiva, areas.length - 1)] || areas[0];
+}
+
+function pxPorSegundo() {
+  const linha = tamanhoAtual() * 1.58;             // mesma entrelinha do CSS
+  return VELOCIDADES[est.velocidade] * linha / 60;
+}
+
 function passoRolagem(agora) {
-  const leitor = $('leitor');
-  if (!leitor) return pararRolagem();
-  const dt = Math.min((agora - ultimoQuadro) / 1000, 0.1); // ignora pausas longas de aba
+  const dt = Math.min((agora - ultimoQuadro) / 1000, 0.1);  // ignora aba em segundo plano
   ultimoQuadro = agora;
+  const avanco = pxPorSegundo() * dt;
 
-  const avanco = VELOCIDADES[est.velocidade] * dt + sobra;
-  const px = Math.floor(avanco);
-  sobra = avanco - px;
-  if (px > 0) leitor.scrollTop += px;
+  const areas = areasDeRolagem();
+  let todasNoFim = true;
+  areas.forEach((area, i) => {
+    if (posicoes[i] === undefined) posicoes[i] = area.scrollTop;
+    const fim = area.scrollHeight - area.clientHeight;
+    if (fim <= 0) return;
+    // alguem arrastou com a mao: segue de onde a tela esta, nao de onde estava
+    if (Math.abs(area.scrollTop - posicoes[i]) > 2) posicoes[i] = area.scrollTop;
+    posicoes[i] = Math.min(posicoes[i] + avanco, fim);
+    area.scrollTop = posicoes[i];
+    if (posicoes[i] < fim - 1) todasNoFim = false;
+  });
 
-  const fim = leitor.scrollHeight - leitor.clientHeight;
-  if (leitor.scrollTop >= fim - 1) {
+  if (todasNoFim) {
     pararRolagem();
     aviso('Chegou ao fim.');
     return;
@@ -1146,11 +1271,10 @@ function passoRolagem(agora) {
 
 function comecarRolagem() {
   if (rolando()) return;
-  /* O scroll-snap do leitor puxa de volta a cada pixel andado, entao a rolagem
-     automatica ficava parada no lugar. Desligo o snap enquanto ela roda. */
-  $('leitor')?.classList.add('sem-snap');
   ultimoQuadro = performance.now();
-  sobra = 0;
+  const areas = areasDeRolagem();
+  for (const a of areas) a.classList.add('rolando');
+  posicoes = areas.map(a => a.scrollTop);
   rolagem = requestAnimationFrame(passoRolagem);
   atualizaBotaoRolagem();
 }
@@ -1158,7 +1282,8 @@ function comecarRolagem() {
 function pararRolagem() {
   if (rolagem !== null) cancelAnimationFrame(rolagem);
   rolagem = null;
-  $('leitor')?.classList.remove('sem-snap');
+  posicoes = [];
+  for (const a of areasDeRolagem()) a.classList.remove('rolando');
   atualizaBotaoRolagem();
 }
 
@@ -1170,6 +1295,31 @@ function atualizaBotaoRolagem() {
   for (const b of ($('velocidades')?.children || [])) {
     b.setAttribute('aria-pressed', String(b.dataset.vel === est.velocidade));
   }
+}
+
+/* Anda de ponto em ponto. O "ponto atual" e o ultimo cujo topo ja passou pelo
+   alto da area -- e o que voce esta cantando, mesmo que so a parte de baixo
+   dele esteja na tela. */
+function pulaPonto(passo) {
+  pararRolagem();
+  const area = areaAtiva();
+  if (!area) return;
+  const cards = [...area.querySelectorAll('.card')];
+  if (!cards.length) return;
+
+  const topoArea = area.getBoundingClientRect().top;
+  let atual = 0;
+  cards.forEach((c, i) => {
+    if (c.getBoundingClientRect().top - topoArea <= 6) atual = i;
+  });
+
+  const alvo = Math.min(cards.length - 1, Math.max(0, atual + passo));
+  // ja no primeiro e pedindo anterior: volta para o topo de tudo
+  if (passo < 0 && atual === 0) {
+    area.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  cards[alvo].scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ---------------- tela cheia ----------------
@@ -1186,7 +1336,8 @@ function ondeEstou() {
     return g ? g.nome : 'Giras';
   }
   const linha = ROTULO_LINHA[est.vista] || (est.vista === 'casa' ? 'Casa' : est.vista);
-  return est.entidade ? `${linha} · ${est.entidade}` : linha;
+  if (!est.entidades.length) return linha;
+  return `${linha} · ${est.entidades.join('  |  ')}`;
 }
 
 function aplicaCheia(ligar) {
@@ -1197,7 +1348,6 @@ function aplicaCheia(ligar) {
   poe('telaCheia', 'textContent', ligar ? '⤡ Reduzir' : '⤢ Tela cheia');
 
   // a caixa muda de tamanho: refaz o ajuste da letra
-  requestAnimationFrame(() => ajustarLetras());
 
   try {
     if (ligar && !document.fullscreenElement) {
@@ -1213,7 +1363,6 @@ function aplicaCheia(ligar) {
 function aplicaTamanho(px) {
   document.documentElement.style.setProperty('--letra-tam', px + 'px');
   try { localStorage.setItem(TAM_KEY, String(px)); } catch (_) {}
-  ajustarLetras();
 }
 function tamanhoAtual() {
   return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--letra-tam'), 10) || 30;
@@ -1233,7 +1382,7 @@ function ligarEventos() {
     b.onclick = () => {
       pararRolagem();
       est.vista = b.dataset.vista;
-      est.entidade = null; est.momento = null; est.ritmo = null;
+      est.entidades = []; est.momento = null; est.ritmo = null;
       est.verRoteiro = false;
       if (est.vista !== 'giras') est.giraAberta = null;
       render();
@@ -1300,6 +1449,8 @@ function ligarEventos() {
   $('modalGira').onclick = e => { if (e.target === $('modalGira')) $('modalGira').hidden = true; };
 
   liga('rolar', 'onclick', () => (rolando() ? pararRolagem() : comecarRolagem()));
+  liga('pontoAnterior', 'onclick', () => pulaPonto(-1));
+  liga('proximoPonto', 'onclick', () => pulaPonto(+1));
   for (const b of ($('velocidades')?.children || [])) {
     b.onclick = () => {
       est.velocidade = b.dataset.vel;
@@ -1307,7 +1458,8 @@ function ligarEventos() {
       atualizaBotaoRolagem();
     };
   }
-  // encostar na tela do leitor pausa
+  /* Encostar na tela pausa: se voce tocou, e porque quis intervir. Fica no
+     leitor inteiro, entao vale tambem para as colunas do lado a lado. */
   $('leitor')?.addEventListener('touchstart', () => { if (rolando()) pararRolagem(); }, { passive: true });
   $('leitor')?.addEventListener('wheel', () => { if (rolando()) pararRolagem(); }, { passive: true });
 
@@ -1323,6 +1475,14 @@ function ligarEventos() {
   $('btnMenor').onclick = () => aplicaTamanho(Math.max(17, tamanhoAtual() - 3));
 
   document.onkeydown = e => {
+    // teclado: seta/espaco anda de ponto em ponto, sem precisar mirar no botao
+    const digitando = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || '');
+    if (!digitando && $('modal').hidden && $('modalGira').hidden) {
+      if (e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) { e.preventDefault(); pulaPonto(+1); return; }
+      if (e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) { e.preventDefault(); pulaPonto(-1); return; }
+      if (e.key === 'ArrowLeft' && dividido()) { marcaPaneAtiva(0); return; }
+      if (e.key === 'ArrowRight' && dividido()) { marcaPaneAtiva(1); return; }
+    }
     if (e.key === 'Escape') {
       if (!$('modal').hidden || !$('modalGira').hidden) { fecharModal(); $('modalGira').hidden = true; return; }
       if (est.cheia) aplicaCheia(false);

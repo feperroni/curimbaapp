@@ -156,6 +156,43 @@ button { cursor: pointer; }
 .ent-btn .qtd { margin-left: 8px; font-size: 13px; color: var(--texto-fraco); font-weight: 500; }
 .ent-btn-acao { background: transparent; border-style: dashed; color: var(--texto-fraco); }
 
+.ent-btn-modo { background: transparent; border-style: dashed; color: var(--texto-fraco); }
+.ent-btn-modo[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--acento) 20%, var(--fundo-2));
+  border-style: solid;
+  border-color: var(--acento);
+  color: var(--acento-2);
+}
+.ent-btn .lado {
+  display: inline-block;
+  min-width: 20px;
+  margin-right: 8px;
+  padding: 1px 5px;
+  border-radius: 6px;
+  background: var(--acento);
+  color: #14110f;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* cabecalho de grupo na lista lateral, no lado a lado */
+.grupo-ent {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px 7px;
+  border-bottom: 1px solid var(--borda);
+  background: var(--fundo-3);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.grupo-qtd { margin-left: auto; font-weight: 500; color: var(--texto-fraco); }
+
 /* ---------- filtros ---------- */
 .filtros {
   display: flex;
@@ -316,35 +353,86 @@ button { cursor: pointer; }
   container-type: size;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
   position: relative;
+}
+/* lado a lado: o leitor vira moldura e quem rola sao as colunas */
+.leitor.dividido { overflow: hidden; }
+.pilha.dividido { display: flex; padding-bottom: 0; height: 100%; }
+
+.pane {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--borda);
+}
+.pane:last-child { border-right: 0; }
+
+.pane-cab {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 20px;
+  border-bottom: 1px solid var(--borda);
+  background: var(--fundo-2);
+  flex-shrink: 0;
+}
+.pane-cab b { font-size: 16px; text-transform: uppercase; letter-spacing: .04em; color: var(--texto-fraco); }
+.pane-cab span { font-size: 13px; color: var(--texto-fraco); }
+.pane[aria-current="true"] .pane-cab { background: color-mix(in srgb, var(--acento) 16%, var(--fundo-2)); }
+.pane[aria-current="true"] .pane-cab b { color: var(--acento-2); }
+
+.pane-pontos {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  container-type: size;
+  padding-bottom: 42cqh;
+}
+.pane-pontos .card { padding: 18px 24px 22px; min-height: 0; }
+.pane-vazio { padding: 26px 24px; color: var(--texto-fraco); }
+
+.dica-modo {
+  align-self: center;
+  flex: 0 0 auto;
+  padding-right: 4px;
+  font-size: 13px;
+  color: var(--texto-fraco);
+  letter-spacing: .04em;
+}
+
+/* tablet em pé: lado a lado de verdade não cabe, então uma em cima da outra,
+   cada uma ainda com a própria rolagem */
+@media (max-width: 860px) {
+  .pilha.dividido { flex-direction: column; }
+  .pane { border-right: 0; border-bottom: 1px solid var(--borda); min-height: 0; }
+  .pane:last-child { border-bottom: 0; }
 }
 
 .vazio { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--texto-fraco); text-align: center; line-height: 1.6; }
 .vazio-ico { font-size: 52px; margin: 0 0 10px; }
 .vazio b { color: var(--texto); }
 
-/* uma coluna: dois pontos por tela. duas colunas: quatro, em 2x2.
-   O card cresce sozinho quando a letra e mais longa que a altura reservada. */
-.pilha { display: grid; grid-template-columns: 1fr; align-items: start; }
+/* A caixa tem a altura que a letra pedir: o ponto aparece inteiro, sempre.
+   Em duas colunas de card, as caixas da mesma fila esticam juntas para as
+   bordas nao ficarem em degrau. */
+.pilha { display: grid; grid-template-columns: 1fr; align-items: stretch; padding-bottom: 42cqh; }
 .pilha[data-colunas="2"] { grid-template-columns: 1fr 1fr; }
 
 .card {
-  height: 50cqh;
+  min-height: 34cqh;
   padding: 20px 34px 26px;
   border-bottom: 1px solid var(--borda);
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  overflow: hidden;
+  scroll-margin-top: 0;
 }
 .pilha[data-colunas="2"] .card { padding: 18px 22px 22px; }
 .pilha[data-colunas="2"] .card:nth-child(odd) { border-right: 1px solid var(--borda); }
 .pilha[data-colunas="1"] .card:last-child { border-bottom: 0; }
 .pilha[data-colunas="2"] .card:nth-last-child(-n+2) { border-bottom: 0; }
 
-.card-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; flex-shrink: 0; }
+.card-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
 .card-tit-wrap { min-width: 0; }
 .card-tit { margin: 0; font-size: 21px; line-height: 1.25; font-weight: 700; }
 .card-num {
@@ -366,50 +454,15 @@ button { cursor: pointer; }
 .card-acoes { display: flex; gap: 4px; flex-shrink: 0; }
 .card-acoes .mini-btn { min-width: 42px; min-height: 38px; border-color: var(--borda); font-size: 17px; }
 
-/* a letra ocupa o que sobra da caixa. O tamanho da fonte e ajustado no app.js
-   para o ponto caber inteiro; so o ponto muito longo rola aqui dentro. */
+/* A letra flui inteira. Nada de altura fixa nem rolagem dentro da caixa. */
 .letra {
   margin: 0;
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
   font-family: inherit;
   font-size: var(--letra-tam);
   line-height: 1.58;
   white-space: pre-wrap;
   word-break: break-word;
-  scrollbar-width: thin;
-  scrollbar-color: var(--borda) transparent;
 }
-/* aviso de que a letra continua abaixo */
-.card.tem-mais { position: relative; }
-.card.tem-mais::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 30px;
-  background: linear-gradient(to top, var(--fundo), transparent);
-  pointer-events: none;
-}
-.card.tem-mais::before {
-  content: 'continua ⌄';
-  position: absolute;
-  right: 16px;
-  bottom: 7px;
-  z-index: 1;
-  padding: 2px 9px;
-  border-radius: 999px;
-  background: var(--fundo-3);
-  border: 1px solid var(--borda);
-  font-size: 12px;
-  letter-spacing: .04em;
-  color: var(--texto-fraco);
-  pointer-events: none;
-}
-
-.letra::-webkit-scrollbar { width: 6px; }
-.letra::-webkit-scrollbar-thumb { background: var(--borda); border-radius: 3px; }
 
 .rodape-pilha {
   display: flex;
@@ -666,4 +719,5 @@ body[data-cheia="1"] .pilha > .card:first-child { padding-top: 68px; }
   #velocidades button { padding: 0 9px; font-size: 12px; }
   #telaCheia { padding: 0 12px; }
 }
-.leitor.sem-snap { scroll-snap-type: none; }
+/* a rolagem automatica move a posicao direto: nada de animar por cima dela */
+.leitor.rolando, .pane-pontos.rolando { scroll-behavior: auto; }
