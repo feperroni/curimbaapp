@@ -358,7 +358,9 @@ button { cursor: pointer; }
 }
 /* lado a lado: o leitor vira moldura e quem rola sao as colunas */
 .leitor.dividido { overflow: hidden; }
-.pilha.dividido { display: flex; padding-bottom: 0; height: 100%; }
+/* align-items: stretch aqui e o que faz as colunas irem ate o pe da tela --
+   a .pilha usa "start" para as pilhas de card nao esticarem */
+.pilha.dividido { display: flex; align-items: stretch; padding: 0; height: 100%; }
 
 .pane {
   flex: 1 1 0;
@@ -385,13 +387,17 @@ button { cursor: pointer; }
 
 .pane-pontos {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   overflow-y: auto;
   overscroll-behavior: contain;
   scroll-behavior: smooth;
   container-type: size;
-  padding-bottom: 42cqh;
+  padding: 10px 8px 42cqh;
 }
-.pane-pontos .card { padding: 18px 24px 22px; min-height: 0; }
+.pane-pontos > .card { flex: 0 0 auto; }
+.pane-pontos .card { padding: 18px 22px 24px; }
 .pane-vazio { padding: 26px 24px; color: var(--texto-fraco); }
 
 .dica-modo {
@@ -416,38 +422,79 @@ button { cursor: pointer; }
 .vazio b { color: var(--texto); }
 
 /* A caixa tem a altura que a letra pedir: o ponto aparece inteiro, sempre.
-   Em duas colunas de card, as caixas da mesma fila esticam juntas para as
-   bordas nao ficarem em degrau. */
-.pilha { display: grid; grid-template-columns: 1fr; align-items: stretch; padding-bottom: 42cqh; }
-.pilha[data-colunas="2"] { grid-template-columns: 1fr 1fr; }
+   Nada de filete entre um ponto e outro: linha cheia atravessando a tela dava
+   cara de tabela. O que separa um ponto do outro e o espaco em volta e a
+   marca de comeco (o filete curto colorido antes do titulo). */
+.pilha {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 8px 18px;
+  padding: 10px 12px 42cqh;
+}
+/* Em duas colunas nao da para usar grade: a fila inteira fica com a altura do
+   ponto mais alto e sobra um buraco embaixo do mais curto. Sao duas pilhas
+   independentes, e o proximo ponto entra sempre na coluna mais curta. */
+.pilha[data-colunas="2"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.coluna-massa {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .card {
-  min-height: 34cqh;
-  padding: 20px 34px 26px;
-  border-bottom: 1px solid var(--borda);
-  scroll-margin-top: 0;
+  padding: 22px 30px 30px;
+  border-radius: 18px;
+  scroll-margin-top: 10px;
+  background: var(--fundo-2);
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--acento) 70%, transparent);
 }
-.pilha[data-colunas="2"] .card { padding: 18px 22px 22px; }
-.pilha[data-colunas="2"] .card:nth-child(odd) { border-right: 1px solid var(--borda); }
-.pilha[data-colunas="1"] .card:last-child { border-bottom: 0; }
-.pilha[data-colunas="2"] .card:nth-last-child(-n+2) { border-bottom: 0; }
+.pilha[data-colunas="2"] .card { padding: 18px 22px 24px; }
 
-.card-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+/* o cabecalho e informacao de apoio: quem manda na tela e a letra */
+.card-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
 .card-tit-wrap { min-width: 0; }
-.card-tit { margin: 0; font-size: 21px; line-height: 1.25; font-weight: 700; }
+.card-tit {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--texto);
+}
+/* filete curto: marca onde o ponto comeca sem precisar de moldura */
+.card-tit::before {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 3px;
+  margin-bottom: 11px;
+  border-radius: 2px;
+  background: var(--acento);
+}
 .card-num {
   display: inline-block;
-  min-width: 25px;
-  margin-right: 9px;
-  padding: 1px 6px;
-  border-radius: 7px;
-  background: var(--acento);
-  color: #14110f;
+  min-width: 22px;
+  margin-right: 8px;
   font-size: 13px;
-  text-align: center;
-  vertical-align: middle;
+  font-weight: 600;
+  color: var(--acento);
+  text-align: right;
+  vertical-align: baseline;
 }
-.card-meta { margin: 6px 0 0; font-size: 14px; color: var(--acento-2); }
+.card-meta { margin: 5px 0 0; font-size: 13px; color: var(--texto-fraco); letter-spacing: .01em; }
+
+/* o filete curto era do enquadramento "folha", que nao foi o escolhido */
+.card-tit::before { display: none; }
+
+/* as acoes so aparecem de verdade quando a mao vai ate elas */
+.card-acoes { opacity: .4; transition: opacity .15s; }
+.card:hover .card-acoes, .card-acoes:focus-within { opacity: 1; }
 .pilha[data-colunas="2"] .card-tit { font-size: 18px; }
 .pilha[data-colunas="2"] .card-meta { font-size: 12px; }
 .pilha[data-colunas="2"] .letra { font-size: calc(var(--letra-tam) * .8); }
@@ -455,14 +502,18 @@ button { cursor: pointer; }
 .card-acoes .mini-btn { min-width: 42px; min-height: 38px; border-color: var(--borda); font-size: 17px; }
 
 /* A letra flui inteira. Nada de altura fixa nem rolagem dentro da caixa. */
+/* medida de leitura: linha de ponta a ponta da tela cansa a vista e faz o
+   olho perder o comeco da linha seguinte no meio da gira */
 .letra {
   margin: 0;
+  max-width: 27em;
   font-family: inherit;
   font-size: var(--letra-tam);
-  line-height: 1.58;
+  line-height: 1.6;
   white-space: pre-wrap;
   word-break: break-word;
 }
+.pilha[data-colunas="2"] .letra, .pane-pontos .letra { max-width: none; }
 
 .rodape-pilha {
   display: flex;

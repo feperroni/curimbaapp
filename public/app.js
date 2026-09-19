@@ -794,7 +794,9 @@ function renderPilha() {
   for (const b of ($('altColunas')?.children || [])) b.setAttribute('aria-pressed', String(Number(b.dataset.colunas) === est.colunas));
 
   if (!parte) {
-    colunas[0].pontos.forEach((p, i) => box.appendChild(criaCard(p, i, '')));
+    const pontos = colunas[0].pontos;
+    if (est.colunas === 2) distribuiEmDuasPilhas(box, pontos);
+    else pontos.forEach((p, i) => box.appendChild(criaCard(p, i, '')));
     return;
   }
 
@@ -824,6 +826,24 @@ function renderPilha() {
     // a coluna em que voce encostou por ultimo e a que os botoes de ponto comandam
     pane.addEventListener('pointerdown', () => marcaPaneAtiva(ci), { passive: true });
     box.appendChild(pane);
+  });
+}
+
+/* Duas colunas de card: cada ponto vai para a coluna que estiver mais curta
+   naquele momento. Assim um ponto curto nao deixa um buraco esperando o vizinho
+   comprido terminar -- o proximo ponto sobe e ocupa o espaco.
+   O numero no titulo continua marcando a ordem liturgica, que e o que vale na
+   hora de seguir a gira. */
+function distribuiEmDuasPilhas(box, pontos) {
+  const colA = document.createElement('div');
+  const colB = document.createElement('div');
+  colA.className = colB.className = 'coluna-massa';
+  box.appendChild(colA);
+  box.appendChild(colB);
+
+  pontos.forEach((p, i) => {
+    const menor = colA.offsetHeight <= colB.offsetHeight ? colA : colB;
+    menor.appendChild(criaCard(p, i, ''));
   });
 }
 
@@ -1297,29 +1317,39 @@ function atualizaBotaoRolagem() {
   }
 }
 
-/* Anda de ponto em ponto. O "ponto atual" e o ultimo cujo topo ja passou pelo
-   alto da area -- e o que voce esta cantando, mesmo que so a parte de baixo
-   dele esteja na tela. */
+/* Anda de ponto em ponto.
+ *
+ * Trabalha com as POSICOES onde a tela pode parar, nao com a lista de cards:
+ * em duas colunas os dois primeiros pontos comecam na mesma altura, e andar
+ * "um card" levaria para o vizinho de lado em vez do proximo de cima para
+ * baixo. Duas caixas que comecam quase na mesma linha valem uma parada so.
+ */
+function paradasDaArea(area) {
+  const topoArea = area.getBoundingClientRect().top;
+  const paradas = [];
+  for (const card of area.querySelectorAll('.card')) {
+    const y = Math.round(area.scrollTop + (card.getBoundingClientRect().top - topoArea));
+    if (!paradas.some(v => Math.abs(v - y) < 24)) paradas.push(y);
+  }
+  return paradas.sort((a, b) => a - b);
+}
+
 function pulaPonto(passo) {
   pararRolagem();
   const area = areaAtiva();
   if (!area) return;
-  const cards = [...area.querySelectorAll('.card')];
-  if (!cards.length) return;
 
-  const topoArea = area.getBoundingClientRect().top;
-  let atual = 0;
-  cards.forEach((c, i) => {
-    if (c.getBoundingClientRect().top - topoArea <= 6) atual = i;
-  });
+  const paradas = paradasDaArea(area);
+  if (!paradas.length) return;
 
-  const alvo = Math.min(cards.length - 1, Math.max(0, atual + passo));
-  // ja no primeiro e pedindo anterior: volta para o topo de tudo
-  if (passo < 0 && atual === 0) {
-    area.scrollTo({ top: 0, behavior: 'smooth' });
-    return;
-  }
-  cards[alvo].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const agora = area.scrollTop;
+  const alvo = passo > 0
+    ? paradas.find(y => y > agora + 8)
+    : [...paradas].reverse().find(y => y < agora - 8);
+
+  const fim = area.scrollHeight - area.clientHeight;
+  const destino = Math.max(0, Math.min(alvo ?? (passo > 0 ? fim : 0), fim));
+  area.scrollTo({ top: destino, behavior: 'smooth' });
 }
 
 /* ---------------- tela cheia ----------------
