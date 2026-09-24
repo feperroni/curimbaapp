@@ -76,8 +76,16 @@ const est = {
 const $ = id => document.getElementById(id);
 const acha = id => PONTOS.find(p => p.id === id);
 
-// a primeira entidade escolhida, para quando so uma faz sentido
-const entidadeAtual = () => est.entidades[0] || null;
+/* Cada escolha guarda a linha junto com o nome: no lado a lado da para pegar
+   uma guia da Direita e uma da Esquerda ao mesmo tempo, entao "Exu" sozinho
+   nao diz de onde veio. */
+const selecionada = (vista, nome) =>
+  est.entidades.findIndex(e => e.vista === vista && e.nome === nome);
+// a entidade da linha aberta, para quando so uma faz sentido
+const entidadeAtual = () => {
+  const e = est.entidades.find(x => x.vista === est.vista);
+  return e ? e.nome : null;
+};
 // a tela esta partida em duas colunas de entidade?
 const dividido = () => est.comparar && est.entidades.length >= 2;
 
@@ -146,15 +154,18 @@ function entidadesDaVista(vista) {
 
 // pontos que servem de base para os chips de filtro
 function baseAtual() {
+  // no lado a lado os chips valem para as duas colunas, mesmo de linhas diferentes
+  if (dividido()) return est.entidades.flatMap(e => daEntidade(conjuntoDaVista(e.vista), e));
   const conj = conjuntoDaVista(est.vista);
-  if (!est.entidades.length) return conj;
-  return conj.filter(p => est.entidades.includes(p.entidade));
+  const escolhidas = est.entidades.filter(e => e.vista === est.vista).map(e => e.nome);
+  if (!escolhidas.length) return conj;
+  return conj.filter(p => escolhidas.includes(p.entidade));
 }
 
 // coringa serve qualquer entidade da propria linha
-function daEntidade(lista, nome) {
-  return lista.filter(p => p.entidade === nome ||
-    (p.coringa && LINHAS.includes(est.vista) && p.linha === est.vista));
+function daEntidade(lista, sel) {
+  return lista.filter(p => p.entidade === sel.nome ||
+    (p.coringa && LINHAS.includes(sel.vista) && p.linha === sel.vista));
 }
 
 function aplicaFiltros(lista) {
@@ -195,8 +206,9 @@ function visiveis() {
 
   let l = conjuntoDaVista(est.vista);
 
-  if (est.entidades.length) {
-    l = l.filter(p => est.entidades.includes(p.entidade) ||
+  const escolhidas = est.entidades.filter(e => e.vista === est.vista).map(e => e.nome);
+  if (escolhidas.length) {
+    l = l.filter(p => escolhidas.includes(p.entidade) ||
       (p.coringa && LINHAS.includes(est.vista) && p.linha === est.vista));
   }
   return ordenaLiturgico(aplicaFiltros(l));
@@ -438,6 +450,10 @@ function renderVista() {
   document.body.dataset.vista = est.vista;
 }
 
+function rotuloVista(v) {
+  return ROTULO_LINHA[v] || (v === 'casa' ? 'Casa' : v === 'favoritos' ? 'Favoritos' : v);
+}
+
 function renderSegundaFaixa() {
   const nav = $('navEntidades');
   nav.innerHTML = '';
@@ -487,33 +503,61 @@ function renderSegundaFaixa() {
 
   /* Lado a lado: com o modo ligado, dois toques escolhem duas entidades e o
      leitor parte em duas colunas. Desligado, um toque troca de entidade como
-     sempre -- o gesto de sempre nao pode ficar mais lento por causa do modo. */
+     sempre -- o gesto de sempre nao pode ficar mais lento por causa do modo.
+
+     As duas escolhas nao precisam ser da mesma linha: da para por um Caboclo
+     da Direita ao lado de um Exu da Esquerda. Por isso, com o modo ligado,
+     trocar de linha no menu de cima NAO apaga o que ja foi escolhido -- e as
+     escolhidas aparecem como etiqueta no comeco da barra, para voce sempre ver
+     o par montado, esteja em que linha estiver. */
   const cmp = document.createElement('button');
   cmp.className = 'ent-btn ent-btn-modo';
   cmp.textContent = '⇆ Lado a lado';
   cmp.setAttribute('aria-pressed', String(est.comparar));
   cmp.title = est.comparar
     ? 'Sair do lado a lado'
-    : 'Escolher duas entidades e ver uma em cada coluna';
+    : 'Escolher duas entidades, de qualquer linha, e ver uma em cada coluna';
   cmp.onclick = () => {
     est.comparar = !est.comparar;
-    if (!est.comparar) est.entidades = est.entidades.slice(0, 1);
-    if (est.comparar) est.modo = 'tudo';   // selecao manual nao vale no lado a lado
+    if (!est.comparar) {
+      // ao sair, fica so a escolha da linha aberta (ou nenhuma)
+      est.entidades = est.entidades.filter(e => e.vista === est.vista).slice(0, 1);
+    } else {
+      est.modo = 'tudo';    // selecao manual nao vale no lado a lado
+    }
     render();
   };
   nav.appendChild(cmp);
 
-  if (est.comparar && est.entidades.length < 2) {
+  if (est.comparar) {
+    for (const [i, sel] of est.entidades.entries()) {
+      const et = document.createElement('button');
+      et.className = 'ent-escolhida';
+      et.title = `Tirar ${sel.nome} do lado a lado`;
+      et.innerHTML = `<span class="lado">${i + 1}</span>` +
+        `<span class="ent-linha">${escapa(rotuloVista(sel.vista))}</span>` +
+        `${escapa(sel.nome)}<span class="tira">✕</span>`;
+      et.style.setProperty('--acento', `var(--cor-${sel.vista})`);
+      et.onclick = () => {
+        est.entidades.splice(i, 1);
+        est.paneAtiva = 0;
+        render();
+      };
+      nav.appendChild(et);
+    }
+
     const dica = document.createElement('span');
     dica.className = 'dica-modo';
-    dica.textContent = est.entidades.length
-      ? 'escolha a segunda →'
-      : 'escolha duas entidades →';
+    dica.textContent = est.entidades.length >= 2
+      ? '· trocar de linha não desfaz'
+      : est.entidades.length
+        ? 'escolha a segunda, de qualquer linha →'
+        : 'escolha duas, de qualquer linha →';
     nav.appendChild(dica);
   }
 
   for (const [nome, qtd] of entidadesDaVista(est.vista)) {
-    const i = est.entidades.indexOf(nome);
+    const i = selecionada(est.vista, nome);
     const b = document.createElement('button');
     b.className = 'ent-btn';
     b.setAttribute('aria-selected', String(i !== -1));
@@ -525,10 +569,10 @@ function renderSegundaFaixa() {
         else {
           // a terceira escolhida empurra a mais antiga para fora
           if (est.entidades.length >= 2) est.entidades.shift();
-          est.entidades.push(nome);
+          est.entidades.push({ vista: est.vista, nome });
         }
       } else {
-        est.entidades = (i !== -1) ? [] : [nome];
+        est.entidades = (i !== -1) ? [] : [{ vista: est.vista, nome }];
       }
       est.momento = null;
       est.paneAtiva = 0;
@@ -591,8 +635,10 @@ function renderLista() {
     colunas.forEach((col, ci) => {
       const tit = document.createElement('li');
       tit.className = 'grupo-ent';
-      tit.innerHTML = `<span class="lado">${ci + 1}</span>${escapa(col.nome)}` +
+      tit.innerHTML = `<span class="lado">${ci + 1}</span>` +
+        `<span class="grupo-linha">${escapa(rotuloVista(col.vista))}</span>${escapa(col.nome)}` +
         `<span class="grupo-qtd">${col.pontos.length}</span>`;
+      tit.style.setProperty('--acento', `var(--cor-${col.vista})`);
       tit.onclick = () => marcaPaneAtiva(ci);
       ul.appendChild(tit);
 
@@ -719,11 +765,11 @@ function pontosNoLeitor() {
 /* O leitor e sempre uma lista de colunas. Normalmente uma so; no lado a lado,
    uma por entidade, cada uma com a propria rolagem. */
 function colunasDoLeitor() {
-  if (!dividido()) return [{ nome: null, pontos: pontosNoLeitor() }];
-  const base = conjuntoDaVista(est.vista);
-  return est.entidades.map(nome => ({
-    nome,
-    pontos: ordenaLiturgico(aplicaFiltros(daEntidade(base, nome)))
+  if (!dividido()) return [{ nome: null, vista: est.vista, pontos: pontosNoLeitor() }];
+  return est.entidades.map(sel => ({
+    nome: sel.nome,
+    vista: sel.vista,
+    pontos: ordenaLiturgico(aplicaFiltros(daEntidade(conjuntoDaVista(sel.vista), sel)))
   }));
 }
 
@@ -806,9 +852,13 @@ function renderPilha() {
     pane.dataset.coluna = String(ci);
     pane.setAttribute('aria-current', String(ci === est.paneAtiva));
 
+    // cada coluna usa a cor da propria linha: da para saber de onde e sem ler
+    pane.style.setProperty('--acento', `var(--cor-${col.vista})`);
+
     const cab = document.createElement('header');
     cab.className = 'pane-cab';
-    cab.innerHTML = `<b>${escapa(col.nome)}</b>` +
+    cab.innerHTML = `<span class="pane-linha">${escapa(rotuloVista(col.vista))}</span>` +
+      `<b>${escapa(col.nome)}</b>` +
       `<span>${col.pontos.length === 1 ? '1 ponto' : col.pontos.length + ' pontos'}</span>`;
     pane.appendChild(cab);
 
@@ -1193,7 +1243,7 @@ async function salvarPonto(ev) {
     fecharModal();
     if (!est.montando && est.vista !== 'giras' && est.vista !== 'casa' && est.vista !== 'favoritos') {
       est.vista = salvo.linha;
-      est.entidades = [salvo.entidade];
+      est.entidades = [{ vista: salvo.linha, nome: salvo.entidade }];
       est.momento = null; est.ritmo = null; est.busca = '';
       $('campoBusca').value = '';
       $('buscaBarra').hidden = true;
@@ -1367,7 +1417,10 @@ function ondeEstou() {
   }
   const linha = ROTULO_LINHA[est.vista] || (est.vista === 'casa' ? 'Casa' : est.vista);
   if (!est.entidades.length) return linha;
-  return `${linha} · ${est.entidades.join('  |  ')}`;
+  if (dividido()) {
+    return est.entidades.map(e => `${rotuloVista(e.vista)} · ${e.nome}`).join('   |   ');
+  }
+  return `${linha} · ${est.entidades.map(e => e.nome).join(', ')}`;
 }
 
 function aplicaCheia(ligar) {
@@ -1412,7 +1465,10 @@ function ligarEventos() {
     b.onclick = () => {
       pararRolagem();
       est.vista = b.dataset.vista;
-      est.entidades = []; est.momento = null; est.ritmo = null;
+      /* No lado a lado a linha de cima e so navegacao: o par escolhido fica de
+         pe enquanto voce passeia pelas linhas atras da segunda entidade. */
+      if (!est.comparar) est.entidades = [];
+      est.momento = null; est.ritmo = null;
       est.verRoteiro = false;
       if (est.vista !== 'giras') est.giraAberta = null;
       render();

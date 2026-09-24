@@ -163,7 +163,35 @@ button { cursor: pointer; }
   border-color: var(--acento);
   color: var(--acento-2);
 }
-.ent-btn .lado {
+/* etiqueta do par montado: fica no comeco da barra e acompanha voce enquanto
+   passeia pelas linhas atras da segunda entidade */
+.ent-escolhida {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 12px 0 8px;
+  border: 1px solid var(--acento);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--acento) 20%, var(--fundo-2));
+  color: var(--texto);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+.ent-escolhida .ent-linha {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--texto-fraco);
+  letter-spacing: .08em;
+}
+.ent-escolhida .tira { margin-left: 2px; font-size: 15px; color: var(--texto-fraco); }
+
+.ent-btn .lado,
+.ent-escolhida .lado {
   display: inline-block;
   min-width: 20px;
   margin-right: 8px;
@@ -192,6 +220,16 @@ button { cursor: pointer; }
   z-index: 2;
 }
 .grupo-qtd { margin-left: auto; font-weight: 500; color: var(--texto-fraco); }
+.grupo-linha {
+  margin-right: 7px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--acento) 55%, transparent);
+  color: var(--acento-2);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .08em;
+}
 
 /* ---------- filtros ---------- */
 .filtros {
@@ -382,6 +420,15 @@ button { cursor: pointer; }
 }
 .pane-cab b { font-size: 16px; text-transform: uppercase; letter-spacing: .04em; color: var(--texto-fraco); }
 .pane-cab span { font-size: 13px; color: var(--texto-fraco); }
+.pane-cab .pane-linha {
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--acento) 55%, transparent);
+  color: var(--acento-2);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
 .pane[aria-current="true"] .pane-cab { background: color-mix(in srgb, var(--acento) 16%, var(--fundo-2)); }
 .pane[aria-current="true"] .pane-cab b { color: var(--acento-2); }
 
